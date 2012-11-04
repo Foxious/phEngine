@@ -233,8 +233,6 @@ void Renderer::CreateBuffers(Mesh& mesh)
 
 	// pH - if ever this becomes more than just a sprite engine,
 	// change this.
-	//mDevice->SetStreamSource(0, VB, 0, sizeof(VertexPNT));
-	//mDevice->SetIndices(IB);
 	mDevice->SetVertexDeclaration(VertexPNT::Decl);
 
 }
