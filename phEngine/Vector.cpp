@@ -1,6 +1,24 @@
 #include "stdafx.h"
 #include "Vector.h"
 
+
+Vector2 Vector2::operator=(const Vector2& rhs)
+{
+	this->x = x;
+	this->y = y;
+
+	return *this;
+}
+
+Vector2 Vector2::operator*(const Vector2& rhs)
+{
+	Vector2 temp(*this);
+	temp.x *= rhs.x;
+	temp.y *= rhs.y;
+
+	return temp;
+}
+
 Vector3 Vector3::operator=(const Vector3& rhs)
 {
 	this->x = rhs.x;
@@ -17,4 +35,15 @@ Vector3 Vector3::operator=(const Vector2& rhs)
 	z = 0.0f;
 
 	return *this;
+}
+
+Vector3 Vector3::operator*(const Vector3& rhs)
+{
+	Vector3 temp(*this);
+
+	temp.x *= rhs.x;
+	temp.y *= rhs.y;
+	temp.z *= rhs.z;
+
+	return temp;
 }

@@ -16,10 +16,11 @@
 
 
 // pH Warnning - these need to stay in sync
-const char* animKeys[5] = {"Texture", "Anims", "Name", "Start", "Data"};
+const char* animKeys[6] = {"Texture", "CellSize", "Anims", "Name", "Start", "Data"};
 enum AnimKeysEnum
 {
 	texture,
+	cellSize,
 	anims,
 	animName,
 	animStart,
@@ -98,41 +99,22 @@ void AnimationComponent::PlayAnim(const std::string& name)
 	}
 }
 
-void AnimationComponent::SetTexture(const ITexture * texture)
-{
-	if (texture != 0)
-	{
-		mTex = texture;
-
-		mFramesPerRow = mTex->GetWidth() / (unsigned int)mCellSize.x;
-
-		mXform.mScale.x = mCellSize.x / (float) mTex->GetWidth();
-		mXform.mScale.y = mCellSize.y / (float) mTex->GetHeight();
-	}
-}
-
 void AnimationComponent::Update(float dt)
 {
-	if (0 == mTex || 0 == mFramesPerRow)
-	{
-		return;
-	}
-
 	GetCurrentAnim().Update(dt);
+
 	unsigned int currentFrame = GetCurrentAnim().GetCurrentFrame();
+	unsigned int framesPerRow = (unsigned int)(1.0f / mUV.mScale.x);
 	
-	mXform.mPos.x = (currentFrame % mFramesPerRow) * mXform.mScale.x;
-	mXform.mPos.y = (currentFrame / mFramesPerRow) * mXform.mScale.y;
+	mUV.mPos.x = (currentFrame % framesPerRow) * mUV.mScale.x;
+	mUV.mPos.y = (currentFrame / framesPerRow) * mUV.mScale.y;
 
 }
 
 Animation& AnimationComponent::GetCurrentAnim()
 {
+	assert(!mAnims.empty());
 	return mAnims[mCurrentAnimIndex];
-}
-Vector2 AnimationComponent::GetCellSize()
-{
-	return mCellSize;
 }
 
 void AnimationComponent::ParseJsonData(const std::string& jsonData)
@@ -148,19 +130,25 @@ void AnimationComponent::ParseJsonData(const std::string& jsonData)
 	int i = 1;
 	std::string keyStr;
 	jsmntok_t *keyTok;
-	while (i < tokens[0].size)
+	int count=0;
+	while(tokens[count].type >= 0) ++count;
+	while (i < count)
 	{
 		 keyTok = &tokens[i];
-		 if (keyTok->type < 0)
-		 {
-			 break;
-		 }
 
 		 keyStr = SubstringFromToken(jsonData, *keyTok);
 
 		 if (keyStr.compare(animKeys[texture]) == 0)
 		 {
 			 // load texture here
+		 }
+
+		 else if (keyStr.compare(animKeys[cellSize])==0)
+		 {
+			 // pH TODO - test this shit
+			 jsmntok_t & cellTok = tokens[++i];
+			 mUV.mScale.x = FloatFromToken(jsonData, tokens[++i]);
+			 mUV.mScale.y = FloatFromToken(jsonData, tokens[++i]);
 		 }
 
 		 else if (keyStr.compare(animKeys[anims]) == 0)

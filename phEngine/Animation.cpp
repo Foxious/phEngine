@@ -4,7 +4,7 @@
 Animation::Animation()
 	: mStartFrame(0)
 	, mCurrentFrame(0)
-	, mTime(0)
+	, mTime(0.0f)
 {
 	// pH TODO - This is a hard coded thing to
 	// test that the system is working. Make this
@@ -21,6 +21,7 @@ Animation::Animation()
 Animation::Animation(unsigned int startFrame, const std::string& name, const std::vector<float>& frameData)
 	: mStartFrame(startFrame)
 	, mCurrentFrame(0)
+	, mTime(0.0f)
 	, mName(name)
 	, mFrames(frameData)
 {
@@ -39,7 +40,7 @@ void Animation::Update(float dt)
 
 void Animation::Reset()
 {
-	mTime = 0;
+	mTime = 0.0f;
 }
 
 unsigned int Animation::GetCurrentFrame() const

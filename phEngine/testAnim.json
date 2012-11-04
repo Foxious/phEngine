@@ -1,9 +1,9 @@
 {
-	"Texture": "BigMacSq.tga",
+	"CellSize": [0.5,0.5],
 	"Anims":
 	{
 		"Name": "Test",
-		"Start": 0
+		"Start": 0,
 		"Data": [0.5, 0.5, 1.8]
 	}
 }

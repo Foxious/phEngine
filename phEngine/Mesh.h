@@ -30,16 +30,16 @@ struct Mesh
 // todo - finish out this class
 struct MeshInstance
 {
-	MeshInstance(Mesh* parent) : mParent(parent), texture(0), mXform() {}
+	MeshInstance(Mesh* parent) : mParent(parent), mTexture(0), mXform() {}
 
 	void Update(float dt);
-	void SetTexture(const ITexture* texName);
+	void SetTexture(ITexture* texName);
 
 	size_t VertCount();
 	size_t TriCount();
 	
 	Mesh* mParent;
-	const ITexture * texture;
+	ITexture * mTexture;
 	XForm mXform;
 	AnimationComponent mAnimComponent;
 };

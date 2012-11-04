@@ -33,12 +33,11 @@ void MeshInstance::Update(float dt)
 	mAnimComponent.Update(dt);
 }
 
-void MeshInstance::SetTexture(const ITexture* texture)
+void MeshInstance::SetTexture(ITexture* texture)
 {
-	this->texture = texture;
-	this->mAnimComponent.SetTexture(texture);
-
-	this->mXform.mScale = mAnimComponent.GetCellSize();
+	this->mTexture = texture;
+	Vector3 textureSizeVec((float)texture->GetWidth(), (float)texture->GetHeight(), 1.0f);
+	this->mXform.mScale = mAnimComponent.GetXForm().mScale * textureSizeVec;
 }
 
 // CTOR ///////////////////////////////////////////////////////////////////////
@@ -133,7 +132,7 @@ void MeshBuilder::Draw(D3DXMATRIX& WVP)
 // PRIVATE ////////////////////////////////////////////////////////////////////
 bool MeshSortPredicate(const MeshInstance& m1, const MeshInstance& m2)
 {
-	return m1.texture < m2.texture;
+	return m1.mTexture < m2.mTexture;
 }
 
 void MeshBuilder::SortMeshes()

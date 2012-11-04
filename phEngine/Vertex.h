@@ -1,6 +1,8 @@
 #ifndef VERTEX_H
 #define VERTEX_H
 
+#include <Windows.h>
+#include <d3d9.h>
 #include <d3dx9.h>
 
 void InitAllVertexDeclarations(IDirect3DDevice9* device);

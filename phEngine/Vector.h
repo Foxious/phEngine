@@ -16,7 +16,16 @@ struct Vector2
 		y = yy;
 	}
 
+	Vector2(const Vector2& rhs)
+		: x(rhs.x)
+		, y(rhs.y)
+	{
+	}
+
 	float x, y;
+
+	Vector2 operator=(const Vector2& rhs);
+	Vector2 operator*(const Vector2& rhs);
 };
 
 struct Vector3
@@ -34,8 +43,18 @@ struct Vector3
 	{
 	}
 
+	Vector3(const Vector3& rhs)
+		: x(rhs.x)
+		, y(rhs.y)
+		, z(rhs.z)
+	{
+	}
+
 	Vector3 operator=(const Vector3& rhs);
 	Vector3 operator=(const Vector2& rhs);
+
+	Vector3 operator*(const Vector3& rhs);
+
 
 	float x,y,z;
 };

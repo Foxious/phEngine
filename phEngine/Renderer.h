@@ -12,6 +12,16 @@
 #include "Actor.h"
 #include "AnimationManager.h"
 
+struct SceneObject
+{
+	MeshBuffers* buffers;
+	ITexture* tex;
+	XForm xf;
+	XForm uv;
+	unsigned int vc;
+	unsigned int tc;
+};
+
 class Renderer : IRenderer
 {
 public:
@@ -26,7 +36,7 @@ public:
 	virtual void CreateBuffers(Mesh& mesh);
 	virtual ITexture* CreateTexture(const char* name);
 
-	virtual void Render(MeshInstance* mesh) { mRenderQueue.push_back(*mesh); }
+	virtual void Render(MeshInstance* mesh);
 
 	// Services
 	virtual TextureManager& GetTextureManager() { return mTextureManager; }
@@ -49,7 +59,7 @@ private:
 	int mHeight;
 	HWND mhWnd;
 
-	std::vector<MeshInstance> mRenderQueue;
+	std::vector<SceneObject> mRenderQueue;
 
 	MeshBuilder mMeshBuilder;
 	TextureManager mTextureManager;

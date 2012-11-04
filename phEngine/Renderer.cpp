@@ -7,6 +7,24 @@ struct MeshBuffers
 {
 	IDirect3DVertexBuffer9 * VB;
 	IDirect3DIndexBuffer9 * IB;
+
+	MeshBuffers& operator= (const MeshBuffers& rhs)
+	{
+		VB = rhs.VB;
+		IB = rhs.IB;
+
+		return *this;
+	}
+
+	bool operator== (const MeshBuffers& rhs)
+	{
+		return ((VB == rhs.VB) && (IB == rhs.IB));
+	}
+
+	bool operator!= (const MeshBuffers& rhs)
+	{
+		return !(*this == rhs);
+	}
 };
 
 Renderer::Renderer(HWND hWnd)
@@ -122,16 +140,27 @@ void Renderer::Update(float dt)
 	mMeshBuilder.Update(dt);
 }
 
+void Renderer::Render(MeshInstance* mesh)
+{
+	mRenderQueue.push_back( SceneObject() );
+	SceneObject* sco = &mRenderQueue.back();
+
+	sco->buffers = mesh->mParent->buffers;
+	sco->tex = mesh->mTexture;
+	sco->xf = mesh->mXform;
+	sco->uv = mesh->mAnimComponent.GetXForm();
+	sco->tc = mesh->TriCount();
+	sco->vc = mesh->VertCount();
+}
+
 void Renderer::DrawScene()
 {
 	mDevice->Clear(0, NULL, D3DCLEAR_TARGET, 0xff000000, 1.0f, 0);
 	mDevice->BeginScene();
 	mDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
-	//mMeshBuilder.Draw(mCamera.GetMatrix());
-
-	std::vector<MeshInstance>::iterator it = mRenderQueue.begin();
-	std::vector<MeshInstance>::iterator end = mRenderQueue.end();
+	std::vector<SceneObject>::iterator it = mRenderQueue.begin();
+	std::vector<SceneObject>::iterator end = mRenderQueue.end();
 
 	for (; it != end ; ++it)
 	{
@@ -140,24 +169,32 @@ void Renderer::DrawScene()
 		unsigned int numPasses = 0;
 		mFX->Begin(&numPasses, 0);
 		const DXTexture* tex = 0;
+		const MeshBuffers* buf = 0;
 		for (unsigned int i = 0; i < numPasses; ++i)
 		{
-			if (tex != it->texture)
+			if (tex != it->tex)
 			{
-				tex = static_cast<const DXTexture*>(it->texture);
+				tex = static_cast<const DXTexture*>(it->tex);
 				mFX->SetTexture(mTexture, tex->GetTexture());
 			}
 
-			mFX->SetValue(mPos, (void*)&it->mXform.mPos, sizeof(Vector3));
-			mFX->SetValue(mScale, (void*)&it->mXform.mScale, sizeof(Vector3));
+			if (buf != it->buffers)
+			{
+				buf = it->buffers;
+				mDevice->SetStreamSource(0, it->buffers->VB, 0, sizeof(VertexPNT));
+				mDevice->SetIndices(it->buffers->IB);
+			}
 
-			XForm uvXform = it->mAnimComponent.GetUVXform();
+			mFX->SetValue(mPos, (void*)&it->xf.mPos, sizeof(Vector3));
+			mFX->SetValue(mScale, (void*)&it->xf.mScale, sizeof(Vector3));
+
+			XForm uvXform = it->uv;
 
 			mFX->SetValue(mUVPos, (void*)&uvXform.mPos, sizeof(Vector3));
 			mFX->SetValue(mUVScale, (void*)&uvXform.mScale, sizeof(Vector3));
 			
 			mFX->BeginPass(i);
-			mDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, it->VertCount(), 0, it->TriCount());
+			mDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, it->vc, 0, it->tc);
 			mFX->EndPass();
 		}
 	}
@@ -196,8 +233,8 @@ void Renderer::CreateBuffers(Mesh& mesh)
 
 	// pH - if ever this becomes more than just a sprite engine,
 	// change this.
-	mDevice->SetStreamSource(0, VB, 0, sizeof(VertexPNT));
-	mDevice->SetIndices(IB);
+	//mDevice->SetStreamSource(0, VB, 0, sizeof(VertexPNT));
+	//mDevice->SetIndices(IB);
 	mDevice->SetVertexDeclaration(VertexPNT::Decl);
 
 }
