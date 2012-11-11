@@ -18,7 +18,6 @@ public:
 	// services
 	virtual TextureManager& GetTextureManager()=0;
 	virtual MeshBuilder& GetMeshBuilder()=0;
-	virtual AnimationManager& GetAnimationManager()=0;
 };
 
 #endif

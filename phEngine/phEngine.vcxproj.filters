@@ -52,6 +52,9 @@
     <None Include="Default.fx">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="spriteShader.vs">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -111,11 +114,11 @@
     <ClInclude Include="AnimationComponent.h">
       <Filter>Engine\Animation</Filter>
     </ClInclude>
-    <ClInclude Include="AnimationManager.h">
-      <Filter>Engine\Animation</Filter>
-    </ClInclude>
     <ClInclude Include="json.h">
       <Filter>Engine\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders.h">
+      <Filter>Engine\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -155,11 +158,11 @@
     <ClCompile Include="Animation.cpp">
       <Filter>Engine\Animation</Filter>
     </ClCompile>
-    <ClCompile Include="AnimationManager.cpp">
-      <Filter>Engine\Animation</Filter>
-    </ClCompile>
     <ClCompile Include="json.cpp">
       <Filter>Engine\JSON</Filter>
+    </ClCompile>
+    <ClCompile Include="DXShaders.cpp">
+      <Filter>Engine\Rendering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

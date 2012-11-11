@@ -65,19 +65,6 @@ void MeshBuilder::SetRenderer(IRenderer* renderer)
 
 void MeshBuilder::Update(float dt)
 {
-	// pH - for now, I'm just going to hard code this
-	// thing to circle
-	//MeshInstance& sprite = mInstances[0];
-
-	//static float tt =0;
-	//tt += dt;
-
-	//float dc = 100.0f;
-	//float rate = 0.25f;
-
-	//sprite.mPos.x = cosf(tt*rate)*dc;
-	//sprite.mPos.y = sinf(tt*rate)*dc*0;
-
 	std::vector<MeshInstance>::iterator it = mInstances.begin();
 	std::vector<MeshInstance>::iterator end = mInstances.end();
 
@@ -86,47 +73,6 @@ void MeshBuilder::Update(float dt)
 		it->Update(dt);
 		mRenderer->Render(&(*it));
 	}
-
-}
-
-void MeshBuilder::Draw(D3DXMATRIX& WVP)
-{
-	// pH TODO - Refactor - ownership of setting material params
-	// should go to a material class, and the Renderer should
-	// do the actual rendering.
-	//std::vector<MeshInstance>::iterator it = mInstances.begin();
-	//std::vector<MeshInstance>::iterator end = mInstances.end();
-
-	//for (; it != end; ++it)
-	//{
-	//	mFX->SetMatrix(mShaderMVP, &WVP);
-
-	//	unsigned int numPasses = 0;
-	//	mFX->Begin(&numPasses, 0);
-	//	ITexture* tex = 0;
-	//	for (unsigned int i = 0; i < numPasses; ++i)
-	//	{
-	//		if (tex != it->texture)
-	//		{
-	//			mFX->SetTexture(mTexture, it->texture->GetTexture());
-	//		}
-
-	//		mFX->SetValue(mPos, (void*)&it->mXform.mPos, sizeof(Vector3));
-	//		mFX->SetValue(mScale, (void*)&it->mXform.mScale, sizeof(Vector3));
-
-	//		XForm uvXform = it->mAnimComponent.GetUVXform();
-
-	//		mFX->SetValue(mUVPos, (void*)&uvXform.mPos, sizeof(Vector3));
-	//		mFX->SetValue(mUVScale, (void*)&uvXform.mScale, sizeof(Vector3));
-	//		
-	//		mFX->BeginPass(i);
-	//		mDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, it->VertCount(), 0, it->TriCount());
-	//		mFX->EndPass();
-	//	}
-
-	//	mFX->End();
-
-	//}
 }
 
 // PRIVATE ////////////////////////////////////////////////////////////////////
@@ -160,24 +106,4 @@ void MeshBuilder::MakeSprite()
 	mSpriteDef.indices.push_back(3);
 
 	mRenderer->CreateBuffers(mSpriteDef);
-}
-
-void MeshBuilder::SetupShader()
-{
-	// load the shader
-	/*ID3DXBuffer* errors = 0;
-	D3DXCreateEffectFromFileA(mDevice, "Default.fx", 0, 0, D3DXSHADER_DEBUG, 0, &mFX, &errors);
-	if (errors)
-	{
-		MessageBoxA(0, (LPCSTR)errors->GetBufferPointer(), "Shader load error!", 0);
-		return;
-	}
-
-	mShaderMVP = mFX->GetParameterByName(0, "gWVP");
-	mTexture = mFX->GetParameterByName(0, "gTex");
-	mPos = mFX->GetParameterByName(0, "gPos");
-	mScale = mFX->GetParameterByName(0, "gScale");
-
-	mUVPos = mFX->GetParameterByName(0, "gUVPos");
-	mUVScale = mFX->GetParameterByName(0, "gUVScale");*/
 }

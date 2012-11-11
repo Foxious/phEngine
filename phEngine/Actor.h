@@ -14,7 +14,6 @@ public:
 	void MoveY(float value);
 
 private:
-	Vector2 mPos;
 	MeshInstance* mSprite;
 };
 

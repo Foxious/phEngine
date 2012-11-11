@@ -1,9 +1,11 @@
 {
 	"CellSize": [0.5,0.5],
 	"Anims":
-	{
-		"Name": "Test",
-		"Start": 0,
-		"Data": [0.5, 0.5, 1.8]
-	}
+	[
+		{
+			"Name": "Test",
+			"Start": 1,
+			"Duration": [0.5, 0.5, 1.8]
+		}
+	]
 }

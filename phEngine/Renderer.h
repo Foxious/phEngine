@@ -10,7 +10,6 @@
 #include "Mesh.h"
 #include "Controller.h"
 #include "Actor.h"
-#include "AnimationManager.h"
 
 struct SceneObject
 {
@@ -41,7 +40,6 @@ public:
 	// Services
 	virtual TextureManager& GetTextureManager() { return mTextureManager; }
 	virtual MeshBuilder& GetMeshBuilder() { return mMeshBuilder; }
-	virtual AnimationManager& GetAnimationManager() { return mAnimationManager; }
 
 private:
 	void BuildTris();
@@ -63,7 +61,6 @@ private:
 
 	MeshBuilder mMeshBuilder;
 	TextureManager mTextureManager;
-	AnimationManager mAnimationManager;
 
 	XboxController mController;
 

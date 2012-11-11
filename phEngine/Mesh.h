@@ -54,7 +54,6 @@ public:
 
 	void SetRenderer (IRenderer* renderer);
 	void Update(float dt);
-	void Draw(D3DXMATRIX& WVP);
 
 private:
 	void MakeSprite();

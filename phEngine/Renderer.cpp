@@ -129,7 +129,7 @@ int Renderer::Run()
 
 void Renderer::Update(float dt)
 {
-	float velocity = 100.0f;
+	float velocity = 210.0f;
 	mController.Poll();
 	if (mController.IsConnected())
 	{

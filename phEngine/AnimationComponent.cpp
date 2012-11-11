@@ -16,7 +16,7 @@
 
 
 // pH Warnning - these need to stay in sync
-const char* animKeys[6] = {"Texture", "CellSize", "Anims", "Name", "Start", "Data"};
+const char* animKeys[6] = {"Texture", "CellSize", "Anims", "Name", "Start", "Duration"};
 enum AnimKeysEnum
 {
 	texture,
@@ -29,7 +29,7 @@ enum AnimKeysEnum
 	NUM_KEYS
 };
 
-Animation DeserializeAnimation(const std::string& jsonData, jsmntok_t* tokens, size_t numAnims)
+Animation DeserializeAnimation(const std::string& jsonData, jsmntok_t* tokens, size_t numToks)
 {
 	size_t i = 0;
 	std::string tokStr;
@@ -38,7 +38,7 @@ Animation DeserializeAnimation(const std::string& jsonData, jsmntok_t* tokens, s
 	unsigned int startFrame;
 	std::vector<float>frameData;
 
-	while (i < numAnims)
+	while (i < numToks)
 	{
 		jsmntok_t & thisTok = tokens[i];
 		tokStr = SubstringFromToken(jsonData, thisTok); 
@@ -61,7 +61,6 @@ Animation DeserializeAnimation(const std::string& jsonData, jsmntok_t* tokens, s
 			{
 				frameData.push_back(FloatFromToken(jsonData, tokens[++i]));
 			}
-
 		}
 		++i;
 	}
@@ -155,7 +154,11 @@ void AnimationComponent::ParseJsonData(const std::string& jsonData)
 		 {
 			 // we have an animation
 			 jsmntok_t & animTok = tokens[++i];
-			 mAnims.push_back(DeserializeAnimation(jsonData, &tokens[++i], animTok.size));
+			 for (int j = 0; j < animTok.size; ++j)
+			 {
+				jsmntok_t *animData = &tokens[++i];
+				mAnims.push_back(DeserializeAnimation(jsonData, animData, animData->size));
+			 }
 
 			 i += animTok.size;
 		 }
