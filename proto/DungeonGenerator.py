@@ -17,14 +17,12 @@ def makeRoom(size):
     return room
 
 def generateCell():
-    seed = math.floor(random.random()*3)
-    options = {
-       0:'F',
-       1:'W',
-       2:'P'
-    }
-    return options[seed]
-        
+    value = [
+       'F',
+       'W',
+       'P',
+    ][int(random.random()*3)]
+    return value
 
 def generateRow(size):
     dungeon = list()
@@ -32,9 +30,9 @@ def generateRow(size):
         dungeon.append(generateCell())
     return dungeon
         
-    
-for row in makeRoom(8):
-    hor = ''
-    for cell in row:
-        hor += cell + ' '
-    print hor
+if __name__ == '__main__':    
+    for row in makeRoom(8):
+        hor = ''
+        for cell in row:
+            hor += cell + ' '
+        print hor
