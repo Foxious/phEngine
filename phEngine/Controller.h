@@ -3,8 +3,11 @@
 
 #include <Windows.h>
 #include <XInput.h>
+#include <vector>
 
 #pragma comment(lib, "XInput.lib")
+
+#include "InputManager.h"
 
 class XboxController
 {
@@ -17,7 +20,7 @@ public:
 	float ThumbLX();
 	float ThumbLY();
 
-	void Poll();
+	void Poll(DeviceState* state);
 
 private:
 	XINPUT_STATE mState;

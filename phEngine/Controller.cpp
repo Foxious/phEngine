@@ -10,14 +10,29 @@ float QueryStickPosition(int input)
 	return input < MIN_INPUT && input > -MIN_INPUT ? 0.0f : input / 32767.0f;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+void MapXInputToState(const XINPUT_GAMEPAD* xinput, DeviceState* state)
+{
+	std::vector<bool>& buttons = state->buttons;
+	std::vector<float>& axes = state->axes;
+	buttons.resize(14);
+	axes.resize(6);
+	for (int i = 0; i < 14; ++i)
+	{
+		buttons[i] = ((xinput->wButtons >> i) & 1);
+	}
+	axes[0] = xinput->bLeftTrigger / 255.0f;
+	axes[1] = xinput->bRightTrigger / 255.0f;
+
+	axes[2] = QueryStickPosition(xinput->sThumbLX);
+	axes[3] = QueryStickPosition(xinput->sThumbLY);
+	axes[4] = QueryStickPosition(xinput->sThumbRX);
+	axes[5] = QueryStickPosition(xinput->sThumbRY);
+}
+
 // PUBLIC /////////////////////////////////////////////////////////////////////
 XboxController::~XboxController()
 {
-	Poll();
-	if (IsConnected())
-	{
-		Vibrate();
-	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -33,10 +48,11 @@ void XboxController::Vibrate(int leftVal, int rightVal)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-void XboxController::Poll()
+void XboxController::Poll(DeviceState* state)
 {
 	memset(&mState, 0, sizeof(XINPUT_STATE));
 	mIsConnected = XInputGetState(mPlayerID, &mState) == ERROR_SUCCESS;
+	MapXInputToState(&mState.Gamepad, state);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -37,7 +37,7 @@ void MeshInstance::SetTexture(ITexture* texture)
 {
 	this->mTexture = texture;
 	Vector3 textureSizeVec((float)texture->GetWidth(), (float)texture->GetHeight(), 1.0f);
-	this->mXform.mScale = mAnimComponent.GetXForm().mScale * textureSizeVec;
+	this->mXform.scale = mAnimComponent.GetXForm().scale * textureSizeVec;
 }
 
 // CTOR ///////////////////////////////////////////////////////////////////////

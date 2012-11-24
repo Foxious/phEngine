@@ -30,7 +30,6 @@ struct MeshBuffers
 Renderer::Renderer(HWND hWnd)
 	: mDx9(0)
 	, mDevice(0)
-	, mController(0)
 {
 	Init(hWnd);
 }
@@ -84,7 +83,7 @@ void Renderer::Init(HWND hWnd)
 void Renderer::BuildTris()
 {
 	MeshInstance * testQuad = &(mMeshBuilder.AddNewSprite());
-	testQuad->SetTexture(mTextureManager.GetTexture("BigMacSq.tga"));
+	testQuad->SetTexture(mTextureManager.GetTexture("protag.tga"));
 	mPlayer.SetSprite(testQuad);
 }
 
@@ -130,13 +129,7 @@ int Renderer::Run()
 void Renderer::Update(float dt)
 {
 	float velocity = 210.0f;
-	mController.Poll();
-	if (mController.IsConnected())
-	{
-		mPlayer.MoveX(mController.ThumbLX() * velocity * dt);
-		mPlayer.MoveY(mController.ThumbLY() * velocity * dt);
-	}
-
+	mPlayer.Update(dt);
 	mMeshBuilder.Update(dt);
 }
 
@@ -185,13 +178,13 @@ void Renderer::DrawScene()
 				mDevice->SetIndices(it->buffers->IB);
 			}
 
-			mFX->SetValue(mPos, (void*)&it->xf.mPos, sizeof(Vector3));
-			mFX->SetValue(mScale, (void*)&it->xf.mScale, sizeof(Vector3));
+			mFX->SetValue(mPos, (void*)&it->xf.position, sizeof(Vector3));
+			mFX->SetValue(mScale, (void*)&it->xf.scale, sizeof(Vector3));
 
 			XForm uvXform = it->uv;
 
-			mFX->SetValue(mUVPos, (void*)&uvXform.mPos, sizeof(Vector3));
-			mFX->SetValue(mUVScale, (void*)&uvXform.mScale, sizeof(Vector3));
+			mFX->SetValue(mUVPos, (void*)&uvXform.position, sizeof(Vector3));
+			mFX->SetValue(mUVScale, (void*)&uvXform.scale, sizeof(Vector3));
 			
 			mFX->BeginPass(i);
 			mDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, it->vc, 0, it->tc);

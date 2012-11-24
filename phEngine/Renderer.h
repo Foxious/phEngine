@@ -62,8 +62,6 @@ private:
 	MeshBuilder mMeshBuilder;
 	TextureManager mTextureManager;
 
-	XboxController mController;
-
 	Actor mPlayer;
 
 

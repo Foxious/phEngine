@@ -108,9 +108,6 @@
     <ClInclude Include="Mesh.h">
       <Filter>Engine\Rendering\Meshes</Filter>
     </ClInclude>
-    <ClInclude Include="Animation.h">
-      <Filter>Engine\Animation</Filter>
-    </ClInclude>
     <ClInclude Include="AnimationComponent.h">
       <Filter>Engine\Animation</Filter>
     </ClInclude>
@@ -119,6 +116,9 @@
     </ClInclude>
     <ClInclude Include="Shaders.h">
       <Filter>Engine\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Engine\Control</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -153,9 +153,6 @@
       <Filter>Engine\Math</Filter>
     </ClCompile>
     <ClCompile Include="AnimationComponent.cpp">
-      <Filter>Engine\Animation</Filter>
-    </ClCompile>
-    <ClCompile Include="Animation.cpp">
       <Filter>Engine\Animation</Filter>
     </ClCompile>
     <ClCompile Include="json.cpp">

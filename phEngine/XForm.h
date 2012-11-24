@@ -6,11 +6,11 @@
 class XForm
 {
 public:
-	XForm() :mScale(1.0f, 1.0f, 1.0f), mPos(0.0f, 0.0f, 0.0f)
+	XForm() :scale(1.0f, 1.0f, 1.0f), position(0.0f, 0.0f, 0.0f)
 	{}
 
-	Vector3 mScale;
-	Vector3 mPos;
+	Vector3 scale;
+	Vector3 position;
 	// no rotation yet, not needed ATM
 };
 

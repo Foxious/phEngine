@@ -5,7 +5,15 @@
 #define MIN_MOVE 0.09f
 
 Actor::Actor()
+	: speed(210.0f)
+	, mInput(new PlayerController(0))
 {
+	
+}
+
+void Actor::Update(float dt)
+{
+	mInput->Update(this, dt);
 }
 
 void Actor::SetSprite(MeshInstance* sprite)
@@ -13,12 +21,11 @@ void Actor::SetSprite(MeshInstance* sprite)
 	mSprite = sprite;
 }
 
-void Actor::MoveX(float value)
+void Actor::Move(float x, float y)
 {
-	mSprite->mXform.mPos.x += value;
-}
+	mSprite->mXform.position.x += x;
+	mSprite->mXform.position.y += y;
+	mCollision[0].x += x;
+	mCollision[0].y += y;
 
-void Actor::MoveY(float value)
-{
-	mSprite->mXform.mPos.y += value;
 }

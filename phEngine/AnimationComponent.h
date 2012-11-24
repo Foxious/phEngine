@@ -4,10 +4,28 @@
 #include <string>
 #include <vector>
 
-#include "Animation.h"
 #include "Texture.h"
 #include "Vector.h"
 #include "XForm.h"
+
+struct AnimationData
+{
+	unsigned int startFrame;
+	std::vector<float> frames;
+	std::string name;
+};
+
+enum PlaybackFlags
+{
+	Anim_Loop = 0x01,
+};
+
+enum AnimationStates
+{
+	Anim_Playing = 0x01,
+	Anim_Paused = 0x02,
+	Anim_Finished = 0x04,
+};
 
 
 // Class that handles the interaction betweeen animations and
@@ -15,9 +33,12 @@
 class AnimationComponent
 {
 public:
-	AnimationComponent() : mTime(0.0f)
+	AnimationComponent() 
+		: time(0.0f)
+		, currentFrame(0)
+		, playbackFlags(0)
 	{
-		mCurrentAnimIndex = 0;
+		currentAnimIndex = 0;
 		LoadFromJSON("testAnim.json");
 	}
 
@@ -25,11 +46,16 @@ public:
 
 	void Update(float dt);
 
-	void PlayAnim(unsigned int index);
-	void PlayAnim(const std::string& name);
-	void PlayAnim(const char* name);
+	void PlayAnim(unsigned int index, int flags = 0);
+	void PlayAnim(const std::string& name, int flags = 0);
+	void PlayAnim(const char* name, int flags = 0);
 
-	Animation& GetCurrentAnim();
+	void PauseAnim();
+	void ResumeAnim();
+
+	bool IsPlaying() { return state & Anim_Playing; }
+	bool IsPaused() { return state & Anim_Paused; }
+
 	XForm GetXForm() { return mUV; }
 
 	void LoadFromJSON(const std::string& name);
@@ -37,11 +63,15 @@ public:
 private:
 	unsigned int FindAnim(const std::string& name);
 	void ParseJsonData(const std::string& jsonData);
+	const AnimationData& GetCurrentAnim();
 
-	float mTime;
+	float time;
+	unsigned int currentFrame;
 	XForm mUV;
-	std::vector<Animation> mAnims;
-	unsigned int mCurrentAnimIndex;
+	std::vector<AnimationData> anims;
+	unsigned int currentAnimIndex;
+	int playbackFlags;
+	int state;
 
 };
 

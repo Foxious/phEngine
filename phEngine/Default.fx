@@ -16,7 +16,8 @@ sampler TexS = sampler_state
 
 struct OutputVS
 {
-	float4 posH : POSITION0;
+	float4 pos : POSITION;
+	float4 col : COLOR;
 	float2 tex0 : TEXCOORD0;
 };
 
@@ -26,7 +27,7 @@ OutputVS TransformVS(float3 posL : POSITION0,
 {
 	// Zero output
 	OutputVS outVS = (OutputVS)0;
-	outVS.posH = mul(float4(posL * gScale + gPos, 1.0f), gWVP);
+	outVS.pos = mul(float4(posL * gScale + gPos, 1.0f), gWVP);
 
 	outVS.tex0 = tex0 * gUVScale + gUVPos;
 
