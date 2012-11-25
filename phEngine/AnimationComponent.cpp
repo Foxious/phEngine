@@ -82,9 +82,8 @@ void AnimationComponent::PlayAnim(unsigned int index, int flags)
 
 	playbackFlags = flags;
 
-	if (index == currentAnimIndex && IsPaused())
+	if (index == currentAnimIndex && IsPlaying())
 	{
-		ResumeAnim();
 		return;
 	}
 	state = Anim_Playing;
