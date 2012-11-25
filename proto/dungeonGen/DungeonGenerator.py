@@ -30,23 +30,16 @@ def generateRow(size):
         dungeon.append(generateCell())
     return dungeon
 
-if __name__ == '__main__':
-    for row in makeRoom(8):
-        hor = ''
-        for cell in row:
-            hor += cell + ' '
-        print hor
-
 def selectRoom(roomlist):
     placed = []
     while len(placed) <= len(roomlist):
-        room = selectRoom(roomList)
+        room = select(roomlist)
         if room not in placed:
             placed.append(room)
     return placed
 
 
-def selectRoom(rooms):
+def select(rooms):
     return rooms[int(random.random()*len(rooms))]
 
 if __name__ == '__main__':
@@ -58,3 +51,10 @@ if __name__ == '__main__':
     'e',
     ]
     print selectRoom(rooms)
+    '''
+    for row in makeRoom(8):
+        hor = ''
+        for cell in row:
+            hor += cell + ' '
+        print hor
+    '''

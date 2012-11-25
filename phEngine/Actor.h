@@ -44,6 +44,8 @@ class PlayerController : public InputController
 public:
 	PlayerController(int controllerNum)
 		: mController(controllerNum)
+		, atkBtn(12)
+		, runBtn(13)
 	{
 	}
 	virtual void Update(Actor* actor, float dt)
@@ -52,19 +54,28 @@ public:
 		mController.Poll(&state);
 		if (mController.IsConnected())
 		{
-			float x = state.axes[2] * actor->speed * dt;
-			float y = state.axes[3] * actor->speed * dt;
+			float multiplier = 1.0f;
+			if (state.buttons[runBtn])
+			{
+				multiplier = 2.0f;
+			}
+			float x = state.axes[2] * actor->speed * dt * multiplier;
+			float y = state.axes[3] * actor->speed * dt * multiplier;
 			actor->Move(x, y);
 
-			if (state.buttons[12])
+			if (state.buttons[atkBtn])
 			{
 				actor->GetAnimComponent()->PlayAnim(0U);
 			}
+
 		}
 	}
 
 private:
 	XboxController mController;
+
+	unsigned int atkBtn;
+	unsigned int runBtn;
 
 };
 
