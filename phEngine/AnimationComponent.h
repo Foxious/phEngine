@@ -53,8 +53,8 @@ public:
 	void PauseAnim();
 	void ResumeAnim();
 
-	bool IsPlaying() { return state & Anim_Playing; }
-	bool IsPaused() { return state & Anim_Paused; }
+	bool IsPlaying() { return (state & Anim_Playing) > 0; }
+	bool IsPaused() { return (state & Anim_Paused) > 0; }
 
 	XForm GetXForm() { return mUV; }
 
