@@ -1,7 +1,27 @@
 #include "stdafx.h"
 #include "Mesh.h"
+
 #include <algorithm>
+#include <fstream>
+
 #include "Vector.h"
+#include "json.h"
+
+const char* spriteKeys[2] = {"Texture", "Animations"};
+enum SpriteKeysEnum
+{
+	texture,
+	anims,
+	
+	NUM_KEYS
+};
+
+void CloneMesh(const MeshInstance* source, MeshInstance* destination)
+{
+	destination->mParent = source->mParent;
+	destination->mAnimComponent = source->mAnimComponent;
+	destination->mTexture = source->mTexture;
+}
 
 Mesh::Mesh()
 {
@@ -40,7 +60,7 @@ void MeshInstance::SetTexture(ITexture* texture)
 	this->mXform.scale = mAnimComponent.GetXForm().scale * textureSizeVec;
 }
 
-// CTOR ///////////////////////////////////////////////////////////////////////
+// CTOR /////////////////////////////////////////////////////////////////////////////////
 MeshBuilder::MeshBuilder()
 {
 }
@@ -49,13 +69,8 @@ MeshBuilder::~MeshBuilder()
 {
 }
 
-MeshInstance & MeshBuilder::AddNewSprite()
-{
-	mInstances.push_back(MeshInstance(&mSpriteDef));
-	return mInstances.back();
-}
 
-// PUBLIC /////////////////////////////////////////////////////////////////////
+// PUBLIC ///////////////////////////////////////////////////////////////////////////////
 void MeshBuilder::SetRenderer(IRenderer* renderer)
 {
 	// pH TODO - do I even need this?
@@ -75,16 +90,57 @@ void MeshBuilder::Update(float dt)
 	}
 }
 
-// PRIVATE ////////////////////////////////////////////////////////////////////
-bool MeshSortPredicate(const MeshInstance& m1, const MeshInstance& m2)
+MeshInstance* MeshBuilder::GetSprite(const std::string& fileName)
 {
-	return m1.mTexture < m2.mTexture;
+	std::unordered_map<std::string, MeshInstance>::iterator it = mDefinitions.find(fileName);
+	if (it != mDefinitions.end())
+	{
+		mInstances.push_back(MeshInstance());
+		CloneMesh( &it->second, &mInstances.back() );
+	}
+
+	return LoadSpriteFromFile(fileName);
 }
 
-void MeshBuilder::SortMeshes()
+void MeshBuilder::DeserializeSprite(const std::string& spriteData, const std::string& name)
 {
-	std::sort(mInstances.begin(), mInstances.end(), MeshSortPredicate);
+	MeshInstance newSprite;
+	newSprite.mParent = &mSpriteDef;
+	jsmn_parser parser;
+	jsmn_init(&parser);
+
+	jsmntok_t tokens[256];
+	jsmnerr_t r = jsmn_parse(&parser, spriteData.c_str(), tokens, 256);
+
+	char str[255];
+
+	int i = 1;
+	std::string keyStr;
+	jsmntok_t *keyTok;
+	int count=0;
+	while(tokens[count].type >= 0) ++count;
+	while(i < count)
+	{
+		keyTok = &tokens[i];
+		keyStr = SubstringFromToken(spriteData, *keyTok);
+
+		if (keyStr.compare(spriteKeys[texture])==0)
+		{
+			ITexture* newTex = mRenderer->GetTextureManager().GetTexture( SubstringFromToken(spriteData, tokens[++i]) );
+			newSprite.SetTexture(newTex);
+		}
+		else if (keyStr.compare(spriteKeys[anims]) == 0)
+		{
+			newSprite.mAnimComponent.LoadFromJSON( SubstringFromToken(spriteData, tokens[++i]) );
+		}
+		++i;
+	} // end while
+	mDefinitions.insert(mDefinitions.begin(), std::unordered_map<std::string, MeshInstance>::value_type(name, newSprite) );
+	mInstances.push_back(newSprite);
+	CloneMesh( &mDefinitions[name], &mInstances.back() );
 }
+
+// PRIVATE //////////////////////////////////////////////////////////////////////////////
 
 void MeshBuilder::MakeSprite()
 {
@@ -106,4 +162,30 @@ void MeshBuilder::MakeSprite()
 	mSpriteDef.indices.push_back(3);
 
 	mRenderer->CreateBuffers(mSpriteDef);
+}
+
+MeshInstance* MeshBuilder::LoadSpriteFromFile(const std::string& fileName)
+{
+	// pH TODO - make dumping a file into a string its own function - you do it a lot.7
+	int length = 0;
+	char* buffer = 0;
+	std::fstream f;
+	f.open(fileName.c_str(), std::fstream::in);
+
+	f.seekg(0, std::ios::end);
+	length = f.tellg();
+	f.seekg(0, std::ios::beg);
+
+	buffer = new char [length];
+
+	f.read(buffer, length);
+	f.close();
+
+	std::string fileData(buffer);
+
+	DeserializeSprite(fileData, fileName);
+
+	delete [] buffer;
+
+	return &mInstances.back();
 }

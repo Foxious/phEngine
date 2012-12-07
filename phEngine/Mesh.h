@@ -1,8 +1,9 @@
 #ifndef MESH_H
 #define MESH_H
 
-
+#include <unordered_map>
 #include <vector>
+
 #include "Helper.h"
 #include "XForm.h"
 #include "Vertex.h"
@@ -30,7 +31,7 @@ struct Mesh
 // todo - finish out this class
 struct MeshInstance
 {
-	MeshInstance(Mesh* parent) : mParent(parent), mTexture(0), mXform() {}
+	MeshInstance() : mParent(0), mTexture(0), mXform() {}
 
 	void Update(float dt);
 	void SetTexture(ITexture* texName);
@@ -50,9 +51,8 @@ public:
 	MeshBuilder();
 	~MeshBuilder();
 
-	MeshInstance & AddNewSprite();
-
 	void SetRenderer (IRenderer* renderer);
+	MeshInstance* GetSprite(const std::string& fileName);
 	void Update(float dt);
 
 private:
@@ -61,15 +61,17 @@ private:
 	// pH TODO - when you make something
 	// to manage shaders, move this there.
 	void SetupShader();
+	MeshInstance* LoadSpriteFromFile(const std::string& fileName);
+	void DeserializeSprite (const std::string& spriteData, const std::string& name);
 
 private:
 	MeshBuilder(const MeshBuilder &);
-	void SortMeshes();
 
 	IRenderer* mRenderer;
 	Mesh mSpriteDef;
 
 	std::vector<MeshInstance> mInstances;
+	std::unordered_map<std::string, MeshInstance> mDefinitions;
 
 	// pH TODO - This should probably not
 	// be the responsibility of the mesh

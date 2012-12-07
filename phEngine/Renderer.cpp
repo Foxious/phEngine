@@ -82,8 +82,7 @@ void Renderer::Init(HWND hWnd)
 
 void Renderer::BuildTris()
 {
-	MeshInstance * testQuad = &(mMeshBuilder.AddNewSprite());
-	testQuad->SetTexture(mTextureManager.GetTexture("protag.tga"));
+	MeshInstance* testQuad = mMeshBuilder.GetSprite("testSpriteDef.json");
 	mPlayer.SetSprite(testQuad);
 }
 

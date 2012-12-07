@@ -28,8 +28,10 @@ enum AnimationStates
 };
 
 
-// Class that handles the interaction betweeen animations and
-// the textures they run on
+// Class that handles the interaction betweeen animations
+
+// ph TODO : change this into a factory/manager thingamy so that
+// we're not constantly reading from disk to load these.
 class AnimationComponent
 {
 public:

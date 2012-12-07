@@ -26,6 +26,7 @@ struct Vector2
 
 	Vector2 operator=(const Vector2& rhs);
 	Vector2 operator*(const Vector2& rhs);
+	Vector2 operator*(float rhs);
 };
 
 struct Vector3
@@ -54,6 +55,7 @@ struct Vector3
 	Vector3 operator=(const Vector2& rhs);
 
 	Vector3 operator*(const Vector3& rhs);
+	Vector3 operator*(float rhs);
 
 
 	float x,y,z;

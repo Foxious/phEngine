@@ -92,11 +92,13 @@ void AnimationComponent::PlayAnim(unsigned int index, int flags)
 	currentFrame = 0;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 void AnimationComponent::PlayAnim(const char* name, int flags)
 {
 	PlayAnim(std::string(name), flags);
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 void AnimationComponent::PlayAnim(const std::string& name, int flags)
 {
 	unsigned int anim = FindAnim(name);
@@ -106,16 +108,19 @@ void AnimationComponent::PlayAnim(const std::string& name, int flags)
 	}
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 void AnimationComponent::PauseAnim()
 {
 	state |= Anim_Paused;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 void AnimationComponent::ResumeAnim()
 {
 	state &= ~Anim_Paused;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 void AnimationComponent::Update(float dt)
 {
 	if (IsPaused() || !IsPlaying())
@@ -149,6 +154,7 @@ void AnimationComponent::Update(float dt)
 
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 void AnimationComponent::LoadFromJSON(const std::string& name)
 {
 	int length = 0;
@@ -172,7 +178,7 @@ void AnimationComponent::LoadFromJSON(const std::string& name)
 	delete [] buffer;
 }
 
-// PRIVATE ////////////////////////////////////////////////////////////////////
+// PRIVATE //////////////////////////////////////////////////////////////////////////////
 unsigned int AnimationComponent::FindAnim(const std::string& name)
 {
 	std::vector<AnimationData>::iterator it = anims.begin();
