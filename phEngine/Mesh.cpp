@@ -75,6 +75,7 @@ void MeshBuilder::SetRenderer(IRenderer* renderer)
 {
 	// pH TODO - do I even need this?
 	mRenderer = renderer;
+	mTextureManager.SetRenderer(renderer);
 	MakeSprite();
 }
 
@@ -126,7 +127,7 @@ void MeshBuilder::DeserializeSprite(const std::string& spriteData, const std::st
 
 		if (keyStr.compare(spriteKeys[texture])==0)
 		{
-			ITexture* newTex = mRenderer->GetTextureManager().GetTexture( SubstringFromToken(spriteData, tokens[++i]) );
+			ITexture* newTex = mTextureManager.GetTexture( SubstringFromToken(spriteData, tokens[++i]) );
 			newSprite.SetTexture(newTex);
 		}
 		else if (keyStr.compare(spriteKeys[anims]) == 0)
@@ -166,7 +167,7 @@ void MeshBuilder::MakeSprite()
 
 MeshInstance* MeshBuilder::LoadSpriteFromFile(const std::string& fileName)
 {
-	// pH TODO - make dumping a file into a string its own function - you do it a lot.7
+	// pH TODO - make dumping a file into a string its own function - you do it a lot.
 	int length = 0;
 	char* buffer = 0;
 	std::fstream f;

@@ -5,7 +5,7 @@
 
 #include <time.h>
 #include "phEngine.h"
-
+#include "GameMaster.h"
 #include "Renderer.h"
 
 #define MAX_LOADSTRING 100
@@ -57,7 +57,9 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	//}
 
 	Renderer renderer(hWnd);
-	return renderer.Run();
+	GameMaster gm;
+	gm.SetRenderer(&renderer);
+	return gm.Run();
 }
 
 

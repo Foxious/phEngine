@@ -69,6 +69,7 @@ private:
 
 	IRenderer* mRenderer;
 	Mesh mSpriteDef;
+	TextureManager mTextureManager;
 
 	std::vector<MeshInstance> mInstances;
 	std::unordered_map<std::string, MeshInstance> mDefinitions;

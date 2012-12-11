@@ -40,6 +40,15 @@
     <Filter Include="Engine\JSON">
       <UniqueIdentifier>{752c9ef9-7d06-42d6-bb4a-0b898ee2b1c6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\GameMaster">
+      <UniqueIdentifier>{2c5f7809-3a10-489c-aa39-c6bd6e6fd86a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Actor">
+      <UniqueIdentifier>{d0d39d0a-b0a8-4b88-8ba5-154348a25c96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Actor\Controllers">
+      <UniqueIdentifier>{815abd52-39ec-4573-b5da-6535ed9f7745}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -73,9 +82,6 @@
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Helper.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor.h">
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Controller.h">
@@ -123,6 +129,18 @@
     <ClInclude Include="Utils.h">
       <Filter>Engine\Math</Filter>
     </ClInclude>
+    <ClInclude Include="GameMaster.h">
+      <Filter>Engine\GameMaster</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Engine\GameMaster</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor.h">
+      <Filter>Engine\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorManager.h">
+      <Filter>Engine\Actor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -136,9 +154,6 @@
     </ClCompile>
     <ClCompile Include="Controller.cpp">
       <Filter>Engine\Control</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor.cpp">
-      <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>Engine\Rendering</Filter>
@@ -166,6 +181,15 @@
     </ClCompile>
     <ClCompile Include="Utils.cpp">
       <Filter>Engine\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMaster.cpp">
+      <Filter>Engine\GameMaster</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor.cpp">
+      <Filter>Engine\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="ActorManager.cpp">
+      <Filter>Engine\Actor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

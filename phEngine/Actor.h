@@ -7,6 +7,7 @@
 #include "Controller.h"
 
 class Actor;
+class ActorManager;
 
 class InputController
 {
@@ -23,7 +24,7 @@ class Actor
 {
 	// an Actor is a thing on the stage.
 public:
-	Actor();
+	Actor(ActorManager* theManager);
 	void SetSprite(MeshInstance* sprite);
 	void Move(float x, float y);
 	void Move(Vector2 move);
@@ -43,6 +44,14 @@ private:
 	InputController* mInput;
 	Vector2 mCollision[2];
 	Vector2 direction;
+	ActorManager* manager;
+};
+
+class PropController : public InputController
+{
+	virtual void Update(Actor* actor, float dt)
+	{
+	}
 };
 
 class PlayerController : public InputController

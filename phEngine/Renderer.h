@@ -21,25 +21,22 @@ struct SceneObject
 	unsigned int tc;
 };
 
-class Renderer : IRenderer
+class Renderer : public IRenderer
 {
 public:
 	Renderer(HWND hWnd);
 	~Renderer();
 
 	virtual void Init(HWND hWnd);
-	virtual int Run();
 
 	virtual void Update(float dt);
 	virtual void DrawScene();
 	virtual void CreateBuffers(Mesh& mesh);
-	virtual ITexture* CreateTexture(const char* name);
+	virtual ITexture* CreateTexture(const char* name); // pH TODO - get rid of this crap
+	virtual MeshInstance* GetMesh(const char* name);
 
 	virtual void Render(MeshInstance* mesh);
 
-	// Services
-	virtual TextureManager& GetTextureManager() { return mTextureManager; }
-	virtual MeshBuilder& GetMeshBuilder() { return mMeshBuilder; }
 
 private:
 	void BuildTris();
@@ -60,7 +57,6 @@ private:
 	std::vector<SceneObject> mRenderQueue;
 
 	MeshBuilder mMeshBuilder;
-	TextureManager mTextureManager;
 
 	Actor mPlayer;
 

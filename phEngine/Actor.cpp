@@ -25,10 +25,11 @@ Vector2 CalculateDirection(float x, float y)
 
 #define MIN_MOVE 0.09f
 
-Actor::Actor()
+Actor::Actor(ActorManager* theManager)
 	: speed(210.0f)
 	, mInput(new PlayerController(0))
 	, direction(0.0f, -1.0f)
+	, manager(theManager)
 {
 	
 }
