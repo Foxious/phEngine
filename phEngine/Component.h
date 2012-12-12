@@ -1,13 +1,18 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-class GameMaster;
+#include "GameMaster.h"
 
 class Component
 {
 public:
 	virtual void Update (float dt)= 0;
-	inline void SetGameMaster(GameMaster* gm) { gameMaster = gm; }
+	inline void SetGameMaster(GameMaster* gm) 
+	{ 
+		gameMaster = gm;
+		OnRegister();
+	}
+	virtual void OnRegister(){};
 
 protected:
 	GameMaster* gameMaster;

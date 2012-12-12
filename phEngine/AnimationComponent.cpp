@@ -197,8 +197,16 @@ unsigned int AnimationComponent::FindAnim(const std::string& name)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
+void AnimationComponent::ClearData()
+{
+	anims.clear();
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
 void AnimationComponent::ParseJsonData(const std::string& jsonData)
 {
+	ClearData();
+
 	jsmn_parser parser;
 	jsmn_init(&parser);
 

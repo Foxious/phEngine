@@ -22,14 +22,18 @@ Vector2 CalculateDirection(float x, float y)
 	return retval;
 }
 
+Vector2 CalculateDirection(Vector2 direction)
+{
+	return CalculateDirection(direction.x, direction.y);
+}
+
 
 #define MIN_MOVE 0.09f
 
-Actor::Actor(ActorManager* theManager)
+Actor::Actor()
 	: speed(210.0f)
-	, mInput(new PlayerController(0))
+	, mInput(0)
 	, direction(0.0f, -1.0f)
-	, manager(theManager)
 {
 	
 }
@@ -56,7 +60,24 @@ void Actor::Move(float x, float y)
 
 }
 
-void Actor::Move(Vector2 move)
+void Actor::Move(Vector2 offset)
 {
-	Move(direction.x, direction.y);
+	Move(offset.x, offset.y);
+	direction = CalculateDirection(offset.x, offset.y);
+
+	Vector3 absolute = mSprite->mXform.position + offset;
+
+	WarpTo( Vector2(absolute.x, absolute.y) );
+
+}
+
+void Actor::WarpTo(float x, float y)
+{
+	WarpTo( Vector2(x, y) );
+}
+
+void Actor::WarpTo(Vector2 coords)
+{
+	mSprite->mXform.position = coords;
+	mCollision[0] = coords;
 }

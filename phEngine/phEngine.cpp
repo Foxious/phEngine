@@ -7,6 +7,7 @@
 #include "phEngine.h"
 #include "GameMaster.h"
 #include "Renderer.h"
+#include "ActorManager.h"
 
 #define MAX_LOADSTRING 100
 
@@ -59,6 +60,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	Renderer renderer(hWnd);
 	GameMaster gm;
 	gm.SetRenderer(&renderer);
+	gm.RegisterComponent(new ActorManager());
 	return gm.Run();
 }
 

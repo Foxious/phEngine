@@ -63,6 +63,7 @@ void MeshInstance::SetTexture(ITexture* texture)
 // CTOR /////////////////////////////////////////////////////////////////////////////////
 MeshBuilder::MeshBuilder()
 {
+	mInstances.reserve(20);
 }
 
 MeshBuilder::~MeshBuilder()
@@ -81,13 +82,13 @@ void MeshBuilder::SetRenderer(IRenderer* renderer)
 
 void MeshBuilder::Update(float dt)
 {
-	std::vector<MeshInstance>::iterator it = mInstances.begin();
-	std::vector<MeshInstance>::iterator end = mInstances.end();
+	std::vector<MeshInstance*>::iterator it = mInstances.begin();
+	std::vector<MeshInstance*>::iterator end = mInstances.end();
 
 	for (; it != end; ++it)
 	{
-		it->Update(dt);
-		mRenderer->Render(&(*it));
+		(*it)->Update(dt);
+		mRenderer->Render(*it);
 	}
 }
 
@@ -96,8 +97,9 @@ MeshInstance* MeshBuilder::GetSprite(const std::string& fileName)
 	std::unordered_map<std::string, MeshInstance>::iterator it = mDefinitions.find(fileName);
 	if (it != mDefinitions.end())
 	{
-		mInstances.push_back(MeshInstance());
-		CloneMesh( &it->second, &mInstances.back() );
+		//mInstances.push_back(MeshInstance());
+		//CloneMesh( &it->second, &mInstances.back() );
+		mInstances.push_back( new MeshInstance(it->second) );
 	}
 
 	return LoadSpriteFromFile(fileName);
@@ -137,8 +139,8 @@ void MeshBuilder::DeserializeSprite(const std::string& spriteData, const std::st
 		++i;
 	} // end while
 	mDefinitions.insert(mDefinitions.begin(), std::unordered_map<std::string, MeshInstance>::value_type(name, newSprite) );
-	mInstances.push_back(newSprite);
-	CloneMesh( &mDefinitions[name], &mInstances.back() );
+	mInstances.push_back( new MeshInstance(newSprite) );
+	CloneMesh( &mDefinitions[name], mInstances.back() );
 }
 
 // PRIVATE //////////////////////////////////////////////////////////////////////////////
@@ -188,5 +190,5 @@ MeshInstance* MeshBuilder::LoadSpriteFromFile(const std::string& fileName)
 
 	delete [] buffer;
 
-	return &mInstances.back();
+	return mInstances.back();
 }

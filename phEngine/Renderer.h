@@ -58,7 +58,7 @@ private:
 
 	MeshBuilder mMeshBuilder;
 
-	Actor mPlayer;
+	//Actor mPlayer;
 
 
 	// pH TODO - This should probably not

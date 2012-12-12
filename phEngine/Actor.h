@@ -24,10 +24,17 @@ class Actor
 {
 	// an Actor is a thing on the stage.
 public:
-	Actor(ActorManager* theManager);
+	Actor();
+
 	void SetSprite(MeshInstance* sprite);
+	void SetController(InputController* controller) { mInput = controller; }
+
+	Vector2 GetPosition() { return Vector2(mSprite->mXform.position.x, mSprite->mXform.position.y); }
+
 	void Move(float x, float y);
-	void Move(Vector2 move);
+	void Move(Vector2 offset);
+	void WarpTo(float x, float y);
+	void WarpTo(Vector2 coords);
 
 	AnimationComponent* GetAnimComponent() { return &mSprite->mAnimComponent; }
 	
@@ -37,70 +44,13 @@ public:
 	Vector2 GetDirection() { return direction; }
 
 private:
-	Actor(const Actor& rhs);
+	//Actor(const Actor& rhs);
 
 private:
 	MeshInstance* mSprite;
 	InputController* mInput;
 	Vector2 mCollision[2];
 	Vector2 direction;
-	ActorManager* manager;
-};
-
-class PropController : public InputController
-{
-	virtual void Update(Actor* actor, float dt)
-	{
-	}
-};
-
-class PlayerController : public InputController
-{
-public:
-	PlayerController(int controllerNum)
-		: mController(controllerNum)
-		, atkBtn(12)
-		, runBtn(13)
-	{
-	}
-	virtual void Update(Actor* actor, float dt)
-	{
-		DeviceState state;
-		mController.Poll(&state);
-		if (mController.IsConnected())
-		{
-			float multiplier = 1.0f;
-			if (state.buttons[runBtn])
-			{
-				multiplier = 2.0f;
-			}
-			float x = state.axes[2] * actor->speed * dt * multiplier;
-			float y = state.axes[3] * actor->speed * dt * multiplier;
-			actor->Move(x, y);
-
-			if (state.buttons[atkBtn])
-			{
-				actor->GetAnimComponent()->PlayAnim(0U);
-
-				/* pH TODO - how do I want to handle sending 
-				messages to the renderer? I need to register
-				another sprite here AND another actor, and those
-				should be coupled IMO
-
-				Actor* subActor = new Actor(*actor);
-				subActor->Move(subActor->GetDirection() * 256.0f);
-				*/
-			}
-
-		}
-	}
-
-private:
-	XboxController mController;
-
-	unsigned int atkBtn;
-	unsigned int runBtn;
-
 };
 
 #endif

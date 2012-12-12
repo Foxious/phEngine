@@ -46,6 +46,8 @@ public:
 
 	AnimationComponent(const std::string& jsonData);
 
+	//AnimationComponent(const AnimationComponent& rhs);
+
 	void Update(float dt);
 
 	void PlayAnim(unsigned int index, int flags = 0);
@@ -66,6 +68,9 @@ private:
 	unsigned int FindAnim(const std::string& name);
 	void ParseJsonData(const std::string& jsonData);
 	const AnimationData& GetCurrentAnim();
+	void ClearData();
+
+private:
 
 	float time;
 	unsigned int currentFrame;

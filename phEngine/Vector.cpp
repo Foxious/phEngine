@@ -28,6 +28,15 @@ Vector2 Vector2::operator*(float rhs)
 	return temp;
 }
 
+Vector2 Vector2::operator+(const Vector2& rhs)
+{
+	Vector2 temp(*this);
+	temp.x += rhs.x;
+	temp.y += rhs.y;
+
+	return temp;
+}
+
 Vector3 Vector3::operator=(const Vector3& rhs)
 {
 	this->x = rhs.x;
@@ -64,6 +73,27 @@ Vector3 Vector3::operator*(float rhs)
 	temp.x *= rhs;
 	temp.y *= rhs;
 	temp.z *= rhs;
+
+	return temp;
+}
+
+Vector3 Vector3::operator+(const Vector2& rhs)
+{
+	Vector3 temp(*this);
+
+	temp.x += rhs.x;
+	temp.y += rhs.y;
+
+	return temp;
+}
+
+Vector3 Vector3::operator+(const Vector3& rhs)
+{
+	Vector3 temp(*this);
+
+	temp.x += rhs.x;
+	temp.y += rhs.y;
+	temp.z += rhs.z;
 
 	return temp;
 }

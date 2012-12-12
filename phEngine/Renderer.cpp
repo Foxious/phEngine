@@ -81,8 +81,8 @@ void Renderer::Init(HWND hWnd)
 
 void Renderer::BuildTris()
 {
-	MeshInstance* testQuad = mMeshBuilder.GetSprite("testSpriteDef.json");
-	mPlayer.SetSprite(testQuad);
+	//MeshInstance* testQuad = mMeshBuilder.GetSprite("testSpriteDef.json");
+	//mPlayer.SetSprite(testQuad);
 }
 
 ITexture* Renderer::CreateTexture(const char* name)
@@ -98,7 +98,7 @@ MeshInstance* Renderer::GetMesh(const char* name)
 void Renderer::Update(float dt)
 {
 	float velocity = 210.0f;
-	mPlayer.Update(dt);
+//	mPlayer.Update(dt);
 	mMeshBuilder.Update(dt);
 }
 

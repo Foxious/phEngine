@@ -3,14 +3,15 @@
 
 #include <vector>
 
-#include "Component.h"
 #include "IRenderer.h"
+
+class Component;
 
 class GameMaster
 {
 public:
 	inline void SetRenderer(IRenderer* theRenderer) { renderer = theRenderer; }
-	inline IRenderer& GetRenderer(IRenderer* theRenderer) { return *renderer; }
+	inline IRenderer& GetRenderer() { return *renderer; }
 	void RegisterComponent(Component* component);
 	int Run();
 

@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "GameMaster.h"
 
+#include "Component.h"
+
 int GameMaster::Run()
 {
 	// pH TODO - strip this of windows specific code.

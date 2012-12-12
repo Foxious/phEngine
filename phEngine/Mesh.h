@@ -71,7 +71,7 @@ private:
 	Mesh mSpriteDef;
 	TextureManager mTextureManager;
 
-	std::vector<MeshInstance> mInstances;
+	std::vector<MeshInstance*> mInstances;
 	std::unordered_map<std::string, MeshInstance> mDefinitions;
 
 	// pH TODO - This should probably not
