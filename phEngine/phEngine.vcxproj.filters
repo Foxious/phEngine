@@ -141,6 +141,9 @@
     <ClInclude Include="ActorManager.h">
       <Filter>Engine\Actor</Filter>
     </ClInclude>
+    <ClInclude Include="ObjectPool.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

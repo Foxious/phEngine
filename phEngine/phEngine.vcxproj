@@ -98,6 +98,7 @@
     <ClInclude Include="IRenderer.h" />
     <ClInclude Include="json.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="phEngine.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Resource.h" />
