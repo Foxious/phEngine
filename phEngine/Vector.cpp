@@ -10,6 +10,16 @@ Vector2 Vector2::operator=(const Vector2& rhs)
 	return *this;
 }
 
+bool Vector2::operator==(const Vector2& rhs)
+{
+	return (x == rhs.x && y == rhs.y);
+}
+
+bool Vector2::operator!=(const Vector2& rhs)
+{
+	return !(*this == rhs);
+}
+
 Vector2 Vector2::operator*(const Vector2& rhs)
 {
 	Vector2 temp(*this);
@@ -37,6 +47,9 @@ Vector2 Vector2::operator+(const Vector2& rhs)
 	return temp;
 }
 
+const Vector2 Vector2::Zero = Vector2(0.0f, 0.0f);
+
+
 Vector3 Vector3::operator=(const Vector3& rhs)
 {
 	this->x = rhs.x;
@@ -53,6 +66,16 @@ Vector3 Vector3::operator=(const Vector2& rhs)
 	z = 0.0f;
 
 	return *this;
+}
+
+bool Vector3::operator==(const Vector3& rhs)
+{
+	return (x == rhs.x && y == rhs.y && z == rhs.z);
+}
+
+bool Vector3::operator!=(const Vector3& rhs)
+{
+	return !(*this == rhs);
 }
 
 Vector3 Vector3::operator*(const Vector3& rhs)
@@ -97,3 +120,5 @@ Vector3 Vector3::operator+(const Vector3& rhs)
 
 	return temp;
 }
+
+const Vector3 Vector3::Zero = Vector3(0.0f, 0.0f, 0.0f);

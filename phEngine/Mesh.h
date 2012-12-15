@@ -4,16 +4,12 @@
 #include <unordered_map>
 #include <vector>
 
-#include "Helper.h"
-#include "XForm.h"
-#include "Vertex.h"
-#include "Camera.h"
-#include "Texture.h"
 #include "AnimationComponent.h"
 #include "IRenderer.h"
-
-// pH TODO - figure out how to abstract this away.
-#include <d3dx9.h>
+#include "ObjectPool.h"
+#include "Texture.h"
+#include "Vertex.h"
+#include "XForm.h"
 
 struct MeshBuffers;
 
@@ -52,7 +48,8 @@ public:
 	~MeshBuilder();
 
 	void SetRenderer (IRenderer* renderer);
-	MeshInstance* GetSprite(const std::string& fileName);
+	MeshInstance* GetInstance(const std::string& fileName);
+	MeshInstance* CopyInstance(const MeshInstance* instance);
 	void Update(float dt);
 
 private:
@@ -62,7 +59,7 @@ private:
 	// to manage shaders, move this there.
 	void SetupShader();
 	MeshInstance* LoadSpriteFromFile(const std::string& fileName);
-	void DeserializeSprite (const std::string& spriteData, const std::string& name);
+	MeshInstance* DeserializeSprite (const std::string& spriteData, const std::string& name);
 
 private:
 	MeshBuilder(const MeshBuilder &);
@@ -71,7 +68,9 @@ private:
 	Mesh mSpriteDef;
 	TextureManager mTextureManager;
 
-	std::vector<MeshInstance*> mInstances;
+	//std::vector<MeshInstance*> mInstances;
+	ObjectPool<MeshInstance> mInstances;
+
 	std::unordered_map<std::string, MeshInstance> mDefinitions;
 
 	// pH TODO - This should probably not

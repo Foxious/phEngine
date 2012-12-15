@@ -46,6 +46,9 @@ void Actor::Update(float dt)
 void Actor::SetSprite(MeshInstance* sprite)
 {
 	mSprite = sprite;
+
+	mCollision[1].x = mSprite->mXform.scale.x;
+	mCollision[1].y = mSprite->mXform.scale.y;
 }
 
 

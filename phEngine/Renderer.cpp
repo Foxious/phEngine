@@ -92,7 +92,12 @@ ITexture* Renderer::CreateTexture(const char* name)
 
 MeshInstance* Renderer::GetMesh(const char* name)
 {
-	return mMeshBuilder.GetSprite(name);
+	return mMeshBuilder.GetInstance(name);
+}
+
+MeshInstance* Renderer::CopyMesh(const MeshInstance* instance)
+{
+	return mMeshBuilder.CopyInstance(instance);
 }
 
 void Renderer::Update(float dt)

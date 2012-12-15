@@ -5,6 +5,7 @@
 
 #include "Actor.h"
 #include "Component.h"
+#include "ObjectPool.h"
 
 class ActorManager;
 
@@ -37,6 +38,14 @@ private:
 
 };
 
+class CollisionManager
+{
+public:
+	void Update(float dt);
+private:
+	std::vector<Vector2[2]> boxes;
+};
+
 class ActorManager : public Component
 {
 public:
@@ -47,14 +56,10 @@ public:
 
 	Actor* CreateActor(const std::string& name);
 	Actor* CreateActorStub(); // for test purposes atm
-	Actor* CloneActor(Actor* source);
+	Actor* CloneActor(const Actor* source);
 
 private:
-	void AddNewActors();
-
-private:
-	std::vector<Actor> actors;
-	std::vector<Actor> newActors;
+	ObjectPool<Actor> actors;
 	PlayerController* playerController;
 	PropController propController;
 

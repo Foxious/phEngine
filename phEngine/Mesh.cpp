@@ -62,8 +62,9 @@ void MeshInstance::SetTexture(ITexture* texture)
 
 // CTOR /////////////////////////////////////////////////////////////////////////////////
 MeshBuilder::MeshBuilder()
+	: mInstances(1000)
 {
-	mInstances.reserve(20);
+	//mInstances.reserve(20);
 }
 
 MeshBuilder::~MeshBuilder()
@@ -82,30 +83,36 @@ void MeshBuilder::SetRenderer(IRenderer* renderer)
 
 void MeshBuilder::Update(float dt)
 {
-	std::vector<MeshInstance*>::iterator it = mInstances.begin();
-	std::vector<MeshInstance*>::iterator end = mInstances.end();
+	ObjectPool<MeshInstance>::Iterator it = mInstances.Begin();
 
-	for (; it != end; ++it)
+	for (; it.IsValid(); ++it )
 	{
-		(*it)->Update(dt);
-		mRenderer->Render(*it);
+		MeshInstance& mesh = *it;
+		mesh.Update(dt);
+		mRenderer->Render(&mesh);
 	}
 }
 
-MeshInstance* MeshBuilder::GetSprite(const std::string& fileName)
+MeshInstance* MeshBuilder::GetInstance(const std::string& fileName)
 {
 	std::unordered_map<std::string, MeshInstance>::iterator it = mDefinitions.find(fileName);
 	if (it != mDefinitions.end())
 	{
-		//mInstances.push_back(MeshInstance());
-		//CloneMesh( &it->second, &mInstances.back() );
-		mInstances.push_back( new MeshInstance(it->second) );
+		poolIndex index = mInstances.Insert( MeshInstance(it->second) );
+		return &mInstances[index];
 	}
 
 	return LoadSpriteFromFile(fileName);
 }
 
-void MeshBuilder::DeserializeSprite(const std::string& spriteData, const std::string& name)
+MeshInstance* MeshBuilder::CopyInstance(const MeshInstance* instance)
+{
+	MeshInstance newInstance(*instance);
+	poolIndex index = mInstances.Insert( newInstance );
+	return &mInstances[index];
+}
+
+MeshInstance* MeshBuilder::DeserializeSprite(const std::string& spriteData, const std::string& name)
 {
 	MeshInstance newSprite;
 	newSprite.mParent = &mSpriteDef;
@@ -139,8 +146,8 @@ void MeshBuilder::DeserializeSprite(const std::string& spriteData, const std::st
 		++i;
 	} // end while
 	mDefinitions.insert(mDefinitions.begin(), std::unordered_map<std::string, MeshInstance>::value_type(name, newSprite) );
-	mInstances.push_back( new MeshInstance(newSprite) );
-	CloneMesh( &mDefinitions[name], mInstances.back() );
+	poolIndex thisMesh = mInstances.Insert( newSprite );
+	return &(mInstances[thisMesh]);
 }
 
 // PRIVATE //////////////////////////////////////////////////////////////////////////////
@@ -186,9 +193,9 @@ MeshInstance* MeshBuilder::LoadSpriteFromFile(const std::string& fileName)
 
 	std::string fileData(buffer);
 
-	DeserializeSprite(fileData, fileName);
+	MeshInstance* mesh = DeserializeSprite(fileData, fileName);
 
 	delete [] buffer;
 
-	return mInstances.back();
+	return mesh;
 }

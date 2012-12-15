@@ -34,6 +34,7 @@ public:
 	virtual void CreateBuffers(Mesh& mesh);
 	virtual ITexture* CreateTexture(const char* name); // pH TODO - get rid of this crap
 	virtual MeshInstance* GetMesh(const char* name);
+	virtual MeshInstance* CopyMesh(const MeshInstance* instance);
 
 	virtual void Render(MeshInstance* mesh);
 

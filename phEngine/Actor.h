@@ -27,6 +27,7 @@ public:
 	Actor();
 
 	void SetSprite(MeshInstance* sprite);
+	const MeshInstance* GetSprite() const { return mSprite; }
 	void SetController(InputController* controller) { mInput = controller; }
 
 	Vector2 GetPosition() { return Vector2(mSprite->mXform.position.x, mSprite->mXform.position.y); }
@@ -42,9 +43,6 @@ public:
 
 	float speed;
 	Vector2 GetDirection() { return direction; }
-
-private:
-	//Actor(const Actor& rhs);
 
 private:
 	MeshInstance* mSprite;

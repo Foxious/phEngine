@@ -40,13 +40,14 @@ int GameMaster::Run()
 
 void GameMaster::Update(float dt)
 {
-	renderer->Update(dt);
 	std::vector<Component*>::iterator it = components.begin();
 	std::vector<Component*>::iterator end = components.end();
 	for (; it != end; ++it)
 	{
 		(*it)->Update(dt);
 	}
+
+	renderer->Update(dt);
 }
 
 void GameMaster::RegisterComponent(Component* component)
