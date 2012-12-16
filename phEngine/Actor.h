@@ -9,6 +9,13 @@
 class Actor;
 class ActorManager;
 
+struct Box
+{
+	Vector2 position;
+	Vector2 size;
+};
+
+
 class InputController
 {
 public:
@@ -37,6 +44,10 @@ public:
 	void WarpTo(float x, float y);
 	void WarpTo(Vector2 coords);
 
+	const Box* GetCollision() const { return &collision; }
+
+	void OnCollide(const Actor* collider);
+
 	AnimationComponent* GetAnimComponent() { return &mSprite->mAnimComponent; }
 	
 	void Update(float dt);
@@ -47,7 +58,7 @@ public:
 private:
 	MeshInstance* mSprite;
 	InputController* mInput;
-	Vector2 mCollision[2];
+	Box collision;
 	Vector2 direction;
 };
 

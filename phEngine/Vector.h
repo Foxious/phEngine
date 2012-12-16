@@ -29,10 +29,10 @@ struct Vector2
 	bool operator==(const Vector2& rhs);
 	bool operator!=(const Vector2& rhs);
 	
-	Vector2 operator*(const Vector2& rhs);
-	Vector2 operator*(float rhs);
+	Vector2 operator*(const Vector2& rhs) const;
+	Vector2 operator*(float rhs) const;
 
-	Vector2 operator+(const Vector2& rhs);
+	Vector2 operator+(const Vector2& rhs) const;
 
 	const static Vector2 Zero;
 };
@@ -65,11 +65,11 @@ struct Vector3
 	bool operator==(const Vector3& rhs);
 	bool operator!=(const Vector3& rhs);
 
-	Vector3 operator*(const Vector3& rhs);
-	Vector3 operator*(float rhs);
+	Vector3 operator*(const Vector3& rhs) const;
+	Vector3 operator*(float rhs) const;
 
-	Vector3 operator+(const Vector2& rhs);
-	Vector3 operator+(const Vector3& rhs);
+	Vector3 operator+(const Vector2& rhs) const;
+	Vector3 operator+(const Vector3& rhs) const;
 
 	const static Vector3 Zero;
 	

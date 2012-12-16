@@ -47,25 +47,22 @@ void Actor::SetSprite(MeshInstance* sprite)
 {
 	mSprite = sprite;
 
-	mCollision[1].x = mSprite->mXform.scale.x;
-	mCollision[1].y = mSprite->mXform.scale.y;
+	collision.size.x = mSprite->mXform.scale.x;
+	collision.size.y = mSprite->mXform.scale.y;
 }
 
-
+void Actor::OnCollide(const Actor* collider)
+{
+	mSprite->mAnimComponent.PlayAnim(0U);
+}
 
 void Actor::Move(float x, float y)
 {
-	direction = CalculateDirection(x, y);
-	mSprite->mXform.position.x += x;
-	mSprite->mXform.position.y += y;
-	mCollision[0].x += x;
-	mCollision[0].y += y;
-
+	Move( Vector2(x, y) );
 }
 
 void Actor::Move(Vector2 offset)
 {
-	Move(offset.x, offset.y);
 	direction = CalculateDirection(offset.x, offset.y);
 
 	Vector3 absolute = mSprite->mXform.position + offset;
@@ -82,5 +79,5 @@ void Actor::WarpTo(float x, float y)
 void Actor::WarpTo(Vector2 coords)
 {
 	mSprite->mXform.position = coords;
-	mCollision[0] = coords;
+	collision.position = coords;
 }

@@ -3,6 +3,7 @@
 
 ActorManager::ActorManager()
 	: actors(1000)
+	, collider(512.0f, 3)
 {
 	playerController = new PlayerController(0, this);
 }
@@ -15,12 +16,17 @@ void ActorManager::OnRegister()
 
 void ActorManager::Update(float dt)
 {
+	collider.Clear();
 	ObjectPool<Actor>::Iterator it = actors.Begin();
 
 	for (; it.IsValid(); ++it)
 	{
 		it->Update(dt);
+		collider.ResolveCollisions(&(*it));
+		collider.Classify(&(*it));
 	}
+
+	collider.Clear();
 }
 
 Actor* ActorManager::CreateActorStub()

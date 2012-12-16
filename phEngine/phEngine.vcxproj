@@ -89,6 +89,7 @@
     <ClInclude Include="ActorManager.h" />
     <ClInclude Include="AnimationComponent.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Collision.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="DXTexture.h" />
@@ -117,6 +118,7 @@
     <ClCompile Include="ActorManager.cpp" />
     <ClCompile Include="AnimationComponent.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="DXShaders.cpp" />
     <ClCompile Include="GameMaster.cpp" />

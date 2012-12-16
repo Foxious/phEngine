@@ -144,6 +144,9 @@
     <ClInclude Include="ObjectPool.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>Engine\Actor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -192,6 +195,9 @@
       <Filter>Engine\Actor</Filter>
     </ClCompile>
     <ClCompile Include="ActorManager.cpp">
+      <Filter>Engine\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
       <Filter>Engine\Actor</Filter>
     </ClCompile>
   </ItemGroup>

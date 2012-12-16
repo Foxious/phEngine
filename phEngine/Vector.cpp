@@ -20,7 +20,7 @@ bool Vector2::operator!=(const Vector2& rhs)
 	return !(*this == rhs);
 }
 
-Vector2 Vector2::operator*(const Vector2& rhs)
+Vector2 Vector2::operator*(const Vector2& rhs) const
 {
 	Vector2 temp(*this);
 	temp.x *= rhs.x;
@@ -29,7 +29,7 @@ Vector2 Vector2::operator*(const Vector2& rhs)
 	return temp;
 }
 
-Vector2 Vector2::operator*(float rhs)
+Vector2 Vector2::operator*(float rhs) const
 {
 	Vector2 temp(*this);
 	temp.x *= rhs;
@@ -38,7 +38,7 @@ Vector2 Vector2::operator*(float rhs)
 	return temp;
 }
 
-Vector2 Vector2::operator+(const Vector2& rhs)
+Vector2 Vector2::operator+(const Vector2& rhs) const
 {
 	Vector2 temp(*this);
 	temp.x += rhs.x;
@@ -78,7 +78,7 @@ bool Vector3::operator!=(const Vector3& rhs)
 	return !(*this == rhs);
 }
 
-Vector3 Vector3::operator*(const Vector3& rhs)
+Vector3 Vector3::operator*(const Vector3& rhs) const
 {
 	Vector3 temp(*this);
 
@@ -89,7 +89,7 @@ Vector3 Vector3::operator*(const Vector3& rhs)
 	return temp;
 }
 
-Vector3 Vector3::operator*(float rhs)
+Vector3 Vector3::operator*(float rhs) const
 {
 	Vector3 temp(*this);
 
@@ -100,7 +100,7 @@ Vector3 Vector3::operator*(float rhs)
 	return temp;
 }
 
-Vector3 Vector3::operator+(const Vector2& rhs)
+Vector3 Vector3::operator+(const Vector2& rhs) const
 {
 	Vector3 temp(*this);
 
@@ -110,7 +110,7 @@ Vector3 Vector3::operator+(const Vector2& rhs)
 	return temp;
 }
 
-Vector3 Vector3::operator+(const Vector3& rhs)
+Vector3 Vector3::operator+(const Vector3& rhs) const
 {
 	Vector3 temp(*this);
 

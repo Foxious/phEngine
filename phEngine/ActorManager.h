@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "Actor.h"
+#include "Collision.h"
 #include "Component.h"
 #include "ObjectPool.h"
 
@@ -60,6 +61,7 @@ public:
 
 private:
 	ObjectPool<Actor> actors;
+	SpatialHash collider;
 	PlayerController* playerController;
 	PropController propController;
 
