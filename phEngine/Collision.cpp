@@ -7,10 +7,10 @@ bool IsWithin (const Box* box, const Vector2* points)
 {
 	for (int i = 0; i < 4; ++i)
 	{
-		if (points[i].x > box->position.x
-			&& points[i].x < box->position.x + box->size.x
-			&& points[i].y > box->position.y
-			&& points[i].y < box->position.y + box->size.y)
+		if (points[i].x >= box->position.x
+			&& points[i].x <= box->position.x + box->size.x
+			&& points[i].y >= box->position.y
+			&& points[i].y <= box->position.y + box->size.y)
 		{
 			return true;
 		}

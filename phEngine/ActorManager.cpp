@@ -1,6 +1,10 @@
 #include "stdafx.h"
 #include "ActorManager.h"
 
+#include "ActorScript.h"
+#include "ScriptNodes.h"
+
+// CTOR /////////////////////////////////////////////////////////////////////////////////
 ActorManager::ActorManager()
 	: actors(1000)
 	, collider(512.0f, 3)
@@ -8,12 +12,14 @@ ActorManager::ActorManager()
 	playerController = new PlayerController(0, this);
 }
 
+// PUBLIC //////////////////////////////////////////////////////////////////////////////
 void ActorManager::OnRegister()
 {
 	Actor* player = CreateActorStub();
 	player->SetController(playerController);
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 void ActorManager::Update(float dt)
 {
 	collider.Clear();
@@ -29,6 +35,7 @@ void ActorManager::Update(float dt)
 	collider.Clear();
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 Actor* ActorManager::CreateActorStub()
 {
 	Actor newActor;
@@ -36,10 +43,16 @@ Actor* ActorManager::CreateActorStub()
 	newActor.SetSprite(sprite);
 	newActor.SetController(&propController);
 
+	Script collisionScript;
+	collisionScript.push_back(new PlayAnimationNode(""));
+
+	newActor.SetCollisionScript(collisionScript);
+
 	poolIndex index = actors.Insert(newActor);
 	return &actors[index];
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 Actor* ActorManager::CloneActor(const Actor* source)
 {
 	Actor newActor;
@@ -48,6 +61,7 @@ Actor* ActorManager::CloneActor(const Actor* source)
 	return &actors[index];
 }
 
+// PLAYER CONTROLLER ////////////////////////////////////////////////////////////////////
 void PlayerController::Update(Actor* actor, float dt)
 {
 	DeviceState state;

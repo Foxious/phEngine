@@ -51,9 +51,9 @@ void Actor::SetSprite(MeshInstance* sprite)
 	collision.size.y = mSprite->mXform.scale.y;
 }
 
-void Actor::OnCollide(const Actor* collider)
+void Actor::OnCollide(Actor* collider)
 {
-	mSprite->mAnimComponent.PlayAnim(0U);
+	ExecuteScript(&collisionScript, this, collider);
 }
 
 void Actor::Move(float x, float y)

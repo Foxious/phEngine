@@ -142,8 +142,6 @@ public:
 	}
 
 private:
-
-private:
 	const unsigned int size;
 	poolIndex nextFreeIndex;
 	PoolItem* data;

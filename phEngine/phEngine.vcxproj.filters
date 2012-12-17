@@ -46,8 +46,8 @@
     <Filter Include="Engine\Actor">
       <UniqueIdentifier>{d0d39d0a-b0a8-4b88-8ba5-154348a25c96}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Actor\Controllers">
-      <UniqueIdentifier>{815abd52-39ec-4573-b5da-6535ed9f7745}</UniqueIdentifier>
+    <Filter Include="Engine\Actor\Scripts">
+      <UniqueIdentifier>{46aeeb6a-36b3-4176-87a7-d58fbd38bcca}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +147,12 @@
     <ClInclude Include="Collision.h">
       <Filter>Engine\Actor</Filter>
     </ClInclude>
+    <ClInclude Include="ActorScript.h">
+      <Filter>Engine\Actor\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="ScriptNodes.h">
+      <Filter>Engine\Actor\Scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -199,6 +205,12 @@
     </ClCompile>
     <ClCompile Include="Collision.cpp">
       <Filter>Engine\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="ActorScript.cpp">
+      <Filter>Engine\Actor\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="ScriptNodes.cpp">
+      <Filter>Engine\Actor\Scripts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
