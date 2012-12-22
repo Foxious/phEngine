@@ -8,6 +8,8 @@
 #include "Component.h"
 #include "ObjectPool.h"
 
+typedef ObjectPool<Actor>::PoolItemPtr ActorPtr;
+
 class ActorManager;
 
 class PropController : public InputController
@@ -39,14 +41,6 @@ private:
 
 };
 
-class CollisionManager
-{
-public:
-	void Update(float dt);
-private:
-	std::vector<Vector2[2]> boxes;
-};
-
 class ActorManager : public Component
 {
 public:
@@ -55,9 +49,9 @@ public:
 	virtual void Update(float dt);
 	virtual void OnRegister();
 
-	Actor* CreateActor(const std::string& name);
-	Actor* CreateActorStub(); // for test purposes atm
-	Actor* CloneActor(const Actor* source);
+	ActorPtr CreateActor(const std::string& name);
+	ActorPtr CreateActorStub(); // for test purposes atm
+	ActorPtr CloneActor(const ActorPtr source);
 
 private:
 	ObjectPool<Actor> actors;

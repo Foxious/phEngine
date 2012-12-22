@@ -32,10 +32,18 @@ struct Vector2
 	Vector2 operator*(const Vector2& rhs) const;
 	Vector2 operator*(float rhs) const;
 
+	Vector2 operator*=(const Vector2& rhs);
+	Vector2 operator*=(float rhs);
+
 	Vector2 operator+(const Vector2& rhs) const;
+	Vector2 operator+=(const Vector2& rhs);
+	Vector2 operator-(const Vector2& rhs) const;
+	Vector2 operator-=(const Vector2& rhs);
 
 	const static Vector2 Zero;
 };
+
+Vector2 operator*(float lhs, const Vector2& rhs);
 
 struct Vector3
 {
@@ -59,6 +67,13 @@ struct Vector3
 	{
 	}
 
+	Vector3(const Vector2& rhs)
+		: x(rhs.x)
+		, y(rhs.y)
+		, z(0.0f)
+	{
+	}
+
 	Vector3 operator=(const Vector3& rhs);
 	Vector3 operator=(const Vector2& rhs);
 
@@ -68,11 +83,16 @@ struct Vector3
 	Vector3 operator*(const Vector3& rhs) const;
 	Vector3 operator*(float rhs) const;
 
-	Vector3 operator+(const Vector2& rhs) const;
 	Vector3 operator+(const Vector3& rhs) const;
+	Vector3 operator+=(const Vector3& rhs);
+
+	Vector3 operator-(const Vector3& rhs) const;
+	Vector3 operator-=(const Vector3& rhs);
 
 	const static Vector3 Zero;
 	
 	float x,y,z;
 };
+
+Vector3 operator*(float lhs, const Vector3& rhs);
 #endif

@@ -33,8 +33,9 @@ public:
 	virtual void DrawScene();
 	virtual void CreateBuffers(Mesh& mesh);
 	virtual ITexture* CreateTexture(const char* name); // pH TODO - get rid of this crap
-	virtual MeshInstance* GetMesh(const char* name);
-	virtual MeshInstance* CopyMesh(const MeshInstance* instance);
+	virtual ObjectPool<MeshInstance>::PoolItemPtr GetMesh(const char* name);
+	virtual ObjectPool<MeshInstance>::PoolItemPtr CopyMesh(const ObjectPool<MeshInstance>::PoolItemPtr instance);
+	virtual void RemoveMeshInstance(MeshInstancePtr instance);
 
 	virtual void Render(MeshInstance* mesh);
 

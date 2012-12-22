@@ -4,6 +4,7 @@
 #include <vector>
 #include "Actor.h"
 
+#include "Shapes.h"
 #include "Vector.h"
 
 class SpatialHash
@@ -24,7 +25,7 @@ public:
 	void ResolveCollisions(Actor* actor);
 
 private:
-	unsigned int HashPosition(const Vector2* position);
+	unsigned int HashPosition(Vector2 position);
 
 private:
 	float size;

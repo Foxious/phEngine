@@ -41,6 +41,8 @@ struct MeshInstance
 	AnimationComponent mAnimComponent;
 };
 
+typedef ObjectPool<MeshInstance>::PoolItemPtr MeshInstancePtr;
+
 class MeshBuilder
 {
 public:
@@ -48,8 +50,10 @@ public:
 	~MeshBuilder();
 
 	void SetRenderer (IRenderer* renderer);
-	MeshInstance* GetInstance(const std::string& fileName);
-	MeshInstance* CopyInstance(const MeshInstance* instance);
+	MeshInstancePtr GetInstance(const std::string& fileName);
+	MeshInstancePtr CopyInstance(MeshInstancePtr instance);
+	void RemoveInstance(MeshInstancePtr instance);
+
 	void Update(float dt);
 
 private:
@@ -58,8 +62,8 @@ private:
 	// pH TODO - when you make something
 	// to manage shaders, move this there.
 	void SetupShader();
-	MeshInstance* LoadSpriteFromFile(const std::string& fileName);
-	MeshInstance* DeserializeSprite (const std::string& spriteData, const std::string& name);
+	ObjectPool<MeshInstance>::PoolItemPtr LoadSpriteFromFile(const std::string& fileName);
+	ObjectPool<MeshInstance>::PoolItemPtr DeserializeSprite (const std::string& spriteData, const std::string& name);
 
 private:
 	MeshBuilder(const MeshBuilder &);

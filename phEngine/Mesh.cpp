@@ -93,26 +93,31 @@ void MeshBuilder::Update(float dt)
 	}
 }
 
-MeshInstance* MeshBuilder::GetInstance(const std::string& fileName)
+ObjectPool<MeshInstance>::PoolItemPtr MeshBuilder::GetInstance(const std::string& fileName)
 {
 	std::unordered_map<std::string, MeshInstance>::iterator it = mDefinitions.find(fileName);
 	if (it != mDefinitions.end())
 	{
-		poolIndex index = mInstances.Insert( MeshInstance(it->second) );
-		return &mInstances[index];
+		ObjectPool<MeshInstance>::PoolItemPtr item = mInstances.Insert( MeshInstance(it->second) );
+		return item;
 	}
 
 	return LoadSpriteFromFile(fileName);
 }
 
-MeshInstance* MeshBuilder::CopyInstance(const MeshInstance* instance)
+ObjectPool<MeshInstance>::PoolItemPtr MeshBuilder::CopyInstance(MeshInstancePtr instance)
 {
-	MeshInstance newInstance(*instance);
-	poolIndex index = mInstances.Insert( newInstance );
-	return &mInstances[index];
+	MeshInstance newInstance( (*instance) );
+	ObjectPool<MeshInstance>::PoolItemPtr item = mInstances.Insert( newInstance );
+	return item;
 }
 
-MeshInstance* MeshBuilder::DeserializeSprite(const std::string& spriteData, const std::string& name)
+void  MeshBuilder::RemoveInstance(MeshInstancePtr instance)
+{
+	mInstances.Remove(instance);
+}
+
+ObjectPool<MeshInstance>::PoolItemPtr MeshBuilder::DeserializeSprite(const std::string& spriteData, const std::string& name)
 {
 	MeshInstance newSprite;
 	newSprite.mParent = &mSpriteDef;
@@ -146,8 +151,8 @@ MeshInstance* MeshBuilder::DeserializeSprite(const std::string& spriteData, cons
 		++i;
 	} // end while
 	mDefinitions.insert(mDefinitions.begin(), std::unordered_map<std::string, MeshInstance>::value_type(name, newSprite) );
-	poolIndex thisMesh = mInstances.Insert( newSprite );
-	return &(mInstances[thisMesh]);
+	ObjectPool<MeshInstance>::PoolItemPtr thisMesh = mInstances.Insert( newSprite );
+	return thisMesh;
 }
 
 // PRIVATE //////////////////////////////////////////////////////////////////////////////
@@ -174,7 +179,7 @@ void MeshBuilder::MakeSprite()
 	mRenderer->CreateBuffers(mSpriteDef);
 }
 
-MeshInstance* MeshBuilder::LoadSpriteFromFile(const std::string& fileName)
+ObjectPool<MeshInstance>::PoolItemPtr MeshBuilder::LoadSpriteFromFile(const std::string& fileName)
 {
 	// pH TODO - make dumping a file into a string its own function - you do it a lot.
 	int length = 0;
@@ -193,7 +198,7 @@ MeshInstance* MeshBuilder::LoadSpriteFromFile(const std::string& fileName)
 
 	std::string fileData(buffer);
 
-	MeshInstance* mesh = DeserializeSprite(fileData, fileName);
+	ObjectPool<MeshInstance>::PoolItemPtr mesh = DeserializeSprite(fileData, fileName);
 
 	delete [] buffer;
 

@@ -1,6 +1,7 @@
 #ifndef OBJECT_POOL_H
 #define OBJECT_POOL_H
 
+#include <assert.h>
 #include <vector>
 
 typedef unsigned int poolIndex;
@@ -37,6 +38,52 @@ public:
 		void SetAlive() { nextAvail = (poolIndex)-1; }
 	};
 
+	class PoolItemPtr
+	{
+	public:
+		PoolItemPtr()
+			: item(0)
+			, index( (poolIndex)-1 )
+		{
+		}
+		PoolItemPtr(PoolItem* poolItem, poolIndex itemIndex)
+			: item(poolItem)
+			, index(itemIndex)
+		{
+		}
+
+		poolIndex Index() { return index; }
+
+		T& operator*()
+		{
+			assert(item->IsAlive());
+			return item->data;
+		}
+
+		const T& operator*() const
+		{
+			assert(item->IsAlive());
+			return this->operator*();
+		}
+
+		T* operator->()
+		{
+			assert(item->IsAlive());
+			return &item->data;
+		}
+
+		const T* operator->() const
+		{
+			assert(item->IsAlive());
+			return &item->data;
+		}
+
+
+	private:
+		PoolItem* item;
+		poolIndex index;
+	};
+
 	class Iterator
 	{
 	public:
@@ -64,6 +111,11 @@ public:
 			}
 		}
 
+		poolIndex GetIndex() const
+		{
+			return index;
+		}
+
 		T& GetValue()
 		{
 			return pool[index].data;
@@ -89,6 +141,7 @@ public:
 			return &GetValue();
 		}
 
+
 	private:
 		poolIndex index;
 		PoolItem* pool;
@@ -96,19 +149,22 @@ public:
 
 	};
 
-	poolIndex Insert(T& object)
+	PoolItemPtr Insert(T& object)
 	{
 		if (nextFreeIndex == size)
 		{
-			return (poolIndex)-1;
+			// pH TODO - how do we handle this case?
+			//return (poolIndex)-1;
 		}
 
-		poolIndex returnVal = nextFreeIndex;
-		PoolItem& freeSlot = data[nextFreeIndex];
+		poolIndex index = nextFreeIndex;
+		PoolItem& freeSlot = data[index];
 		nextFreeIndex = freeSlot.nextAvail;
 		freeSlot.data = object;
 		freeSlot.SetAlive();
 		++count;
+
+		PoolItemPtr returnVal(&freeSlot, index);
 
 		return returnVal;
 	}
@@ -118,6 +174,16 @@ public:
 		deadItem.nextAvail = nextFreeIndex;
 		nextFreeIndex = index;
 		--count;
+	}
+
+	void Remove(PoolItemPtr& poolItem)
+	{
+		Remove(poolItem.Index());
+	}
+	
+	void Remove(const Iterator* iterator)
+	{
+		Remove(iterator->GetIndex());
 	}
 
 	Iterator Begin()

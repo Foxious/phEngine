@@ -30,7 +30,7 @@ private:
 class ForceOutNode : public ScriptNode
 {
 public:
-	ForceOutNode();
+	ForceOutNode(){}
 	virtual void Execute(Actor* source, Actor* target);
 };
 

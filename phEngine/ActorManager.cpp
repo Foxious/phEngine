@@ -15,8 +15,14 @@ ActorManager::ActorManager()
 // PUBLIC //////////////////////////////////////////////////////////////////////////////
 void ActorManager::OnRegister()
 {
-	Actor* player = CreateActorStub();
+	ActorPtr player = CreateActorStub();
 	player->SetController(playerController);
+
+	Script collisionScript;
+	collisionScript.push_back(new PlayAnimationNode(""));
+	
+	player->SetCollisionScript(collisionScript);
+	player->duration = 9999.0f;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -30,35 +36,42 @@ void ActorManager::Update(float dt)
 		it->Update(dt);
 		collider.ResolveCollisions(&(*it));
 		collider.Classify(&(*it));
+
+		if ( it->IsDead() )
+		{
+			gameMaster->GetRenderer().RemoveMeshInstance(it->GetSprite());
+			actors.Remove(&it);
+		}
 	}
 
 	collider.Clear();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-Actor* ActorManager::CreateActorStub()
+ActorPtr ActorManager::CreateActorStub()
 {
 	Actor newActor;
-	MeshInstance* sprite = gameMaster->GetRenderer().GetMesh("testSpriteDef.json");
+	MeshInstancePtr sprite = gameMaster->GetRenderer().GetMesh("testSpriteDef.json");
 	newActor.SetSprite(sprite);
 	newActor.SetController(&propController);
 
 	Script collisionScript;
-	collisionScript.push_back(new PlayAnimationNode(""));
+	collisionScript.push_back(new ForceOutNode());
 
 	newActor.SetCollisionScript(collisionScript);
+	newActor.duration = 5.0f;
 
-	poolIndex index = actors.Insert(newActor);
-	return &actors[index];
+	ActorPtr actor = actors.Insert(newActor);
+	return actor;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-Actor* ActorManager::CloneActor(const Actor* source)
+ActorPtr ActorManager::CloneActor(const ActorPtr source)
 {
 	Actor newActor;
-	MeshInstance* sprite = gameMaster->GetRenderer().CopyMesh( source->GetSprite() );
-	poolIndex index = actors.Insert(newActor);
-	return &actors[index];
+	MeshInstancePtr sprite = gameMaster->GetRenderer().CopyMesh( source->GetSprite() );
+	ActorPtr actor = actors.Insert(newActor);
+	return actor;
 }
 
 // PLAYER CONTROLLER ////////////////////////////////////////////////////////////////////
@@ -84,7 +97,7 @@ void PlayerController::Update(Actor* actor, float dt)
 		{
 			actor->GetAnimComponent()->PlayAnim(0U);
 
-			Actor* subActor = actorManager->CreateActorStub();
+			ActorPtr subActor = actorManager->CreateActorStub();
 			subActor->WarpTo(actor->GetPosition() + actor->GetDirection() * 350.0f);
 			subActor->GetAnimComponent()->PlayAnim(0U);
 		}

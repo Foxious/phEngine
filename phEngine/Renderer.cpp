@@ -90,20 +90,24 @@ ITexture* Renderer::CreateTexture(const char* name)
 	return new DXTexture(mDevice, name);
 }
 
-MeshInstance* Renderer::GetMesh(const char* name)
+ObjectPool<MeshInstance>::PoolItemPtr Renderer::GetMesh(const char* name)
 {
 	return mMeshBuilder.GetInstance(name);
 }
 
-MeshInstance* Renderer::CopyMesh(const MeshInstance* instance)
+ObjectPool<MeshInstance>::PoolItemPtr Renderer::CopyMesh(const MeshInstancePtr instance)
 {
 	return mMeshBuilder.CopyInstance(instance);
+}
+
+void Renderer::RemoveMeshInstance(ObjectPool<MeshInstance>::PoolItemPtr instance)
+{
+	mMeshBuilder.RemoveInstance(instance);
 }
 
 void Renderer::Update(float dt)
 {
 	float velocity = 210.0f;
-//	mPlayer.Update(dt);
 	mMeshBuilder.Update(dt);
 }
 
