@@ -153,6 +153,9 @@
     <ClInclude Include="ScriptNodes.h">
       <Filter>Engine\Actor\Scripts</Filter>
     </ClInclude>
+    <ClInclude Include="Shapes.h">
+      <Filter>Engine\Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -211,6 +214,9 @@
     </ClCompile>
     <ClCompile Include="ScriptNodes.cpp">
       <Filter>Engine\Actor\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="Shapes.cpp">
+      <Filter>Engine\Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
