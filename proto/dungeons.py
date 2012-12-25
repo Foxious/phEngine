@@ -1,6 +1,6 @@
 import random as r
 
-class Room():
+class Room:
     def __init__(self,name=None):
         self.doors = self.numRooms()
         self.usedDoors = 0
@@ -29,9 +29,9 @@ def generateDungeon(numberOfRooms = 5):
         #print len(room.neighbors)
     return rooms
 def pickUnusedRoom(_Room = None,rooms = None):
-    #expects an instance of the Room object and a list of rooms
-    #otherwise it fails
-    #randomly selects form the list of rooms not in use
+    '''expects an instance of the Room object and a list of rooms
+    otherwise it fails
+    randomly selects form the list of rooms not in use'''
     if _Room != None and rooms != None:
         avalableRooms = []
         for _room in rooms:
