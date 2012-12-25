@@ -4,16 +4,40 @@
 #include <vector>
 
 class Actor;
+class ScriptNode;
 
-class ScriptNode
+struct ScriptParams
 {
-public:
-	virtual void Execute(Actor* source, Actor* target)=0;
+	Actor* source;
+	Actor* target;
+	float deltaTime;
 };
 
 typedef std::vector<ScriptNode*> Script;
 
-void ExecuteScript(Script* script, Actor* source, Actor* target);
+
+class ScriptNode
+{
+public:
+	virtual ~ScriptNode();
+
+	void SetScriptCompleteCallback(const Script& script);
+	void AddScriptCompleteCallback(ScriptNode* node);
+
+	virtual bool IsFinished() { return true; }
+
+	void operator() (const ScriptParams* params);
+
+
+private:
+	virtual void Execute(const ScriptParams* params)=0;
+private:
+	Script callbackScript;
+};
+
+
+
+void ExecuteScript(Script* script, const ScriptParams* params);
 void ClearScript(Script* script);
 
 #endif

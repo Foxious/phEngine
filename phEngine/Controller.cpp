@@ -13,13 +13,14 @@ float QueryStickPosition(int input)
 ///////////////////////////////////////////////////////////////////////////////
 void MapXInputToState(const XINPUT_GAMEPAD* xinput, DeviceState* state)
 {
-	std::vector<bool>& buttons = state->buttons;
+	std::vector<char>& buttons = state->buttons;
 	std::vector<float>& axes = state->axes;
 	buttons.resize(14);
 	axes.resize(6);
 	for (int i = 0; i < 14; ++i)
 	{
-		buttons[i] = ((xinput->wButtons >> i) & 1);
+		buttons[i] = buttons[i] >> 1;
+		buttons[i] |= ((xinput->wButtons >> i) & 1) << 1;
 	}
 	axes[0] = xinput->bLeftTrigger / 255.0f;
 	axes[1] = xinput->bRightTrigger / 255.0f;

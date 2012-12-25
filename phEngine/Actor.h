@@ -23,6 +23,7 @@ class Actor
 	// an Actor is a thing on the stage.
 public:
 	Actor();
+	~Actor();
 
 	void SetSprite(MeshInstancePtr sprite);
 	const MeshInstancePtr GetSprite() const { return mSprite; }
@@ -38,26 +39,27 @@ public:
 	void WarpTo(Vector2 coords);
 
 	Vector2 GetDirection()	{ return direction; }
-	Vector2 GetLastMove()	{ return lastMove; }
 
 	const Box* GetCollision() const { return &collision; }
 	void OnCollide(Actor* collider);
 
 	inline bool IsDead() { return isDead; }
+	inline void MarkForCleanup() { isDead = true; }
+	void ClearScripts();
 
 	AnimationComponent* GetAnimComponent() { return &mSprite->mAnimComponent; }
 	
 	void Update(float dt);
 
 	float speed;
-	float duration;
+	Script updateScript;
+
 
 private:
 	MeshInstancePtr mSprite;
 	InputController* mInput;
 	Box collision;
 	Vector2 direction;
-	Vector2 lastMove;
 
 	Script collisionScript;
 

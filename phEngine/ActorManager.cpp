@@ -22,7 +22,6 @@ void ActorManager::OnRegister()
 	collisionScript.push_back(new PlayAnimationNode(""));
 	
 	player->SetCollisionScript(collisionScript);
-	player->duration = 9999.0f;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -40,6 +39,7 @@ void ActorManager::Update(float dt)
 		if ( it->IsDead() )
 		{
 			gameMaster->GetRenderer().RemoveMeshInstance(it->GetSprite());
+			it->ClearScripts();
 			actors.Remove(&it);
 		}
 	}
@@ -59,7 +59,6 @@ ActorPtr ActorManager::CreateActorStub()
 	collisionScript.push_back(new ForceOutNode());
 
 	newActor.SetCollisionScript(collisionScript);
-	newActor.duration = 5.0f;
 
 	ActorPtr actor = actors.Insert(newActor);
 	return actor;
@@ -77,7 +76,6 @@ ActorPtr ActorManager::CloneActor(const ActorPtr source)
 // PLAYER CONTROLLER ////////////////////////////////////////////////////////////////////
 void PlayerController::Update(Actor* actor, float dt)
 {
-	DeviceState state;
 	mController.Poll(&state);
 	if (mController.IsConnected())
 	{
@@ -93,13 +91,19 @@ void PlayerController::Update(Actor* actor, float dt)
 		if (move != Vector2::Zero )
 		actor->Move(move);
 
-		if (state.buttons[atkBtn])
+		if (state.buttons[atkBtn] == BTN_RELEASE)
 		{
 			actor->GetAnimComponent()->PlayAnim(0U);
 
 			ActorPtr subActor = actorManager->CreateActorStub();
 			subActor->WarpTo(actor->GetPosition() + actor->GetDirection() * 350.0f);
 			subActor->GetAnimComponent()->PlayAnim(0U);
+			
+			ScriptNode* killActor = new KillActorNode();
+			ScriptNode* delay = new TimerNode(3.0f);
+			delay->AddScriptCompleteCallback(killActor);
+
+			subActor->updateScript.push_back(delay);
 		}
 
 	}

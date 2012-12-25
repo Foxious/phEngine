@@ -11,17 +11,17 @@ PlayAnimationNode::PlayAnimationNode(const std::string& animName)
 {
 }
 
-void PlayAnimationNode::Execute(Actor* source, Actor* target)
+void PlayAnimationNode::Execute(const ScriptParams* params)
 {
-	source->GetAnimComponent()->PlayAnim(0u); // TODO: dont' hard code this.
+	params->source->GetAnimComponent()->PlayAnim(0u); // TODO: dont' hard code this.
 }
 
 // FORCE OUT NODE ///////////////////////////////////////////////////////////////////////
-void ForceOutNode::Execute(Actor* source, Actor* target)
+void ForceOutNode::Execute(const ScriptParams* params)
 {
 	// figure out our overlap and how much we have.
-	const Box* sourceBox = source->GetCollision();
-	const Box* targetBox = target->GetCollision();
+	const Box* sourceBox = params->source->GetCollision();
+	const Box* targetBox = params->target->GetCollision();
 
 	if ( !BoxesIntersect(sourceBox, targetBox) )
 	{
@@ -64,12 +64,33 @@ void ForceOutNode::Execute(Actor* source, Actor* target)
 		moveSecond.x = moveX;
 	}
 
-	target->Move(moveFirst);
+	params->target->Move(moveFirst);
 
 	if ( BoxesIntersect(sourceBox, targetBox) )
 	{
-		target->Move(moveSecond);
+		params->target->Move(moveSecond);
 	}
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////
+// TIMER NODE ///////////////////////////////////////////////////////////////////////////
+
+TimerNode::TimerNode(float duration)
+	: time(duration)
+	, isFinished(false)
+{
+}
+
+void TimerNode::Execute(const ScriptParams* params)
+{
+	time -= params->deltaTime;
+	if (time < 0.0f)
+	{
+		isFinished = true;
+	}
+}
+
+// KILL ACTOR NODE //////////////////////////////////////////////////////////////////////
+void KillActorNode::Execute(const ScriptParams* params)
+{
+	params->target->MarkForCleanup();
+}

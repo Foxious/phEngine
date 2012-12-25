@@ -11,7 +11,9 @@ class PlayAnimationNode : public ScriptNode
 {
 public:
 	PlayAnimationNode(const std::string& animName);
-	virtual void Execute(Actor* source, Actor* target);
+
+private:
+	virtual void Execute(const ScriptParams* params);
 
 private:
 	std::string animationName;
@@ -21,7 +23,9 @@ class MoveActorNode : public ScriptNode
 {
 public:
 	MoveActorNode(Vector2 moveAmount);
-	virtual void Execute(Actor* source, Actor* target);
+
+private:
+	virtual void Execute(const ScriptParams* params);
 
 private:
 	Vector2 moveAmount;
@@ -31,7 +35,29 @@ class ForceOutNode : public ScriptNode
 {
 public:
 	ForceOutNode(){}
-	virtual void Execute(Actor* source, Actor* target);
+
+private:
+	virtual void Execute(const ScriptParams* params);
+};
+
+class TimerNode : public ScriptNode
+{
+public:
+	TimerNode(float duration);
+
+private:
+	virtual void Execute(const ScriptParams* params);
+	virtual bool IsFinished() { return isFinished; }
+
+private:
+	float time;
+	bool isFinished;
+};
+
+class KillActorNode : public ScriptNode
+{
+private:
+	virtual void Execute(const ScriptParams* params);
 };
 
 #endif

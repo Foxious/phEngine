@@ -48,21 +48,26 @@ Actor::Actor()
 	: speed(210.0f)
 	, mInput(0)
 	, direction(0.0f, -1.0f)
-	, duration(0.0f)
 	, isDead(false)
 {
 	
+}
+
+Actor::~Actor()
+{
+	//ClearScripts();
 }
 
 // PUBLIC ///////////////////////////////////////////////////////////////////////////////
 void Actor::Update(float dt)
 {
 	mInput->Update(this, dt);
-	duration -= dt;
-
-	if (duration < 0.0f)
+	if ( !updateScript.empty() )
 	{
-		isDead = true;
+		ScriptParams params;
+		params.target = this;
+		params.deltaTime = dt;
+		ExecuteScript(&updateScript, &params);
 	}
 }
 
@@ -80,7 +85,10 @@ void Actor::SetSprite(MeshInstancePtr sprite)
 /////////////////////////////////////////////////////////////////////////////////////////
 void Actor::OnCollide(Actor* collider)
 {
-	ExecuteScript(&collisionScript, this, collider);
+	ScriptParams params;
+	params.source = this;
+	params.target = collider;
+	ExecuteScript(&collisionScript, &params);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -97,9 +105,6 @@ void Actor::Move(Vector2 offset)
 	Vector3 absolute = mSprite->mXform.position + offset;
 
 	WarpTo( Vector2(absolute.x, absolute.y) );
-
-	lastMove = offset;
-
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -113,4 +118,11 @@ void Actor::WarpTo(Vector2 coords)
 {
 	mSprite->mXform.position = coords;
 	collision.position = CalculateBoundsPosition(mSprite->mXform);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+void Actor::ClearScripts()
+{
+	ClearScript(&collisionScript);
+	ClearScript(&updateScript);
 }

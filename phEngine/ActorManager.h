@@ -35,6 +35,7 @@ public:
 private:
 	XboxController mController;
 	ActorManager* actorManager;
+	DeviceState state;
 
 	unsigned int atkBtn;
 	unsigned int runBtn;

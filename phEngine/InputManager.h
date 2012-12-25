@@ -7,9 +7,16 @@ enum Devices
 	NUM_DEVICES
 };
 
+enum ButtonStates
+{
+	BTN_RELEASE = 0x01,
+	BTN_DOWN = 0x10,
+	BTN_HELD = 0x11,
+};
+
 struct DeviceState
 {
-	std::vector<bool> buttons;
+	std::vector<char> buttons;
 	std::vector<float> axes;
 };
 
