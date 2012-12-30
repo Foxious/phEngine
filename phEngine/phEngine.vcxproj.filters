@@ -218,6 +218,9 @@
     <ClCompile Include="Shapes.cpp">
       <Filter>Engine\Math</Filter>
     </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Engine\Control</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="phEngine.rc">

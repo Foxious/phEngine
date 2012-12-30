@@ -6,6 +6,7 @@
 #include "Actor.h"
 #include "Collision.h"
 #include "Component.h"
+#include "InputManager.h"
 #include "ObjectPool.h"
 
 typedef ObjectPool<Actor>::PoolItemPtr ActorPtr;
@@ -23,17 +24,22 @@ class PlayerController : public InputController
 {
 public:
 	PlayerController(int controllerNum, ActorManager* manager)
-		: mController(controllerNum)
+		: inputMapper( new InputMapper( new InputManager() )) // pH todo - CLEAN UP
 		, actorManager(manager)
 		, atkBtn(12)
 		, runBtn(13)
 	{
+		inputMapper->BindButton(InputMapper::atkBtn, X360, 12);
+		inputMapper->BindButton(InputMapper::runBtn, X360, 13);
+		inputMapper->BindAxis(InputMapper::lrAxis, X360, 2);
+		inputMapper->BindAxis(InputMapper::duAxis, X360, 3);
 	}
 
 	virtual void Update(Actor* actor, float dt);
 
 private:
-	XboxController mController;
+	//XboxController mController;
+	InputMapper* inputMapper;
 	ActorManager* actorManager;
 	DeviceState state;
 

@@ -1,0 +1,50 @@
+#include "stdafx.h"
+#include "InputManager.h"
+
+#include "assert.h"
+
+
+// PUBLIC ///////////////////////////////////////////////////////////////////////////////
+InputManager::InputManager()
+	: controller(0)
+{
+	controller.PrepDeviceState(&devices[X360]);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+void InputManager::Update(float dt)
+{
+	controller.Poll(&devices[X360]);
+}
+
+/// INPUT MAPPER ////////////////////////////////////////////////////////////////////////
+char InputMapper::GetButtonState(unsigned button)
+{
+	return *buttonMap[button];
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+float InputMapper::GetAxisState(unsigned axis)
+{
+	return *axisMap[axis];
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+void InputMapper::BindButton(unsigned button, unsigned device, unsigned buttonToBind)
+{
+	assert(button < NUM_BUTTONS);
+	buttonMap[button] = &inputManager->GetDevice(device)->buttons[buttonToBind];
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+void InputMapper::BindAxis(unsigned axis,unsigned device, unsigned axisToBind)
+{
+	assert(axis < NUM_AXES);
+	axisMap[axis] = &inputManager->GetDevice(device)->axes[axisToBind];
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+void InputMapper::Update(float dt)
+{
+	inputManager->Update(dt);
+}

@@ -2,6 +2,8 @@
 #include <float.h>
 #include "Controller.h"
 
+#include "InputManager.h"
+
 #define MIN_INPUT 4000 // to catch minor fuzz as you approach 0 on the stick
 
 // HELPERS ////////////////////////////////////////////////////////////////////
@@ -13,10 +15,10 @@ float QueryStickPosition(int input)
 ///////////////////////////////////////////////////////////////////////////////
 void MapXInputToState(const XINPUT_GAMEPAD* xinput, DeviceState* state)
 {
-	std::vector<char>& buttons = state->buttons;
+	std::vector<unsigned char>& buttons = state->buttons;
 	std::vector<float>& axes = state->axes;
-	buttons.resize(14);
-	axes.resize(6);
+	//buttons.resize(14);
+	//axes.resize(6);
 	for (int i = 0; i < 14; ++i)
 	{
 		buttons[i] = buttons[i] >> 1;
@@ -34,6 +36,13 @@ void MapXInputToState(const XINPUT_GAMEPAD* xinput, DeviceState* state)
 // PUBLIC /////////////////////////////////////////////////////////////////////
 XboxController::~XboxController()
 {
+}
+
+///////////////////////////////////////////////////////////////////////////////
+void XboxController::PrepDeviceState(DeviceState* state)
+{
+	state->buttons.resize(14);
+	state->axes.resize(6);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

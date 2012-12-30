@@ -76,35 +76,35 @@ ActorPtr ActorManager::CloneActor(const ActorPtr source)
 // PLAYER CONTROLLER ////////////////////////////////////////////////////////////////////
 void PlayerController::Update(Actor* actor, float dt)
 {
-	mController.Poll(&state);
-	if (mController.IsConnected())
+	inputMapper->Update(dt); // todo - this should just be taken care of by the GM
+
+	float multiplier = 1.0f;
+	if ( inputMapper->GetButtonState(InputMapper::runBtn) )
 	{
-		float multiplier = 1.0f;
-		if (state.buttons[runBtn])
-		{
-			multiplier = 2.0f;
-		}
-		Vector2 move;
-		move.x = state.axes[2] * actor->speed * dt * multiplier;
-		move.y = state.axes[3] * actor->speed * dt * multiplier;
+		multiplier = 2.0f;
+	}
+
+	Vector2 move;
+	move.x = inputMapper->GetAxisState(InputMapper::lrAxis) * actor->speed * dt * multiplier;
+	move.y = inputMapper->GetAxisState(InputMapper::duAxis) * actor->speed * dt * multiplier;
 		
-		if (move != Vector2::Zero )
+	if (move != Vector2::Zero )
+	{
 		actor->Move(move);
+	}
 
-		if (state.buttons[atkBtn] == BTN_RELEASE)
-		{
-			actor->GetAnimComponent()->PlayAnim(0U);
+	if (inputMapper->GetButtonState(InputMapper::atkBtn) == BTN_DOWN)
+	{
+		actor->GetAnimComponent()->PlayAnim(0U);
 
-			ActorPtr subActor = actorManager->CreateActorStub();
-			subActor->WarpTo(actor->GetPosition() + actor->GetDirection() * 350.0f);
-			subActor->GetAnimComponent()->PlayAnim(0U);
+		ActorPtr subActor = actorManager->CreateActorStub();
+		subActor->WarpTo(actor->GetPosition() + actor->GetDirection() * 350.0f);
+		subActor->GetAnimComponent()->PlayAnim(0U);
 			
-			ScriptNode* killActor = new KillActorNode();
-			ScriptNode* delay = new TimerNode(3.0f);
-			delay->AddScriptCompleteCallback(killActor);
+		ScriptNode* killActor = new KillActorNode();
+		ScriptNode* delay = new TimerNode(3.0f);
+		delay->AddScriptCompleteCallback(killActor);
 
-			subActor->updateScript.push_back(delay);
-		}
-
+		subActor->updateScript.push_back(delay);
 	}
 }
