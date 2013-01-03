@@ -1,4 +1,4 @@
 {
-	"Texture" : "protag.tga"
-	"Animations" : "testAnim.json"
+	"Texture" : "Character_Animation.tga"
+	"Animations" : "charAnim.json"
 }
