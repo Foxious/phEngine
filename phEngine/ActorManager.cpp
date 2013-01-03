@@ -85,8 +85,23 @@ void PlayerController::Update(Actor* actor, float dt)
 	}
 
 	Vector2 move;
-	move.x = inputMapper->GetAxisState(InputMapper::lrAxis) * actor->speed * dt * multiplier;
-	move.y = inputMapper->GetAxisState(InputMapper::duAxis) * actor->speed * dt * multiplier;
+	float moveSpeed = actor->speed * dt * multiplier;
+	move.x = inputMapper->GetAxisState(InputMapper::lrAxis) * moveSpeed;
+	move.y = inputMapper->GetAxisState(InputMapper::duAxis) * moveSpeed;
+
+	char leftButton		= inputMapper->GetButtonState(InputMapper::leftBtn);
+	char rightButton	= inputMapper->GetButtonState(InputMapper::rightBtn);
+	char upButton		= inputMapper->GetButtonState(InputMapper::upBtn);
+	char downButton		= inputMapper->GetButtonState(InputMapper::downBtn);
+
+	if (leftButton || rightButton)
+	{
+		move.x = (rightButton - leftButton) * moveSpeed;
+	}
+	if (upButton || downButton)
+	{
+		move.y = (upButton - downButton) * moveSpeed;
+	}
 		
 	if (move != Vector2::Zero )
 	{

@@ -156,6 +156,12 @@
     <ClInclude Include="Shapes.h">
       <Filter>Engine\Math</Filter>
     </ClInclude>
+    <ClInclude Include="WinKeyboardManager.h">
+      <Filter>Engine\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceState.h">
+      <Filter>Engine\Control</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -219,6 +225,9 @@
       <Filter>Engine\Math</Filter>
     </ClCompile>
     <ClCompile Include="InputManager.cpp">
+      <Filter>Engine\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="WinKeyboardManager.cpp">
       <Filter>Engine\Control</Filter>
     </ClCompile>
   </ItemGroup>

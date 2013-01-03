@@ -1,28 +1,17 @@
 #ifndef INPUT_MANAGER_H
 #define INPUT_MANAGER_H
 
-#include <vector>
+#include "DeviceState.h"
 
 // pH TODO - abstract this away
 #include "Controller.h"
+#include "WinKeyboardManager.h"
 
 enum Devices
 {
 	X360,
+	KEYBOARD,
 	NUM_DEVICES
-};
-
-enum ButtonStates
-{
-	BTN_RELEASE = 0x01,
-	BTN_DOWN = 1 << 1,
-	BTN_HELD = BTN_DOWN | BTN_RELEASE,
-};
-
-struct DeviceState
-{
-	std::vector<unsigned char> buttons;
-	std::vector<float> axes;
 };
 
 class InputManager
@@ -59,10 +48,7 @@ public:
 		NUM_AXES
 	};
 
-	InputMapper(InputManager* manager)
-		: inputManager(manager)
-	{
-	}
+	InputMapper(InputManager* manager);
 
 	char GetButtonState(unsigned button);
 	float GetAxisState(unsigned axis);

@@ -93,6 +93,7 @@
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Controller.h" />
+    <ClInclude Include="DeviceState.h" />
     <ClInclude Include="DXTexture.h" />
     <ClInclude Include="GameMaster.h" />
     <ClInclude Include="Helper.h" />
@@ -114,6 +115,7 @@
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Vertex.h" />
+    <ClInclude Include="WinKeyboardManager.h" />
     <ClInclude Include="XForm.h" />
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +143,7 @@
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Vector.cpp" />
     <ClCompile Include="Vertex.cpp" />
+    <ClCompile Include="WinKeyboardManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="phEngine.rc" />
