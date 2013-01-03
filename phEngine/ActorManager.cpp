@@ -123,4 +123,9 @@ void PlayerController::Update(Actor* actor, float dt)
 
 		subActor->updateScript.push_back(delay);
 	}
+
+	if ( !actor->GetAnimComponent()->IsPlaying() )
+	{
+		actor->GetAnimComponent()->PlayAnim("Idle", Anim_Loop);
+	}
 }

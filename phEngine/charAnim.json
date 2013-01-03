@@ -3,6 +3,11 @@
 	"Anims":
 	[
 		{
+			"Name" : "Idle",
+			"Start" : 0,
+			"Duration" : [0.1]
+		}
+		{
 			"Name": "Jump",
 			"Start": 0,
 			"Duration": [0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15]
