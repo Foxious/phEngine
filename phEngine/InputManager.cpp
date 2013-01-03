@@ -41,6 +41,12 @@ char InputMapper::GetButtonState(unsigned button)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
+char InputMapper::GetButtonStateToggle(unsigned button)
+{
+	return buttonMap[button] == 0 ? 0 : (*buttonMap[button]) >> 1;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
 float InputMapper::GetAxisState(unsigned axis)
 {
 	return axisMap[axis] == 0 ? 0.0f : *axisMap[axis];

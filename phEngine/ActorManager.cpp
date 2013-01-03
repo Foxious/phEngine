@@ -89,10 +89,10 @@ void PlayerController::Update(Actor* actor, float dt)
 	move.x = inputMapper->GetAxisState(InputMapper::lrAxis) * moveSpeed;
 	move.y = inputMapper->GetAxisState(InputMapper::duAxis) * moveSpeed;
 
-	char leftButton		= inputMapper->GetButtonState(InputMapper::leftBtn);
-	char rightButton	= inputMapper->GetButtonState(InputMapper::rightBtn);
-	char upButton		= inputMapper->GetButtonState(InputMapper::upBtn);
-	char downButton		= inputMapper->GetButtonState(InputMapper::downBtn);
+	char leftButton		= inputMapper->GetButtonStateToggle(InputMapper::leftBtn);
+	char rightButton	= inputMapper->GetButtonStateToggle(InputMapper::rightBtn);
+	char upButton		= inputMapper->GetButtonStateToggle(InputMapper::upBtn);
+	char downButton		= inputMapper->GetButtonStateToggle(InputMapper::downBtn);
 
 	if (leftButton || rightButton)
 	{

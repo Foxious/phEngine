@@ -51,6 +51,7 @@ public:
 	InputMapper(InputManager* manager);
 
 	char GetButtonState(unsigned button);
+	char GetButtonStateToggle(unsigned button);
 	float GetAxisState(unsigned axis);
 
 	void BindButton(unsigned button, unsigned device, unsigned buttonToBind);
