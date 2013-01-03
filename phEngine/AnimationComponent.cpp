@@ -28,38 +28,38 @@ enum AnimKeysEnum
 	NUM_KEYS
 };
 
-AnimationData DeserializeAnimation(const std::string& jsonData, jsmntok_t* tokens, size_t numToks)
+AnimationData DeserializeAnimation(const std::string& jsonData, jsmntok_t* tokens, size_t* start, size_t numToks)
 {
-	size_t i = 0;
+	size_t end = numToks + *start;
 	std::string tokStr;
 
 	AnimationData data;
 
-	while (i < numToks)
+	while (*start < end)
 	{
-		jsmntok_t & thisTok = tokens[i];
+		jsmntok_t & thisTok = tokens[*start];
 		tokStr = SubstringFromToken(jsonData, thisTok); 
 
 		if (tokStr.compare(animKeys[animName]) == 0)
 		{
-			data.name = SubstringFromToken(jsonData, tokens[++i]);
+			data.name = SubstringFromToken(jsonData, tokens[++(*start)]);
 		}
 
 		else if (tokStr.compare(animKeys[animStart]) == 0)
 		{
-			std::string startFrameStr = SubstringFromToken(jsonData, tokens[++i]);
+			std::string startFrameStr = SubstringFromToken(jsonData, tokens[++(*start)]);
 			data.startFrame = strtoul(startFrameStr.c_str(), NULL, 0);
 		}
 		else if (tokStr.compare(animKeys[animData]) == 0)
 		{
-			jsmntok_t & collectionTok = tokens[++i];
+			jsmntok_t & collectionTok = tokens[++(*start)];
 			data.frames.reserve(collectionTok.size);
 			for (int x = 0; x < collectionTok.size; ++x)
 			{
-				data.frames.push_back(FloatFromToken(jsonData, tokens[++i]));
+				data.frames.push_back(FloatFromToken(jsonData, tokens[++(*start)]));
 			}
 		}
-		++i;
+		++(*start);
 	}
 
 	return data;
@@ -197,10 +197,10 @@ void AnimationComponent::ParseJsonData(const std::string& jsonData)
 
 	char str[255];
 
-	int i = 1;
+	size_t i = 1;
 	std::string keyStr;
 	jsmntok_t *keyTok;
-	int count=0;
+	size_t count=0;
 	while(tokens[count].type >= 0) ++count;
 	while (i < count)
 	{
@@ -219,10 +219,12 @@ void AnimationComponent::ParseJsonData(const std::string& jsonData)
 		{
 			// we have an animation
 			jsmntok_t & animTok = tokens[++i];
+			++i;
 			for (int j = 0; j < animTok.size; ++j)
 			{
-				jsmntok_t *animData = &tokens[++i];
-				anims.push_back(DeserializeAnimation(jsonData, animData, animData->size));
+				jsmntok_t *animData = &tokens[i];
+				anims.push_back(DeserializeAnimation(jsonData, tokens, &i, animData->size));
+				//i += animData->size;
 			}
 
 			i += animTok.size;

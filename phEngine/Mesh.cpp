@@ -121,6 +121,7 @@ ObjectPool<MeshInstance>::PoolItemPtr MeshBuilder::DeserializeSprite(const std::
 {
 	MeshInstance newSprite;
 	newSprite.mParent = &mSpriteDef;
+	ITexture* newTex = 0;
 	jsmn_parser parser;
 	jsmn_init(&parser);
 
@@ -141,8 +142,7 @@ ObjectPool<MeshInstance>::PoolItemPtr MeshBuilder::DeserializeSprite(const std::
 
 		if (keyStr.compare(spriteKeys[texture])==0)
 		{
-			ITexture* newTex = mTextureManager.GetTexture( SubstringFromToken(spriteData, tokens[++i]) );
-			newSprite.SetTexture(newTex);
+			newTex = mTextureManager.GetTexture( SubstringFromToken(spriteData, tokens[++i]) );
 		}
 		else if (keyStr.compare(spriteKeys[anims]) == 0)
 		{
@@ -150,6 +150,7 @@ ObjectPool<MeshInstance>::PoolItemPtr MeshBuilder::DeserializeSprite(const std::
 		}
 		++i;
 	} // end while
+	newSprite.SetTexture(newTex);
 	mDefinitions.insert(mDefinitions.begin(), std::unordered_map<std::string, MeshInstance>::value_type(name, newSprite) );
 	ObjectPool<MeshInstance>::PoolItemPtr thisMesh = mInstances.Insert( newSprite );
 	return thisMesh;

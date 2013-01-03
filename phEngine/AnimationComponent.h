@@ -41,7 +41,7 @@ public:
 		, playbackFlags(0)
 	{
 		currentAnimIndex = 0;
-		LoadFromJSON("testAnim.json");
+		//LoadFromJSON("testAnim.json");
 	}
 
 	AnimationComponent(const std::string& jsonData);

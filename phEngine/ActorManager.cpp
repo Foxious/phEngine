@@ -19,7 +19,7 @@ void ActorManager::OnRegister()
 	player->SetController(playerController);
 
 	Script collisionScript;
-	collisionScript.push_back(new PlayAnimationNode(""));
+	collisionScript.push_back(new PlayAnimationNode("Jump"));
 	
 	player->SetCollisionScript(collisionScript);
 }
@@ -106,6 +106,7 @@ void PlayerController::Update(Actor* actor, float dt)
 	if (move != Vector2::Zero )
 	{
 		actor->Move(move);
+		actor->GetAnimComponent()->PlayAnim("Walk");
 	}
 
 	if (inputMapper->GetButtonState(InputMapper::atkBtn) == BTN_DOWN)
