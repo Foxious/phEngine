@@ -62,8 +62,8 @@ private:
 	// pH TODO - when you make something
 	// to manage shaders, move this there.
 	void SetupShader();
-	ObjectPool<MeshInstance>::PoolItemPtr LoadSpriteFromFile(const std::string& fileName);
-	ObjectPool<MeshInstance>::PoolItemPtr DeserializeSprite (const std::string& spriteData, const std::string& name);
+	MeshInstancePtr LoadSpriteFromFile(const std::string& fileName);
+	MeshInstancePtr DeserializeSprite (const std::string& spriteData, const std::string& name);
 
 private:
 	MeshBuilder(const MeshBuilder &);

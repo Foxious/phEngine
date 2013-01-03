@@ -9,4 +9,6 @@ std::string SubstringFromToken(const std::string& jsonData, const jsmntok_t& tok
 unsigned int UnsignedFromToken(const std::string& jsonData, const jsmntok_t& token);
 float FloatFromToken(const std::string& jsonData, const jsmntok_t& token);
 
+std::string JsonStringFromFile(const char* file);
+
 #endif

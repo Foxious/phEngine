@@ -179,28 +179,7 @@ void MeshBuilder::MakeSprite()
 	mRenderer->CreateBuffers(mSpriteDef);
 }
 
-ObjectPool<MeshInstance>::PoolItemPtr MeshBuilder::LoadSpriteFromFile(const std::string& fileName)
+MeshInstancePtr MeshBuilder::LoadSpriteFromFile(const std::string& fileName)
 {
-	// pH TODO - make dumping a file into a string its own function - you do it a lot.
-	int length = 0;
-	char* buffer = 0;
-	std::fstream f;
-	f.open(fileName.c_str(), std::fstream::in);
-
-	f.seekg(0, std::ios::end);
-	length = f.tellg();
-	f.seekg(0, std::ios::beg);
-
-	buffer = new char [length];
-
-	f.read(buffer, length);
-	f.close();
-
-	std::string fileData(buffer);
-
-	ObjectPool<MeshInstance>::PoolItemPtr mesh = DeserializeSprite(fileData, fileName);
-
-	delete [] buffer;
-
-	return mesh;
+	return DeserializeSprite( JsonStringFromFile(fileName.c_str()), fileName );
 }

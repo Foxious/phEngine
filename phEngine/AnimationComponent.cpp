@@ -157,25 +157,7 @@ void AnimationComponent::Update(float dt)
 /////////////////////////////////////////////////////////////////////////////////////////
 void AnimationComponent::LoadFromJSON(const std::string& name)
 {
-	int length = 0;
-	char* buffer = 0;
-	std::fstream f;
-	f.open(name.c_str(), std::fstream::in);
-
-	f.seekg(0, std::ios::end);
-	length = f.tellg();
-	f.seekg(0, std::ios::beg);
-
-	buffer = new char [length];
-
-	f.read(buffer, length);
-	f.close();
-
-	std::string fileData(buffer);
-
-	ParseJsonData(fileData);
-
-	delete [] buffer;
+	ParseJsonData( JsonStringFromFile( name.c_str() ) );
 }
 
 // PRIVATE //////////////////////////////////////////////////////////////////////////////
