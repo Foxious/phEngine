@@ -17,8 +17,6 @@ void MapXInputToState(const XINPUT_GAMEPAD* xinput, DeviceState* state)
 {
 	std::vector<unsigned char>& buttons = state->buttons;
 	std::vector<float>& axes = state->axes;
-	//buttons.resize(14);
-	//axes.resize(6);
 	for (int i = 0; i < 14; ++i)
 	{
 		buttons[i] = buttons[i] >> 1;
@@ -63,25 +61,4 @@ void XboxController::Poll(DeviceState* state)
 	memset(&mState, 0, sizeof(XINPUT_STATE));
 	mIsConnected = XInputGetState(mPlayerID, &mState) == ERROR_SUCCESS;
 	MapXInputToState(&mState.Gamepad, state);
-}
-
-///////////////////////////////////////////////////////////////////////////////
-float XboxController::ThumbLX()
-{
-	if (IsConnected())
-	{
-		return QueryStickPosition(mState.Gamepad.sThumbLX);
-	}
-	return 0.0f;
-}
-
-///////////////////////////////////////////////////////////////////////////////
-float XboxController::ThumbLY()
-{
-	if (IsConnected())
-	{
-		return QueryStickPosition(mState.Gamepad.sThumbLY);
-	}
-
-	return 0.0f;
 }

@@ -19,9 +19,6 @@ public:
 	void PrepDeviceState(DeviceState* state);
 	void Vibrate(int leftval =0, int rightval = 0);
 
-	float ThumbLX();
-	float ThumbLY();
-
 	void Poll(DeviceState* state);
 
 private:
