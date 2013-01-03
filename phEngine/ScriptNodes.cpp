@@ -13,7 +13,7 @@ PlayAnimationNode::PlayAnimationNode(const std::string& animName)
 
 void PlayAnimationNode::Execute(const ScriptParams* params)
 {
-	params->source->GetAnimComponent()->PlayAnim(animationName); // TODO: dont' hard code this.
+	params->target->GetAnimComponent()->PlayAnim(animationName);
 }
 
 // FORCE OUT NODE ///////////////////////////////////////////////////////////////////////

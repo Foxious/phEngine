@@ -90,6 +90,7 @@ void AnimationComponent::PlayAnim(unsigned int index, int flags)
 	currentAnimIndex = index;
 	time = 0.0f;
 	currentFrame = 0;
+	playbackSpeed = 1.0f;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -131,7 +132,7 @@ void AnimationComponent::Update(float dt)
 	int startFrame = thisAnim.startFrame;
 
 	float dur = thisAnim.frames[currentFrame];
-	time += dt;
+	time += dt * playbackSpeed;
 	while (time > dur && currentFrame < thisAnim.frames.size())
 	{
 		time -= dur;

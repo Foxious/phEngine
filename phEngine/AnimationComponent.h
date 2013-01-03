@@ -58,6 +58,8 @@ public:
 	bool IsPlaying() { return (state & Anim_Playing) > 0; }
 	bool IsPaused() { return (state & Anim_Paused) > 0; }
 
+	void SetPlaybackSpeed(float amount) { playbackSpeed = amount; }
+
 	XForm GetXForm() { return mUV; }
 
 	void LoadFromJSON(const std::string& name);
@@ -77,6 +79,7 @@ private:
 	unsigned int currentAnimIndex;
 	int playbackFlags;
 	int state;
+	float playbackSpeed;
 
 };
 

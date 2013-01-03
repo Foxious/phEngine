@@ -107,6 +107,7 @@ void PlayerController::Update(Actor* actor, float dt)
 	{
 		actor->Move(move);
 		actor->GetAnimComponent()->PlayAnim("Walk");
+		actor->GetAnimComponent()->SetPlaybackSpeed(multiplier * 0.5f);
 	}
 
 	if (inputMapper->GetButtonState(InputMapper::atkBtn) == BTN_DOWN)
