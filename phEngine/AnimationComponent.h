@@ -41,12 +41,10 @@ public:
 		, playbackFlags(0)
 	{
 		currentAnimIndex = 0;
-		//LoadFromJSON("testAnim.json");
 	}
 
 	AnimationComponent(const std::string& jsonData);
 
-	//AnimationComponent(const AnimationComponent& rhs);
 
 	void Update(float dt);
 

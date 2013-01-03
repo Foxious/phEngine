@@ -128,6 +128,7 @@ void AnimationComponent::Update(float dt)
 		return;
 	}
 	AnimationData thisAnim = GetCurrentAnim();
+	int startFrame = thisAnim.startFrame;
 
 	float dur = thisAnim.frames[currentFrame];
 	time += dt;
@@ -149,8 +150,8 @@ void AnimationComponent::Update(float dt)
 
 	unsigned int framesPerRow = (unsigned int)(1.0f / mUV.scale.x);
 	
-	mUV.position.x = (currentFrame % framesPerRow) * mUV.scale.x;
-	mUV.position.y = (currentFrame / framesPerRow) * mUV.scale.y;
+	mUV.position.x = ( (currentFrame + startFrame) % framesPerRow) * mUV.scale.x;
+	mUV.position.y = ( (currentFrame + startFrame) / framesPerRow) * mUV.scale.y;
 
 }
 
