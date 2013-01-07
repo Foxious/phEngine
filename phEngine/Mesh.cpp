@@ -64,7 +64,6 @@ void MeshInstance::SetTexture(ITexture* texture)
 MeshBuilder::MeshBuilder()
 	: mInstances(1000)
 {
-	//mInstances.reserve(20);
 }
 
 MeshBuilder::~MeshBuilder()
@@ -79,6 +78,9 @@ void MeshBuilder::SetRenderer(IRenderer* renderer)
 	mRenderer = renderer;
 	mTextureManager.SetRenderer(renderer);
 	MakeSprite();
+
+	MeshInstancePtr bg = GetInstance("bgDef.json");
+	bg->mXform.position = Vector3(0.0f, 0.0f, -1.0f);
 }
 
 void MeshBuilder::Update(float dt)
