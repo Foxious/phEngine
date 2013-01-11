@@ -7,7 +7,7 @@
 // CTOR /////////////////////////////////////////////////////////////////////////////////
 ActorManager::ActorManager()
 	: actors(1000)
-	, collider(512.0f, 3)
+	, collider(Vector2(-512.0f, -512.0f), 512.0f, 3)
 {
 	playerController = new PlayerController(0, this);
 }

@@ -110,8 +110,8 @@ const std::vector<Actor*>& SpatialHash::operator[](unsigned int index)
 // PRIVATE //////////////////////////////////////////////////////////////////////////////
 unsigned int SpatialHash::HashPosition (Vector2 position)
 {
-	unsigned int bucketX = (unsigned int)(position.x / size);
-	unsigned int bucketY = (unsigned int)(position.y / size);
+	unsigned int bucketX = (unsigned int)((position.x - start.x) / size);
+	unsigned int bucketY = (unsigned int)((position.y - start.y) / size);
 
 	return (bucketY * stride) + bucketX;
 }

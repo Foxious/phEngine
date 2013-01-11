@@ -10,8 +10,9 @@
 class SpatialHash
 {
 public:
-	SpatialHash(float bucketSize, unsigned int bucketStride)
-		: size(bucketSize)
+	SpatialHash(Vector2 startPos, float bucketSize, unsigned int bucketStride)
+		: start(startPos)
+		, size(bucketSize)
 		, stride(bucketStride)
 	{
 		buckets.resize(bucketStride * bucketStride);
@@ -28,6 +29,7 @@ private:
 	unsigned int HashPosition(Vector2 position);
 
 private:
+	Vector2 start;
 	float size;
 	unsigned int stride;
 
