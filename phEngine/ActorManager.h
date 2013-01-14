@@ -1,9 +1,11 @@
 #ifndef ACTOR_MANAGER_H
 #define ACTOR_MANAGER_H
 
+#include <unordered_map>
 #include <vector>
 
 #include "Actor.h"
+#include "ActorScript.h"
 #include "Collision.h"
 #include "Component.h"
 #include "InputManager.h"
@@ -66,12 +68,16 @@ public:
 	virtual void Update(float dt);
 	virtual void OnRegister();
 
-	ActorPtr CreateActor(const std::string& name);
+	ActorPtr GetActor(const std::string& name);
 	ActorPtr CreateActorStub(); // for test purposes atm
 	ActorPtr CloneActor(const ActorPtr source);
 
 private:
+	ActorPtr DeserializeActor(const std::string& actorData, const std::string& name);
+
+private:
 	ObjectPool<Actor> actors;
+	std::unordered_map<std::string, Actor> actorDefinitions;
 	SpatialHash collider;
 	PlayerController* playerController;
 	PropController propController;

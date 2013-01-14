@@ -11,7 +11,6 @@ Vector2 CalculateDirection(float x, float y)
 {
 	float absX = abs(x);
 	float absY = abs(y);
-
 	Vector2 retval = Vector2(0.0f,0.0f);
 	if (absX >= absY) 
 	{
@@ -21,7 +20,6 @@ Vector2 CalculateDirection(float x, float y)
 	{
 		retval.y = Signum(y);
 	}
-
 	return retval;
 }
 
@@ -48,26 +46,27 @@ Actor::Actor()
 	: speed(210.0f)
 	, mInput(0)
 	, direction(0.0f, -1.0f)
+
 	, isDead(false)
 {
-	
+	scripts.resize(NUM_EVENTS);
+	ClearScripts();
 }
 
 Actor::~Actor()
 {
-	//ClearScripts();
 }
 
 // PUBLIC ///////////////////////////////////////////////////////////////////////////////
 void Actor::Update(float dt)
 {
 	mInput->Update(this, dt);
-	if ( !updateScript.empty() )
+	VM::scriptID updateScript = scripts[ev_update];
+	if ( updateScript != VM::noScript )
 	{
-		ScriptParams params;
-		params.target = this;
-		params.deltaTime = dt;
-		ExecuteScript(&updateScript, &params);
+		VM::ScriptState state;
+		state.push_back((unsigned int) this);
+		VM::Execute(updateScript, state);
 	}
 }
 
@@ -83,12 +82,25 @@ void Actor::SetSprite(MeshInstancePtr sprite)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
+void Actor::SetScriptEvent(unsigned int eventID, VM::scriptID script)
+{
+	assert (eventID < NUM_EVENTS);
+	scripts[eventID] = script;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
 void Actor::OnCollide(Actor* collider)
 {
-	ScriptParams params;
+	VM::ScriptParams params;
 	params.source = this;
 	params.target = collider;
-	ExecuteScript(&collisionScript, &params);
+
+	// target is index 0, source is index 1
+	VM::ScriptState state;
+	state.push_back((unsigned int)collider);
+	state.push_back((unsigned int)this);
+
+	VM::Execute( scripts[ev_collision], state );
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -123,6 +135,8 @@ void Actor::WarpTo(Vector2 coords)
 /////////////////////////////////////////////////////////////////////////////////////////
 void Actor::ClearScripts()
 {
-	ClearScript(&collisionScript);
-	ClearScript(&updateScript);
+	for (int i = 0; i < NUM_EVENTS; ++i)
+	{
+		scripts[i] = VM::noScript;
+	}
 }

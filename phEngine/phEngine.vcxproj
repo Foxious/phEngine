@@ -98,6 +98,7 @@
     <ClInclude Include="GameMaster.h" />
     <ClInclude Include="Helper.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="Instruction.h" />
     <ClInclude Include="IRenderer.h" />
     <ClInclude Include="json.h" />
     <ClInclude Include="Mesh.h" />
@@ -105,7 +106,7 @@
     <ClInclude Include="phEngine.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="ScriptNodes.h" />
+    <ClInclude Include="IResourcePool.h" />
     <ClInclude Include="Shaders.h" />
     <ClInclude Include="Shapes.h" />
     <ClInclude Include="stdafx.h" />
@@ -129,11 +130,11 @@
     <ClCompile Include="DXShaders.cpp" />
     <ClCompile Include="GameMaster.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="Instruction.cpp" />
     <ClCompile Include="json.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="phEngine.cpp" />
     <ClCompile Include="Renderer.cpp" />
-    <ClCompile Include="ScriptNodes.cpp" />
     <ClCompile Include="Shapes.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

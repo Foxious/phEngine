@@ -49,6 +49,9 @@
     <Filter Include="Engine\Actor\Scripts">
       <UniqueIdentifier>{46aeeb6a-36b3-4176-87a7-d58fbd38bcca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Containers">
+      <UniqueIdentifier>{c53cf173-05d1-47aa-95a6-86d1eae566f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -141,16 +144,10 @@
     <ClInclude Include="ActorManager.h">
       <Filter>Engine\Actor</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectPool.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Collision.h">
       <Filter>Engine\Actor</Filter>
     </ClInclude>
     <ClInclude Include="ActorScript.h">
-      <Filter>Engine\Actor\Scripts</Filter>
-    </ClInclude>
-    <ClInclude Include="ScriptNodes.h">
       <Filter>Engine\Actor\Scripts</Filter>
     </ClInclude>
     <ClInclude Include="Shapes.h">
@@ -161,6 +158,15 @@
     </ClInclude>
     <ClInclude Include="DeviceState.h">
       <Filter>Engine\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="IResourcePool.h">
+      <Filter>Engine\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectPool.h">
+      <Filter>Engine\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Instruction.h">
+      <Filter>Engine\Actor\Scripts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -218,9 +224,6 @@
     <ClCompile Include="ActorScript.cpp">
       <Filter>Engine\Actor\Scripts</Filter>
     </ClCompile>
-    <ClCompile Include="ScriptNodes.cpp">
-      <Filter>Engine\Actor\Scripts</Filter>
-    </ClCompile>
     <ClCompile Include="Shapes.cpp">
       <Filter>Engine\Math</Filter>
     </ClCompile>
@@ -229,6 +232,9 @@
     </ClCompile>
     <ClCompile Include="WinKeyboardManager.cpp">
       <Filter>Engine\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Instruction.cpp">
+      <Filter>Engine\Actor\Scripts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

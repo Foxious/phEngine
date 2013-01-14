@@ -1,0 +1,7 @@
+{
+	"Sprite" : "testSpriteDef.json",
+	"Controller" : "propController"
+	"Scripts" : 
+	["npcCollisionScript.abc"]
+		
+}

@@ -17,6 +17,14 @@ public:
 	virtual void Update(Actor* actor, float dt) = 0;
 };
 
+enum ScriptEvents
+{
+	ev_collision = 0,
+	ev_update,
+
+	NUM_EVENTS
+};
+
 
 class Actor
 {
@@ -28,7 +36,7 @@ public:
 	void SetSprite(MeshInstancePtr sprite);
 	const MeshInstancePtr GetSprite() const { return mSprite; }
 	inline void SetController(InputController* controller) { mInput = controller; }
-	inline void SetCollisionScript(Script script) { collisionScript = script; }
+	void SetScriptEvent(unsigned eventID, VM::scriptID script);
 
 	Vector2 GetPosition() { return Vector2(mSprite->mXform.position.x, mSprite->mXform.position.y); }
 	Vector2 GetScale() { return Vector2(mSprite->mXform.scale.x, mSprite->mXform.scale.y); }
@@ -52,8 +60,6 @@ public:
 	void Update(float dt);
 
 	float speed;
-	Script updateScript;
-
 
 private:
 	MeshInstancePtr mSprite;
@@ -61,7 +67,7 @@ private:
 	Box collision;
 	Vector2 direction;
 
-	Script collisionScript;
+	std::vector<VM::scriptID> scripts;
 
 	bool isDead;
 };
