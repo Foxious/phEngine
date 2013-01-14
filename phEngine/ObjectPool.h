@@ -181,9 +181,9 @@ public:
 		Remove(poolItem.Index());
 	}
 	
-	void Remove(const Iterator* iterator)
+	void Remove(const Iterator& iterator)
 	{
-		Remove(iterator->GetIndex());
+		Remove(iterator.GetIndex());
 	}
 
 	Iterator Begin()
