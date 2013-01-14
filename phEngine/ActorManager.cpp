@@ -19,7 +19,12 @@ const char* actorKeys[NUM_KEYS] = {"Sprite", "Controller", "Scripts"};
 /////////////////////////////////////////////////////////////////////////////////////////
 ActorPtr ActorManager::GetActor(const std::string& resourceFile)
 {
-	return DeserializeActor(JsonStringFromFile(resourceFile.c_str()), resourceFile);
+	if (actorDefinitions.find(resourceFile) == actorDefinitions.end())
+	{
+		return DeserializeActor(JsonStringFromFile(resourceFile.c_str()), resourceFile);
+	}
+
+	return actors.Insert(actorDefinitions[resourceFile]);
 }
 
 ActorPtr ActorManager::DeserializeActor(const std::string& actorData, const std::string& resourceName)
