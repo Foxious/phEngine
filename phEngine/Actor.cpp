@@ -64,8 +64,8 @@ void Actor::Update(float dt)
 	VM::scriptID updateScript = scripts[ev_update];
 	if ( updateScript != VM::noScript )
 	{
-		VM::ScriptState state;
-		state.push_back((unsigned int) this);
+		VM::ScriptStack state;
+		state.push((unsigned char*) this, sizeof(this));
 		VM::Execute(updateScript, state);
 	}
 }
@@ -96,9 +96,11 @@ void Actor::OnCollide(Actor* collider)
 	params.target = collider;
 
 	// target is index 0, source is index 1
-	VM::ScriptState state;
-	state.push_back((unsigned int)collider);
-	state.push_back((unsigned int)this);
+	VM::ScriptStack state;
+	unsigned int colliderAddr = (unsigned int) collider;
+	unsigned int thisAddr = (unsigned int) this;
+	state.push((unsigned char*)&colliderAddr, sizeof(collider));
+	state.push((unsigned char*)&thisAddr, sizeof(this));
 
 	VM::Execute( scripts[ev_collision], state );
 }

@@ -16,7 +16,22 @@ namespace VM
 	};
 
 	typedef std::vector<Instruction> Script;
-	typedef std::vector<unsigned int> ScriptState;
+
+	class ScriptStack
+	{
+	public:
+		ScriptStack();
+		void push(unsigned char* data, size_t size);
+		unsigned char* get(size_t index);
+	private:
+		enum StackSize
+		{
+			S = 2048
+		};
+		size_t tail;
+		unsigned char stack[S];
+	};
+
 	typedef unsigned int scriptID;
 
 	const scriptID noScript = (scriptID)-1;
@@ -24,7 +39,7 @@ namespace VM
 	void CopyScript(Script& dst, const Script& src);
 
 	void Execute(scriptID id);
-	void Execute(scriptID id, ScriptState& state);
+	void Execute(scriptID id, ScriptStack& state);
 	void SaveCompiledScript(const std::string& file, scriptID id);
 	scriptID AddScript(const Script& script);
 	const Script& GetScript(scriptID id);

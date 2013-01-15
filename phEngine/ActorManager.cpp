@@ -93,8 +93,15 @@ void ActorManager::OnRegister()
 	player->SetController(playerController);
 
 	VM::Script collisionScript;
-	unsigned char data[6] = {0, 'J', 'u', 'm', 'p', '\0'};
-	collisionScript.push_back( VM::Instruction(VM::op_playanim, data, 6*sizeof(unsigned char) ) );
+	char playName[10];
+	int size = strlen("Jump") + 1;
+	memcpy(&playName[0], &size, sizeof(size_t));
+	memcpy(&playName[sizeof(size_t)], "Jump", size);
+	collisionScript.push_back( VM::Instruction(VM::op_push, (unsigned char*)playName, sizeof(size_t) + size) );
+
+
+	unsigned char playData[2] = { 0, 8 };
+	collisionScript.push_back( VM::Instruction(VM::op_playanim, playData, 2*sizeof(unsigned char) ) );
 
 	VM::scriptID id = VM::AddScript(collisionScript);
 	
@@ -130,7 +137,7 @@ ActorPtr ActorManager::CreateActorStub()
 	newActor.SetSprite(sprite);
 	newActor.SetController(&propController);
 	VM::Script collisionScript;
-	unsigned char data[2] = {0, 1};
+	unsigned char data[2] = {0, 4};
 	collisionScript.push_back( VM::Instruction(VM::op_forceout, data, 2* sizeof(char)) );
 	VM::scriptID id = VM::AddScript(collisionScript);
 	newActor.SetScriptEvent(ev_collision, id);

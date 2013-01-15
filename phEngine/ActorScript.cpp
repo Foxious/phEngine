@@ -6,16 +6,33 @@
 #include <string>
 #include <unordered_map>
 
-#include "ActorManager.h"
 #include "Actor.h"
+#include "ActorManager.h"
 
 namespace VM
 {
 	#define COLLISION_PADDING 0.1f
-	#define STACK_SIZE 256;
 
 	std::vector<Script> scripts;
 	std::unordered_map<std::string, scriptID> loadedScripts;
+
+	ScriptStack::ScriptStack()
+		: tail(0)
+	{
+	}
+
+	void ScriptStack::push(unsigned char* data, size_t size)
+	{
+		assert ( (tail+size) < S);
+		memcpy(stack + tail, data, size);
+		tail += size;
+	}
+
+	unsigned char* ScriptStack::get(size_t index)
+	{
+		assert( index < tail );
+		return &stack[index];
+	}
 
 
 	// FUNCTIONS ////////////////////////////////////////////////////////////////////////
@@ -115,14 +132,19 @@ namespace VM
 	}
 
 	// EXECUTE /////////////////////////////////////////////////////////////////////////////
+	Actor* GetActor(unsigned char* data)
+	{
+		return (Actor*)*(unsigned int*)data;
+	}
+
 	void Execute(scriptID id)
 	{
-		ScriptState scriptState;
+		ScriptStack scriptState;
 		Execute(id, scriptState);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
-	void Execute(scriptID id, ScriptState& scriptState)
+	void Execute(scriptID id, ScriptStack& scriptState)
 	{
 		Script script = scripts[id];
 		Script::const_iterator ins = script.begin();
@@ -138,8 +160,9 @@ namespace VM
 			case op_push:
 				{
 					const unsigned char* data = ins->GetData();
-					unsigned int value = *(unsigned int*)data;
-					scriptState.push_back(value);
+					unsigned int size = *(unsigned int*)data;
+					unsigned char* value = (unsigned char*)(data + 4);
+					scriptState.push(value, size);
 				}
 
 				break;
@@ -153,8 +176,8 @@ namespace VM
 				{
 					// figure out our overlap and how much we have.
 					const unsigned char* data = ins->GetData();
-					Actor* target = (Actor*)scriptState[*data];
-					Actor* source = (Actor*)scriptState[*(data+1)];
+					Actor* target = GetActor(scriptState.get(*data));
+					Actor* source = GetActor( scriptState.get(*(data+1)) );
 					const Box* sourceBox = source->GetCollision();
 					const Box* targetBox = target->GetCollision();
 
@@ -211,16 +234,16 @@ namespace VM
 			case op_playanim:
 				{
 					const unsigned char* data = ins->GetData();
-					const unsigned char* animName = data + 1;
-					Actor* target = (Actor*)scriptState[*data];
-					target->GetAnimComponent()->PlayAnim((char*)animName);
+					Actor* target = GetActor(scriptState.get(*data));
+					unsigned char animName = (unsigned char)*(data + 1);
+					target->GetAnimComponent()->PlayAnim((char*)scriptState.get(animName));
 				}
 				break;
 
 			/////////////////////////////////////////////////////////////////////////////
 			case op_kill:
 				const unsigned char* data = ins->GetData();
-				Actor* target = (Actor*) scriptState[*(unsigned int*)data];
+				Actor* target = (Actor*) scriptState.get(*(unsigned int*)data);
 				target->MarkForCleanup();
 				break;
 
