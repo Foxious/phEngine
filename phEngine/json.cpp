@@ -39,3 +39,8 @@ std::string JsonStringFromFile(const char* file)
 
 	return fileData;
 }
+
+void InitializeTokens(jsmntok_t* token, size_t size)
+{
+	memset(token, -1, size * sizeof(jsmntok_t) );
+}

@@ -5,10 +5,11 @@
 
 #include <jsmn.h>
 
-std::string SubstringFromToken(const std::string& jsonData, const jsmntok_t& token);
-unsigned int UnsignedFromToken(const std::string& jsonData, const jsmntok_t& token);
-float FloatFromToken(const std::string& jsonData, const jsmntok_t& token);
+void			InitializeTokens (jsmntok_t* tokens, size_t size);
+std::string		SubstringFromToken(const std::string& jsonData, const jsmntok_t& token);
+unsigned int	UnsignedFromToken(const std::string& jsonData, const jsmntok_t& token);
+float			FloatFromToken(const std::string& jsonData, const jsmntok_t& token);
 
-std::string JsonStringFromFile(const char* file);
+std::string		JsonStringFromFile(const char* file);
 
 #endif

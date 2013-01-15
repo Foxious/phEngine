@@ -32,19 +32,19 @@ public:
 		, runBtn(13)
 	{
 		// binds for X360
-		inputMapper->BindButton(InputMapper::atkBtn, X360, 12);
+		/*inputMapper->BindButton(InputMapper::atkBtn, X360, 12);
 		inputMapper->BindButton(InputMapper::runBtn, X360, 13);
 		inputMapper->BindAxis(InputMapper::lrAxis, X360, 2);
-		inputMapper->BindAxis(InputMapper::duAxis, X360, 3);
+		inputMapper->BindAxis(InputMapper::duAxis, X360, 3);*/
 
 		// binds for windows keyboard
-		/*inputMapper->BindButton(InputMapper::atkBtn, KEYBOARD, 0x20 - 0x08);
+		inputMapper->BindButton(InputMapper::atkBtn, KEYBOARD, 0x20 - 0x08);
 		inputMapper->BindButton(InputMapper::runBtn, KEYBOARD, 0x11 - 0x08);
 
 		inputMapper->BindButton(InputMapper::leftBtn, KEYBOARD, 0x41 - 0x08);
 		inputMapper->BindButton(InputMapper::rightBtn, KEYBOARD, 0x44 - 0x08);
 		inputMapper->BindButton(InputMapper::upBtn, KEYBOARD, 0x57 - 0x08);
-		inputMapper->BindButton(InputMapper::downBtn, KEYBOARD, 0x53 - 0x08);*/
+		inputMapper->BindButton(InputMapper::downBtn, KEYBOARD, 0x53 - 0x08);
 
 	}
 

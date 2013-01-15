@@ -128,6 +128,7 @@ ObjectPool<MeshInstance>::PoolItemPtr MeshBuilder::DeserializeSprite(const std::
 	jsmn_init(&parser);
 
 	jsmntok_t tokens[256];
+	InitializeTokens (tokens, 256);
 	jsmnerr_t r = jsmn_parse(&parser, spriteData.c_str(), tokens, 256);
 
 	char str[255];
