@@ -91,10 +91,6 @@ void Actor::SetScriptEvent(unsigned int eventID, VM::scriptID script)
 /////////////////////////////////////////////////////////////////////////////////////////
 void Actor::OnCollide(Actor* collider)
 {
-	VM::ScriptParams params;
-	params.source = this;
-	params.target = collider;
-
 	// target is index 0, source is index 1
 	VM::ScriptStack state;
 	unsigned int colliderAddr = (unsigned int) collider;

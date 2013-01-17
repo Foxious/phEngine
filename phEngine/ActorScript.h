@@ -9,35 +9,36 @@ class Actor;
 
 namespace VM
 {
+	typedef unsigned char ptr;
+	typedef unsigned int scriptID;
+	typedef std::vector<Instruction> Script;
+
+	const ptr ptr_size		= sizeof(ptr);
+	const ptr ptr_max		= -1;
+	const scriptID noScript = (scriptID)-1;
+
 	struct ScriptParams
 	{
 		Actor* source;
 		Actor* target;
 	};
 
-	typedef std::vector<Instruction> Script;
-
 	class ScriptStack
 	{
 	public:
 		ScriptStack();
-		void push(unsigned char* data, size_t size);
-		unsigned char* get(size_t index);
+		~ScriptStack();
+		void push(unsigned char* data, ptr size);
+		unsigned char* get(ptr index);
+
 	private:
-		enum StackSize
-		{
-			S = 2048
-		};
-		size_t tail;
-		unsigned char stack[S];
+		void clear();
+	private:
+		ptr tail;
+		unsigned char *stack;
 	};
 
-	typedef unsigned int scriptID;
-
-	const scriptID noScript = (scriptID)-1;
-
 	void CopyScript(Script& dst, const Script& src);
-
 	void Execute(scriptID id);
 	void Execute(scriptID id, ScriptStack& state);
 	void SaveCompiledScript(const std::string& file, scriptID id);

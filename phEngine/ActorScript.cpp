@@ -19,19 +19,32 @@ namespace VM
 	ScriptStack::ScriptStack()
 		: tail(0)
 	{
+		stack = new unsigned char[ptr_max];
+		clear();
 	}
 
-	void ScriptStack::push(unsigned char* data, size_t size)
+	ScriptStack::~ScriptStack()
 	{
-		assert ( (tail+size) < S);
+		delete [] stack;
+	}
+
+	void ScriptStack::push(unsigned char* data, ptr size)
+	{
+		assert ( (tail+size) < ptr_max);
 		memcpy(stack + tail, data, size);
 		tail += size;
 	}
 
-	unsigned char* ScriptStack::get(size_t index)
+	unsigned char* ScriptStack::get(ptr index)
 	{
 		assert( index < tail );
 		return &stack[index];
+	}
+
+	void ScriptStack::clear()
+	{
+		tail = 0;
+		memset(stack, 0xCD, ptr_max);
 	}
 
 
@@ -113,7 +126,6 @@ namespace VM
 			file.write((char*)&dataSize, sizeof(size_t));
 			file.write((char*)&code, sizeof(unsigned char));
 			file.write((char*)data, sizeof(unsigned char) * dataSize);
-
 		}
 
 		file.close();
@@ -135,6 +147,11 @@ namespace VM
 	Actor* GetActor(unsigned char* data)
 	{
 		return (Actor*)*(unsigned int*)data;
+	}
+
+	const unsigned char* DataAtOffset(const unsigned char* data, ptr offset)
+	{
+		return data + offset * ptr_size;
 	}
 
 	void Execute(scriptID id)
@@ -160,8 +177,8 @@ namespace VM
 			case op_push:
 				{
 					const unsigned char* data = ins->GetData();
-					unsigned int size = *(unsigned int*)data;
-					unsigned char* value = (unsigned char*)(data + 4);
+					ptr size = *(unsigned int*)data;
+					unsigned char* value = (unsigned char*)DataAtOffset(data, 1);
 					scriptState.push(value, size);
 				}
 
@@ -177,7 +194,7 @@ namespace VM
 					// figure out our overlap and how much we have.
 					const unsigned char* data = ins->GetData();
 					Actor* target = GetActor(scriptState.get(*data));
-					Actor* source = GetActor( scriptState.get(*(data+1)) );
+					Actor* source = GetActor( scriptState.get(*DataAtOffset(data, 1)) );
 					const Box* sourceBox = source->GetCollision();
 					const Box* targetBox = target->GetCollision();
 
@@ -235,7 +252,7 @@ namespace VM
 				{
 					const unsigned char* data = ins->GetData();
 					Actor* target = GetActor(scriptState.get(*data));
-					unsigned char animName = (unsigned char)*(data + 1);
+					unsigned char animName = (unsigned char)*( DataAtOffset(data, 1) );
 					target->GetAnimComponent()->PlayAnim((char*)scriptState.get(animName));
 				}
 				break;

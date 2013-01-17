@@ -94,10 +94,10 @@ void ActorManager::OnRegister()
 
 	VM::Script collisionScript;
 	char playName[10];
-	int size = strlen("Jump") + 1;
-	memcpy(&playName[0], &size, sizeof(size_t));
-	memcpy(&playName[sizeof(size_t)], "Jump", size);
-	collisionScript.push_back( VM::Instruction(VM::op_push, (unsigned char*)playName, sizeof(size_t) + size) );
+	VM::ptr size = strlen("Jump") + 1;
+	memcpy(&playName[0], &size, VM::ptr_size);
+	memcpy(&playName[VM::ptr_size], "Jump", size);
+	collisionScript.push_back( VM::Instruction(VM::op_push, (unsigned char*)playName, VM::ptr_size + size) );
 
 
 	unsigned char playData[2] = { 0, 8 };
@@ -137,8 +137,8 @@ ActorPtr ActorManager::CreateActorStub()
 	newActor.SetSprite(sprite);
 	newActor.SetController(&propController);
 	VM::Script collisionScript;
-	unsigned char data[2] = {0, 4};
-	collisionScript.push_back( VM::Instruction(VM::op_forceout, data, 2* sizeof(char)) );
+	VM::ptr data[2] = {0, 4};
+	collisionScript.push_back( VM::Instruction(VM::op_forceout, data, 2* VM::ptr_size) );
 	VM::scriptID id = VM::AddScript(collisionScript);
 	newActor.SetScriptEvent(ev_collision, id);
 	ActorPtr actor = actors.Insert(newActor);
