@@ -27,75 +27,97 @@ namespace ActorScriptTool
 		NUM_TYPES
 	}
 
+	public class ParamsConnectedEventArgs : EventArgs
+	{
+		public enum EventType
+		{
+			Connected,
+			Broken
+		}
+
+		public EventType eventType;
+	}
+	public delegate void ParamsConnectedEventHandler(object sender, ParamsConnectedEventArgs e);
+
 	public class Param
 	{
+		public event ParamsConnectedEventHandler ConnectionsChanged;
+
 		public Type 		type;
 		public byte 		data;
 		public uint 		size;
 		public string		label;
 		public Node			parent;
 
-		// think about doing connections with a static method, 
-		// that way you guarantee that things get connected and that
-		// nodes of the same type can't get connected
-		public static void ConnectNodes(OutParam outParam, InParam inParam)
+		public Param[] Connections
 		{
-			inParam.BreakConnection();
-			outParam.SetConnection(inParam);
-			inParam.SetConnection(outParam);
-		}
-
-		public static void TestFunction()
-		{
-			Param outParam = new OutParam();
-			Param inParam = new InParam();
-
-			ConnectNodes(outParam, inParam);
-		}
-
-		public abstract void SetConnection(Param inConnection);
-		public abstract IEnumerable<Param> GetConnections();
-		public abstract void ClearConnections();
-	}
-	public class InParam : Param
-	{
-		protected override void SetConnection(Param inConnection)
-		{
-			connection = inConnection as OutParam;
-		}
-
-		public void BreakConnection()
-		{
-			connection.RemoveConnection(this);
-			this.connection = null;
-		}
-		private OutParam connection;
-	}
-	public class OutParam : Param
-	{
-		public override void SetConnection(Param inConnection)
-		{
-			// todo - see if this is already connected
-			connections.Add(inConnection as InParam);
-		}
-		public void RemoveConnection(InParam connection)
-		{
-			for (int i = 0; i < connections.Count; ++i)
+			get
 			{
-				if (connections[i] == connection)
-				{
-					connections.Remove(connections[i]);
-					return;
-				}
+				return connections.ToArray();
 			}
 		}
 
-		private List<InParam> connections;
+		public void AddConnection(Param connection)
+		{
+			connections.Add(connection);
+			OnConnectionChanged(ParamsConnectedEventArgs.EventType.Connected);
+		}
+
+		public void RemoveConnection(Param connection)
+		{
+			connections.Remove(connection);
+			OnConnectionChanged(ParamsConnectedEventArgs.EventType.Broken);
+		}
+
+		public void ClearConnections()
+		{
+			for (int i = connections.Count; i > 0; --i)
+			{
+				RemoveConnection(connections[i]);
+			}
+		}
+
+		protected void OnConnectionChanged(ParamsConnectedEventArgs.EventType type)
+		{
+			if (ConnectionsChanged != null)
+			{
+				ParamsConnectedEventArgs e = new ParamsConnectedEventArgs();
+				e.eventType = type;
+				ConnectionsChanged(this, e);
+			}
+		}
+
+		private List<Param> connections;
 	}
 
 	public class Node
 	{
-		public OpCode		code	= 0;
-		public List<Param>	data	= new List<Param>();
+		public OpCode		code		= 0;
+
+		public void AddInParam (Param inParam)
+		{
+			inParams.Add(inParam);
+			inParam.parent = this;
+		}
+		public void AddOutParam (Param outParam)
+		{
+			outParams.Add(outParam);
+			outParam.parent = this;
+		}
+
+		public static void ConnectNodeParams(Param outParam, Param inParam)
+		{
+			// There should only be 1 connection on the inParam.
+			// Let's make sure this is the case.
+			Param oldInConnection = inParam.Connections[0];
+			oldInConnection.RemoveConnection(inParam);
+			inParam.ClearConnections();
+
+			outParam.AddConnection(inParam);
+			inParam.AddConnection(outParam);
+		}
+
+		public List<Param>	inParams	= new List<Param>();
+		public List<Param>	outParams	= new List<Param>();
 	}
 }

@@ -16,14 +16,26 @@ namespace ActorScriptTool
 			InitializeComponent();
 			Node testNode = new Node();
 			testNode.code = OpCode.op_kill;
+
+			Node testNode2 = new Node();
+			testNode2.code = OpCode.op_playanim;
+
 			Param testParam = new Param();
 			testParam.label = "Actor";
 			testParam.size = 4;
 			testParam.type = Type.pactor;
 			testParam.data = 0;
 
-			testNode.data.Add(testParam);
+			Param testOutParam = new Param();
+			testOutParam.label = "Int";
+			testOutParam.size = 4;
+			testOutParam.type = Type.pint;
+			testOutParam.data = 0;
+
+			testNode2.inParams.Add(testParam);
+			testNode.outParams.Add(testOutParam);
 			ctrlNode1.NodeData = testNode;
+			ctrlNode2.NodeData = testNode2;
 		}
 
 
