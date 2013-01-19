@@ -87,7 +87,7 @@ namespace ActorScriptTool
 			}
 		}
 
-		private List<Param> connections;
+		private List<Param> connections = new List<Param>();
 	}
 
 	public class Node

@@ -1,6 +1,6 @@
 ﻿namespace ActorScriptTool
 {
-	partial class ctrlNode
+	partial class CtrlNode
 	{
 		/// <summary> 
 		/// Required designer variable.

@@ -7,10 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+
 namespace ActorScriptTool
 {
 	public partial class Form1 : Form
 	{
+		public List<ConnectionLine> lines = new List<ConnectionLine>();
 		public Form1()
 		{
 			InitializeComponent();
@@ -36,8 +38,10 @@ namespace ActorScriptTool
 			testNode.outParams.Add(testOutParam);
 			ctrlNode1.NodeData = testNode;
 			ctrlNode2.NodeData = testNode2;
-		}
 
+			ctrlNode1.ConnectParam(0, ctrlNode2, 0);
+
+		}
 
 	}
 }

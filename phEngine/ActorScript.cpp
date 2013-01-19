@@ -177,7 +177,7 @@ namespace VM
 			case op_push:
 				{
 					const unsigned char* data = ins->GetData();
-					ptr size = *(unsigned int*)data;
+					ptr size = *(ptr*)data; // SIZE MISMATCH, fix it ppeas Phil
 					unsigned char* value = (unsigned char*)DataAtOffset(data, 1);
 					scriptState.push(value, size);
 				}

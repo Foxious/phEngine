@@ -17,12 +17,6 @@ namespace VM
 	const ptr ptr_max		= -1;
 	const scriptID noScript = (scriptID)-1;
 
-	struct ScriptParams
-	{
-		Actor* source;
-		Actor* target;
-	};
-
 	class ScriptStack
 	{
 	public:
