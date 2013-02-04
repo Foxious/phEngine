@@ -18,21 +18,37 @@ def DrawLine(qp, start, end, color=QtCore.Qt.black):
 def MakeLine(start, end):
     return (start, end)
 
-class NodeHeader(QtGui.QWidget):
+class NodeConnector(QtGui.QWidget):
+    def __init__(self, parent=None):
+        super(NodeConnector, self).__init__(parent)
+        self.resize(10, 10)
+
+    def paintEvent(self, e):
+        qp = QtGui.QPainter()
+        qp.begin(self)
+        brush = QtGui.QBrush(QtGui.QColor.black)
+        qp.fillRect(0, 0, self.width(), self.height(), brush)
+        qp.end()
+
+class Node(QtGui.QWidget):
     def __init__(self, parent = None):
-        super(NodeHeader, self).__init__(parent)
+        super(Node, self).__init__(parent)
         self._clickPos = None
         title = Param( color = QtGui.QColor(255, 0, 0) )
+        title.text = 'Node Title'
+        title.mousePressOverride = self.mousePressOverride
+        title.mouseMoveOverride = self.mouseMoveOverride
         self.titleHeight = 18
         title.resize(1, self.titleHeight)
         self.resize(self.width(), 1)
         self.addParam(title)
+        self.inConnection = NodeConnector(self)
+        self.inConnection.move(0, 0)
         
     def setWidth(self, width):
         self.resize(width, self.height())
                 
     def paintEvent(self, event):
-        print ('node paint event')
         qp = QtGui.QPainter()
         qp.begin(self)
         pen = QtGui.QPen(QtGui.QColor.black)
@@ -40,11 +56,11 @@ class NodeHeader(QtGui.QWidget):
         qp.drawRect(0, 0, self.width()-1, self.height()-1)
         qp.drawRect(0, 0, self.width()-1, self.titleHeight-1)
         qp.end()
-        
-    def mousePressEvent(self, event):
+
+    def mousePressOverride(self, event):
         self._clickPos = event.globalPos()
         
-    def mouseMoveEvent(self, event):
+    def mouseMoveOverride(self, event):
         currPos = self.mapToGlobal(self.pos())
         globalPos = event.globalPos()
         diff = globalPos - self._clickPos
@@ -53,29 +69,42 @@ class NodeHeader(QtGui.QWidget):
         self._clickPos = globalPos
             
     def addParam(self, param):
-        param.resize(self.width()-2, param.height())
+        param.resize(self.width()-12, param.height())
         param.setParent(self)
-        param.move(1, self.height())
+        param.move(6, self.height())
         self.resize(self.width(), self.height() + param.height()+1)
 
 class Param(QtGui.QWidget):
     def __init__(self, parent = None, color = QtCore.Qt.white):
         QtGui.QWidget.__init__(self, parent)
         self.fillColor = color
+        self.text = 'Param Text'
+        self.mousePressOverride = None
+        self.mouseMoveOverride = None
 
     def paintEvent(self, e):
         qp = QtGui.QPainter()
         qp.begin(self)
         brush = QtGui.QBrush(self.fillColor)
-        print(self.fillColor)
-        qp.fillRect(0, 0, self.width(), self.height(), brush)        
+        qp.fillRect(0, 0, self.width(), self.height(), brush)
+        qp.setPen(QtCore.Qt.black)
+        qp.setFont(QtGui.QFont('Decorative', 8))
+        qp.drawText(e.rect(), QtCore.Qt.AlignCenter, self.text)
         qp.end()
+
+    def mousePressEvent(self, event):
+        if(self.mousePressOverride):
+            self.mousePressOverride(event)
+
+    def mouseMoveEvent(self, event):
+        if(self.mouseMoveOverride):
+            self.mouseMoveOverride(event)
 
 class NodeControl(QtGui.QWidget):
     def __init__(self):
         super(NodeControl, self).__init__()
         self.lines = []
-        self.node = NodeHeader(self)
+        self.node = Node(self)
         self.node.move(10, 10)
         self.node.setWidth(70)
         p = Param()
@@ -104,7 +133,8 @@ def main():
     app = QtGui.QApplication(sys.argv)
     ex = NodeControl()
     ex.run()
-    sys.exit( app.exec_() )
+    return app.exec_()
+    #sys.exit( app.exec_() )
 
 
 if __name__ == '__main__':
