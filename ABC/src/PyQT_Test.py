@@ -21,12 +21,12 @@ def MakeLine(start, end):
 class NodeConnector(QtGui.QWidget):
     def __init__(self, parent=None):
         super(NodeConnector, self).__init__(parent)
-        self.resize(10, 10)
+        self.resize(7, 7)
 
     def paintEvent(self, e):
         qp = QtGui.QPainter()
         qp.begin(self)
-        brush = QtGui.QBrush(QtGui.QColor.black)
+        brush = QtGui.QBrush(QtCore.Qt.black)
         qp.fillRect(0, 0, self.width(), self.height(), brush)
         qp.end()
 
@@ -42,19 +42,22 @@ class Node(QtGui.QWidget):
         title.resize(1, self.titleHeight)
         self.resize(self.width(), 1)
         self.addParam(title)
+        
         self.inConnection = NodeConnector(self)
-        self.inConnection.move(0, 0)
+        self.inConnection.move(0, 4)
         
     def setWidth(self, width):
         self.resize(width, self.height())
+        children = self.findChildren(Param)
+        [c.resize(width-16, c.height()) for c in children]
                 
     def paintEvent(self, event):
         qp = QtGui.QPainter()
         qp.begin(self)
         pen = QtGui.QPen(QtGui.QColor.black)
         qp.setPen(pen)
-        qp.drawRect(0, 0, self.width()-1, self.height()-1)
-        qp.drawRect(0, 0, self.width()-1, self.titleHeight-1)
+        qp.drawRect(6, 0, self.width()-15, self.height()-1)
+        qp.drawRect(6, 0, self.width()-15, self.titleHeight-1)
         qp.end()
 
     def mousePressOverride(self, event):
@@ -69,9 +72,9 @@ class Node(QtGui.QWidget):
         self._clickPos = globalPos
             
     def addParam(self, param):
-        param.resize(self.width()-12, param.height())
+        param.resize(self.width()-16, param.height())
         param.setParent(self)
-        param.move(6, self.height())
+        param.move(7, self.height())
         self.resize(self.width(), self.height() + param.height()+1)
 
 class Param(QtGui.QWidget):
@@ -106,7 +109,7 @@ class NodeControl(QtGui.QWidget):
         self.lines = []
         self.node = Node(self)
         self.node.move(10, 10)
-        self.node.setWidth(70)
+        self.node.setWidth(100)
         p = Param()
         p.resize(12, 15)
         self.node.addParam(p) 
