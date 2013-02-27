@@ -7,12 +7,12 @@ class cell():
         wall = random.randint(0,3)
         if wall == 0:
             self.content = '#'
-        elif wall == 1:
-            self.content = ' '
     def setValue(self,value):
         self.content = value
     def getContents(self):
-        return self
+        pass
+    def setBound(self):
+        self.content = '#'
 class room():
     def __init__(self,height,width):
         self.height = height
@@ -26,17 +26,17 @@ class room():
                 out +=  cell.content
             print out,'\n'
     def generate(self):
-        for i,val in enumerate(range(int(self.height)+1)):
+        for i,val in enumerate(range(self.height+1)):
             self.contents.append(list())
-            for j , value in enumerate(range(int(self.width)+1)):
+            for j , value in enumerate(range(self.width+1)):
                 c = cell()
                 if i == self.height or j == self.width or i == 0 or j == 0:
-                    c.setValue('#')
+                    c.setBound()
                 else:
                     c.genValue()
                 #print i,j
                 self.contents[i].append(c)
 
 if __name__ == '__main__':
-    r = room(8,3e0)
+    r = room(8,30)
     r.display()
