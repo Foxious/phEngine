@@ -10,6 +10,63 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\phEngine\Application\Component.h" />
+    <ClInclude Include="..\src\phEngine\Application\Controller.h" />
+    <ClInclude Include="..\src\phEngine\Application\DeviceState.h" />
+    <ClInclude Include="..\src\phEngine\Application\WinKeyboardManager.h" />
+    <ClInclude Include="..\src\phEngine\Engine\AnimationComponent.h" />
+    <ClInclude Include="..\src\phEngine\Engine\Camera.h" />
+    <ClInclude Include="..\src\phEngine\Engine\Collision.h" />
+    <ClInclude Include="..\src\phEngine\Engine\DXTexture.h" />
+    <ClInclude Include="..\src\phEngine\Engine\GameMaster.h" />
+    <ClInclude Include="..\src\phEngine\Engine\Helper.h" />
+    <ClInclude Include="..\src\phEngine\Engine\InputManager.h" />
+    <ClInclude Include="..\src\phEngine\Engine\Instruction.h" />
+    <ClInclude Include="..\src\phEngine\Engine\IRenderer.h" />
+    <ClInclude Include="..\src\phEngine\Engine\json.h" />
+    <ClInclude Include="..\src\phEngine\Engine\Mesh.h" />
+    <ClInclude Include="..\src\phEngine\Engine\ObjectPool.h" />
+    <ClInclude Include="..\src\phEngine\Engine\phEngine.h" />
+    <ClInclude Include="..\src\phEngine\Engine\Renderer.h" />
+    <ClInclude Include="..\src\phEngine\Engine\Resource.h" />
+    <ClInclude Include="..\src\phEngine\Engine\Shaders.h" />
+    <ClInclude Include="..\src\phEngine\Engine\Shapes.h" />
+    <ClInclude Include="..\src\phEngine\Engine\stdafx.h" />
+    <ClInclude Include="..\src\phEngine\Engine\targetver.h" />
+    <ClInclude Include="..\src\phEngine\Engine\Texture.h" />
+    <ClInclude Include="..\src\phEngine\Engine\TypesFwdDecl.h" />
+    <ClInclude Include="..\src\phEngine\Engine\Utils.h" />
+    <ClInclude Include="..\src\phEngine\Engine\Vector.h" />
+    <ClInclude Include="..\src\phEngine\Engine\Vertex.h" />
+    <ClInclude Include="..\src\phEngine\Engine\XForm.h" />
+    <ClInclude Include="..\src\phEngine\Game\Actor.h" />
+    <ClInclude Include="..\src\phEngine\Game\ActorManager.h" />
+    <ClInclude Include="..\src\phEngine\Game\ActorScript.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\phEngine\Application\Controller.cpp" />
+    <ClCompile Include="..\src\phEngine\Engine\AnimationComponent.cpp" />
+    <ClCompile Include="..\src\phEngine\Engine\Camera.cpp" />
+    <ClCompile Include="..\src\phEngine\Engine\Collision.cpp" />
+    <ClCompile Include="..\src\phEngine\Engine\DXShaders.cpp" />
+    <ClCompile Include="..\src\phEngine\Engine\GameMaster.cpp" />
+    <ClCompile Include="..\src\phEngine\Engine\InputManager.cpp" />
+    <ClCompile Include="..\src\phEngine\Engine\Instruction.cpp" />
+    <ClCompile Include="..\src\phEngine\Engine\json.cpp" />
+    <ClCompile Include="..\src\phEngine\Engine\Mesh.cpp" />
+    <ClCompile Include="..\src\phEngine\Engine\phEngine.cpp" />
+    <ClCompile Include="..\src\phEngine\Engine\Renderer.cpp" />
+    <ClCompile Include="..\src\phEngine\Engine\Shapes.cpp" />
+    <ClCompile Include="..\src\phEngine\Engine\stdafx.cpp" />
+    <ClCompile Include="..\src\phEngine\Engine\Texture.cpp" />
+    <ClCompile Include="..\src\phEngine\Engine\Utils.cpp" />
+    <ClCompile Include="..\src\phEngine\Engine\Vector.cpp" />
+    <ClCompile Include="..\src\phEngine\Engine\Vertex.cpp" />
+    <ClCompile Include="..\src\phEngine\Game\Actor.cpp" />
+    <ClCompile Include="..\src\phEngine\Game\ActorManager.cpp" />
+    <ClCompile Include="..\src\phEngine\Game\ActorScript.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DAB0EB8A-90A9-4784-B402-051259709091}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -39,6 +96,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IntDir>$(SolutionDir)\$(Configuration)\intermediate</IntDir>
+    <OutDir>$(SolutionDir)\build\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -49,7 +108,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\jsmn</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\jsmn;..\src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -77,78 +136,6 @@
       <AdditionalLibraryDirectories>$(SolutionDir)Libs\;$(DXSDK_DIR)Lib\x86;$(SolutionDir)Libs\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <None Include="Default.fx" />
-    <None Include="phEngine.ico" />
-    <None Include="ReadMe.txt" />
-    <None Include="small.ico" />
-    <None Include="spriteShader.vs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Actor.h" />
-    <ClInclude Include="ActorManager.h" />
-    <ClInclude Include="ActorScript.h" />
-    <ClInclude Include="AnimationComponent.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="Collision.h" />
-    <ClInclude Include="Component.h" />
-    <ClInclude Include="Controller.h" />
-    <ClInclude Include="DeviceState.h" />
-    <ClInclude Include="DXTexture.h" />
-    <ClInclude Include="GameMaster.h" />
-    <ClInclude Include="Helper.h" />
-    <ClInclude Include="InputManager.h" />
-    <ClInclude Include="Instruction.h" />
-    <ClInclude Include="IRenderer.h" />
-    <ClInclude Include="json.h" />
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="ObjectPool.h" />
-    <ClInclude Include="phEngine.h" />
-    <ClInclude Include="Renderer.h" />
-    <ClInclude Include="Resource.h" />
-    <ClInclude Include="IResourcePool.h" />
-    <ClInclude Include="Shaders.h" />
-    <ClInclude Include="Shapes.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="targetver.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="TypesFwdDecl.h" />
-    <ClInclude Include="Utils.h" />
-    <ClInclude Include="Vector.h" />
-    <ClInclude Include="Vertex.h" />
-    <ClInclude Include="WinKeyboardManager.h" />
-    <ClInclude Include="XForm.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Actor.cpp" />
-    <ClCompile Include="ActorManager.cpp" />
-    <ClCompile Include="ActorScript.cpp" />
-    <ClCompile Include="AnimationComponent.cpp" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Collision.cpp" />
-    <ClCompile Include="Controller.cpp" />
-    <ClCompile Include="DXShaders.cpp" />
-    <ClCompile Include="GameMaster.cpp" />
-    <ClCompile Include="InputManager.cpp" />
-    <ClCompile Include="Instruction.cpp" />
-    <ClCompile Include="json.cpp" />
-    <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="phEngine.cpp" />
-    <ClCompile Include="Renderer.cpp" />
-    <ClCompile Include="Shapes.cpp" />
-    <ClCompile Include="stdafx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="Utils.cpp" />
-    <ClCompile Include="Vector.cpp" />
-    <ClCompile Include="Vertex.cpp" />
-    <ClCompile Include="WinKeyboardManager.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="phEngine.rc" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
