@@ -1,177 +1,176 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <ItemGroup>
-    <ClInclude Include="..\src\phEngine\Application\Component.h">
-      <Filter>Application</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\phEngine\Application\WinKeyboardManager.h">
-      <Filter>Application</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\phEngine\Application\Controller.h">
-      <Filter>Application</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\phEngine\Application\DeviceState.h">
-      <Filter>Application</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\phEngine\Engine\AnimationComponent.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\phEngine\Engine\Camera.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\phEngine\Engine\Collision.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\phEngine\Engine\DXTexture.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\phEngine\Engine\GameMaster.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\phEngine\Engine\Helper.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\phEngine\Engine\InputManager.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\phEngine\Engine\Instruction.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\phEngine\Engine\IRenderer.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\phEngine\Engine\json.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\phEngine\Engine\Mesh.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\phEngine\Engine\ObjectPool.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\phEngine\Engine\phEngine.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\phEngine\Engine\Renderer.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\phEngine\Engine\Resource.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\phEngine\Engine\Shaders.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\phEngine\Engine\Shapes.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\phEngine\Engine\stdafx.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\phEngine\Engine\targetver.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\phEngine\Engine\Texture.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\phEngine\Engine\TypesFwdDecl.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\phEngine\Engine\Utils.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\phEngine\Engine\Vector.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\phEngine\Engine\Vertex.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\phEngine\Engine\XForm.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\phEngine\Game\Actor.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\phEngine\Game\ActorManager.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\phEngine\Game\ActorScript.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="Application">
-      <UniqueIdentifier>{951b3015-148e-4a72-873c-fc4e0cc0700a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine">
-      <UniqueIdentifier>{9fc3da05-36c1-425d-9781-a89aab2567d9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game">
-      <UniqueIdentifier>{139b2ea2-0b9f-46f1-8eb5-17113a8c48e1}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\src\phEngine\Application\Controller.cpp">
-      <Filter>Application</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\phEngine\Engine\AnimationComponent.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\phEngine\Engine\Camera.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\phEngine\Engine\Collision.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\phEngine\Engine\DXShaders.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\phEngine\Engine\GameMaster.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\phEngine\Engine\InputManager.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\phEngine\Engine\Instruction.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\phEngine\Engine\json.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\phEngine\Engine\Mesh.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\phEngine\Engine\phEngine.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\phEngine\Engine\Renderer.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\phEngine\Engine\Shapes.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\phEngine\Engine\stdafx.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\phEngine\Engine\Texture.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\phEngine\Engine\Utils.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\phEngine\Engine\Vector.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\phEngine\Engine\Vertex.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\phEngine\Game\Actor.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\phEngine\Game\ActorManager.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\phEngine\Game\ActorScript.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-  </ItemGroup>
-</Project>
+<ns0:Project xmlns:ns0="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <ns0:ItemGroup>
+    <ns0:ClInclude Include="..\src\phEngine\Application\Component.h">
+      <ns0:Filter>Application</ns0:Filter>
+    </ns0:ClInclude>
+    <ns0:ClInclude Include="..\src\phEngine\Application\WinKeyboardManager.h">
+      <ns0:Filter>Application</ns0:Filter>
+    </ns0:ClInclude>
+    <ns0:ClInclude Include="..\src\phEngine\Application\Controller.h">
+      <ns0:Filter>Application</ns0:Filter>
+    </ns0:ClInclude>
+    <ns0:ClInclude Include="..\src\phEngine\Application\DeviceState.h">
+      <ns0:Filter>Application</ns0:Filter>
+    </ns0:ClInclude>
+    <ns0:ClInclude Include="..\src\phEngine\engine\animation\AnimationComponent.h">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClInclude>
+    <ns0:ClInclude Include="..\src\phEngine\engine\camera\Camera.h">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClInclude>
+    <ns0:ClInclude Include="..\src\phEngine\Engine\Collision.h">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClInclude>
+    <ns0:ClInclude Include="..\src\phEngine\Engine\DXTexture.h">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClInclude>
+    <ns0:ClInclude Include="..\src\phEngine\Engine\GameMaster.h">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClInclude>
+    <ns0:ClInclude Include="..\src\phEngine\Engine\Helper.h">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClInclude>
+    <ns0:ClInclude Include="..\src\phEngine\application\InputManager.h">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClInclude>
+    <ns0:ClInclude Include="..\src\phEngine\game\scripting\Instruction.h">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClInclude>
+    <ns0:ClInclude Include="..\src\phEngine\Engine\IRenderer.h">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClInclude>
+    <ns0:ClInclude Include="..\src\phEngine\Engine\json.h">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClInclude>
+    <ns0:ClInclude Include="..\src\phEngine\Engine\Mesh.h">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClInclude>
+    <ns0:ClInclude Include="..\src\phEngine\Engine\ObjectPool.h">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClInclude>
+    <ns0:ClInclude Include="..\src\phEngine\Engine\phEngine.h">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClInclude>
+    <ns0:ClInclude Include="..\src\phEngine\Engine\Renderer.h">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClInclude>
+    <ns0:ClInclude Include="..\src\phEngine\Engine\Resource.h">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClInclude>
+    <ns0:ClInclude Include="..\src\phEngine\Engine\Shaders.h">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClInclude>
+    <ns0:ClInclude Include="..\src\phEngine\Engine\Shapes.h">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClInclude>
+    <ns0:ClInclude Include="..\src\phEngine\Engine\stdafx.h">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClInclude>
+    <ns0:ClInclude Include="..\src\phEngine\Engine\targetver.h">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClInclude>
+    <ns0:ClInclude Include="..\src\phEngine\Engine\Texture.h">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClInclude>
+    <ns0:ClInclude Include="..\src\phEngine\Engine\TypesFwdDecl.h">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClInclude>
+    <ns0:ClInclude Include="..\src\phEngine\Engine\Utils.h">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClInclude>
+    <ns0:ClInclude Include="..\src\phEngine\Engine\Vector.h">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClInclude>
+    <ns0:ClInclude Include="..\src\phEngine\Engine\Vertex.h">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClInclude>
+    <ns0:ClInclude Include="..\src\phEngine\Engine\XForm.h">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClInclude>
+    <ns0:ClInclude Include="..\src\phEngine\Game\Actor.h">
+      <ns0:Filter>Game</ns0:Filter>
+    </ns0:ClInclude>
+    <ns0:ClInclude Include="..\src\phEngine\Game\ActorManager.h">
+      <ns0:Filter>Game</ns0:Filter>
+    </ns0:ClInclude>
+    <ns0:ClInclude Include="..\src\phEngine\game\scripting\ActorScript.h">
+      <ns0:Filter>Game</ns0:Filter>
+    </ns0:ClInclude>
+  </ns0:ItemGroup>
+  <ns0:ItemGroup>
+    <ns0:Filter Include="Application">
+      <ns0:UniqueIdentifier>{951b3015-148e-4a72-873c-fc4e0cc0700a}</ns0:UniqueIdentifier>
+    </ns0:Filter>
+    <ns0:Filter Include="Engine">
+      <ns0:UniqueIdentifier>{9fc3da05-36c1-425d-9781-a89aab2567d9}</ns0:UniqueIdentifier>
+    </ns0:Filter>
+    <ns0:Filter Include="Game">
+      <ns0:UniqueIdentifier>{139b2ea2-0b9f-46f1-8eb5-17113a8c48e1}</ns0:UniqueIdentifier>
+    </ns0:Filter>
+  </ns0:ItemGroup>
+  <ns0:ItemGroup>
+    <ns0:ClCompile Include="..\src\phEngine\Application\Controller.cpp">
+      <ns0:Filter>Application</ns0:Filter>
+    </ns0:ClCompile>
+    <ns0:ClCompile Include="..\src\phEngine\engine\animation\AnimationComponent.cpp">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClCompile>
+    <ns0:ClCompile Include="..\src\phEngine\engine\camera\Camera.cpp">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClCompile>
+    <ns0:ClCompile Include="..\src\phEngine\engine\camera\Collision.cpp">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClCompile>
+    <ns0:ClCompile Include="..\src\phEngine\Engine\DXShaders.cpp">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClCompile>
+    <ns0:ClCompile Include="..\src\phEngine\Engine\GameMaster.cpp">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClCompile>
+    <ns0:ClCompile Include="..\src\phEngine\application\InputManager.cpp">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClCompile>
+    <ns0:ClCompile Include="..\src\phEngine\game\scripting\Instruction.cpp">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClCompile>
+    <ns0:ClCompile Include="..\src\phEngine\Engine\json.cpp">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClCompile>
+    <ns0:ClCompile Include="..\src\phEngine\Engine\Mesh.cpp">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClCompile>
+    <ns0:ClCompile Include="..\src\phEngine\Engine\phEngine.cpp">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClCompile>
+    <ns0:ClCompile Include="..\src\phEngine\Engine\Renderer.cpp">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClCompile>
+    <ns0:ClCompile Include="..\src\phEngine\Engine\Shapes.cpp">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClCompile>
+    <ns0:ClCompile Include="..\src\phEngine\Engine\stdafx.cpp">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClCompile>
+    <ns0:ClCompile Include="..\src\phEngine\Engine\Texture.cpp">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClCompile>
+    <ns0:ClCompile Include="..\src\phEngine\Engine\Utils.cpp">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClCompile>
+    <ns0:ClCompile Include="..\src\phEngine\Engine\Vector.cpp">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClCompile>
+    <ns0:ClCompile Include="..\src\phEngine\Engine\Vertex.cpp">
+      <ns0:Filter>Engine</ns0:Filter>
+    </ns0:ClCompile>
+    <ns0:ClCompile Include="..\src\phEngine\Game\Actor.cpp">
+      <ns0:Filter>Game</ns0:Filter>
+    </ns0:ClCompile>
+    <ns0:ClCompile Include="..\src\phEngine\Game\ActorManager.cpp">
+      <ns0:Filter>Game</ns0:Filter>
+    </ns0:ClCompile>
+    <ns0:ClCompile Include="..\src\phEngine\game\scripting\ActorScript.cpp">
+      <ns0:Filter>Game</ns0:Filter>
+    </ns0:ClCompile>
+  </ns0:ItemGroup>
+</ns0:Project>
