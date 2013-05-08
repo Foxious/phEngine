@@ -72,17 +72,16 @@ def files_conversion(folder,search):
     for filter_path in find_files(folder,search):
         print filter_path
         update_xml(filter_path)
-        ''''
         f = open(filter_path, "r")
         lines = f.readlines()
         outlines = []
+        lines = ['<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">'] + lines[1:]
         for line in lines:
             line = line.replace("ns0:","")
             outlines.append(line.replace(":ns0",""))            
         f.close()
         f = open(filter_path,"w")
-        f.
-        '''
+        f.write(filter_path)
         
 if __name__ == "__main__":
     files_conversion("..\\",".filters")
