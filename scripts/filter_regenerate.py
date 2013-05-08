@@ -73,6 +73,16 @@ def files_conversion(folder,search):
     for filter_path in find_files(folder,search):
         print filter_path
         update_xml(filter_path)
+        f = open(filter_path, "r")
+        lines = f.readlines()
+        outlines = []
+        for line in lines:
+            outlines.append(line.replace("ns0:",""))
+        f.close()
+        f = open(filter_path,"w")
+        f.writelines(outlines)
+        f.close()
+        
     
     
 if __name__ == "__main__":
