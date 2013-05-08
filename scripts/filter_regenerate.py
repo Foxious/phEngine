@@ -83,7 +83,5 @@ def files_conversion(folder,search):
         f.writelines(outlines)
         f.close()
         
-    
-    
 if __name__ == "__main__":
     files_conversion("..\\",".filters")
