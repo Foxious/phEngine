@@ -21,25 +21,31 @@ def find_files(root,search):
         filters = [os_file for os_file in folders[2] if os_file.find(search) != -1]
         if len(filters) != 0:
             for vc_filter in filters:
-                vc_filters.append(folders[0] + '\\'+ vc_filter)
+                vc_filters.append(os.path.join(folders[0],vc_filter))
     return vc_filters
 
 def update_xml(xml_file):
     xml_tree = ET.parse(xml_file)
     root = xml_tree.getiterator()
-    for x in root:
-        for z in x.attrib.keys():
-            if z == "Include":
-                f_path = x.attrib["Include"]
-                root = os.path.split(xml_file)[0]
-                updated_path = find_path(x,root,f_path)
-                if f_path != updated_path:
-                    x.attrib["Include"] == updated_path
-                    print 'updated_path:',updated_path
-            elif z == "Exclude":
-                f_path = x.attrib["Exclude"]
-                root = os.path.split(xml_file)[0]
-                find_path(x,root,f_path)                 
+    for elem in root:
+        for key in elem.attrib.keys():
+            # only update include and exclude keys
+            if key == "Include":
+                update_xml_path(elem, key, xml_file)
+            elif key == "Exclude":
+                update_xml_path(elem, key, xml_file)              
+
+def update_xml_path(elem, key, xml_file):
+    '''
+    updates the data in the tree element with fresh data queryed from disk
+    '''
+    f_path = elem.attrib[key]
+    if f_path.find(".") != -1:
+        root = os.path.split(xml_file)[0]
+        updated_path = find_path(elem,root,f_path)
+        if f_path != updated_path:
+            elem.attrib[key] == updated_path
+            #print 'updated_path:',updated_path,f_path
 
 def find_path(entry,root,path):
     'either returns the same path or the best matched path if the path has changed'
@@ -53,7 +59,10 @@ def find_path(entry,root,path):
             split_path = os.path.split(path)
             paths = find_files("..\\",split_path[1])
             if len(paths)>1:
-                matches = difflib.get_close_matches(path,paths)
+                # this is a hack to only find files with src in the path in the src directory
+                # will fail on file to filter when file or other 
+                _paths = [_path for _path in paths if _path.find('src') != -1]
+                matches = difflib.get_close_matches(path,_paths)
                 paths = matches
             print 'potential paths:',paths
             #the first path is the best match, lets take that
