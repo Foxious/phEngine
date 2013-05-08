@@ -44,8 +44,8 @@ def update_xml_path(elem, key, xml_file):
         root = os.path.split(xml_file)[0]
         updated_path = find_path(elem,root,f_path)
         if f_path != updated_path:
-            elem.attrib[key] == updated_path
-            #print 'updated_path:',updated_path,f_path
+            elem.attrib[key] = updated_path
+            print 'updated_path:',updated_path,f_path
 
 def find_path(entry,root,path):
     'either returns the same path or the best matched path if the path has changed'
