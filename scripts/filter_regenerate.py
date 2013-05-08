@@ -33,7 +33,7 @@ def update_xml(xml_file):
                 update_xml_path(elem, key, xml_file)
             elif key == "Exclude":
                 update_xml_path(elem, key, xml_file)
-    xml_tree.write(xml_file)
+    xml_tree.dump(xml_file,declaration=True,default_namespace=None,)
 
 def update_xml_path(elem, key, xml_file):
     '''
@@ -72,6 +72,7 @@ def files_conversion(folder,search):
     for filter_path in find_files(folder,search):
         print filter_path
         update_xml(filter_path)
+        ''''
         f = open(filter_path, "r")
         lines = f.readlines()
         outlines = []
@@ -80,8 +81,8 @@ def files_conversion(folder,search):
             outlines.append(line.replace(":ns0",""))            
         f.close()
         f = open(filter_path,"w")
-        f.writelines(outlines)
-        f.close()
+        f.
+        '''
         
 if __name__ == "__main__":
     files_conversion("..\\",".filters")
