@@ -26,7 +26,22 @@ def parse_xml(xml_file):
     xml_tree = ET.parse(xml_file)
     root = xml_tree.getiterator()
     for x in root:
-        print 'attr: ',,'\ntext: ', x.text
+        for z in x.attrib.keys():
+            if z == "Include":
+                f_path = x.attrib['Include']
+                update_path(x,f_path)
+            elif z == "Exclude":
+                f_path = x.attrib['Exclude']
+
+def update_path(entry,path):
+    if os.path.exists(path):
+        return path
+    else:
+        path = os.path.split(path)
+        root = path[0].split('\\')
+        paths = find_files(root,path[1])
+        print paths
+        return paths[0]
 
 def files_conversion(folder,search):
     for filter_path in find_files(folder,search):
