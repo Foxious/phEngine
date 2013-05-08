@@ -75,7 +75,7 @@ def files_conversion(folder,search):
         f = open(filter_path, "r")
         lines = f.readlines()
         outlines = []
-        lines = ['<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">'] + lines[1:]
+        lines = ['<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">\n'] + lines[1:]
         for line in lines:
             line = line.replace("ns0:","")
             outlines.append(line.replace(":ns0",""))            
