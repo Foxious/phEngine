@@ -81,7 +81,7 @@ def files_conversion(folder,search):
             outlines.append(line.replace(":ns0",""))            
         f.close()
         f = open(filter_path,"w")
-        f.write(filter_path)
+        f.writelines(lines)
         
 if __name__ == "__main__":
     files_conversion("..\\",".filters")
