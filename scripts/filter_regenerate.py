@@ -26,8 +26,7 @@ def find_files(root,search):
 
 def update_xml(xml_file):
     xml_tree = ET.parse(xml_file)
-    root = xml_tree.getiterator()
-    for elem in root:
+    for elem in xml_tree.getiterator(tag = 'ClInclude'):
         for key in elem.attrib.keys():
             # only update include and exclude keys
             if key == "Include":
@@ -77,7 +76,8 @@ def files_conversion(folder,search):
         lines = f.readlines()
         outlines = []
         for line in lines:
-            outlines.append(line.replace("ns0:",""))
+            line = line.replace("ns0:","")
+            outlines.append(line.replace(":ns0",""))            
         f.close()
         f = open(filter_path,"w")
         f.writelines(outlines)
