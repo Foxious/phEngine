@@ -59,12 +59,12 @@ def find_path(entry,root,path):
             split_path = os.path.split(path)
             paths = find_files("..\\",split_path[1])
             if len(paths)>1:
-                # this is a hack to only find files with src in the path in the src directory
-                # will fail on file to filter when file or other 
+                # this is a hack to only find files with src in the path
+                # fix this for more general usage
                 _paths = [_path for _path in paths if _path.find('src') != -1]
                 matches = difflib.get_close_matches(path,_paths)
                 paths = matches
-            print 'potential paths:',paths
+            #print 'potential paths:',paths
             #the first path is the best match, lets take that
             return paths[0]
 
