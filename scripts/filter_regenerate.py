@@ -33,7 +33,7 @@ def update_xml(xml_file):
                 update_xml_path(elem, key, xml_file)
             elif key == "Exclude":
                 update_xml_path(elem, key, xml_file)
-    xml_tree.dump(xml_file,declaration=True,default_namespace=None,)
+    xml_tree.write(xml_file,xml_declaration=True,default_namespace='')
 
 def update_xml_path(elem, key, xml_file):
     '''
